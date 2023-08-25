@@ -71,7 +71,7 @@ There are multiple ways to define dimensions, indicators, and weights to be used
    )
    ```
 
-:::INFO
+:::
 The following examples use the MPI definition for the Philippines's MPI Interim Methodology. The MPI definition for the Philippines is available in the [MPI Philippines 2017 report](https://www4.hks.harvard.edu/cid/programs/building-state-capabilities/philippines-mpi-report-2017.pdf) (see page 8).
 :::
 
