@@ -1,7 +1,5 @@
 # Multidimensional Poverty Index
 
-# Multidimensional Poverty Index
-
 ## 1. Define dimensions, indicators, and weights
 
 There are multiple ways to define dimensions, indicators, and weights to be used in the MPI calculation. Choose one of the following methods (in order of preference):
