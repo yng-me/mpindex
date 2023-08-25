@@ -16,7 +16,7 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
 
   Note: The column names must be exactly the same as the sample file (but not case sensitive). The order of the columns does not matter. Description is optional.
 
-- Using JSON file (sample file: [mpi_define_sample.json]('./test/data/mpi_define_sample.json'))
+- Using JSON (sample file: [mpi_define_sample.json]('./test/data/mpi_define_sample.json'))
   ```json
   [
       {
