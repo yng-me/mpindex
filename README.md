@@ -23,7 +23,7 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
         "Dimension": "Education ",
         "Indicator": "School attendance",
         "Weight": 0.125,
-        "Description": "If any child in the family aged 5 to 17 age child not attending years old is not school is currently attending school"
+        "Description": "If any child in the family aged 5 to 17 years old not currently attending school"
       },
        //...
       {
