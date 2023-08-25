@@ -4,6 +4,8 @@
 
 There are multiple ways to define dimensions, indicators, and weights to be used in the MPI calculation. Choose one of the following methods (in order of preference):
 
+The following examples use the MPI definition for the Philippines's MPI Interim Methodology. The MPI definition for the Philippines is available in the [MPI Philippines 2017 report](https://www4.hks.harvard.edu/cid/programs/building-state-capabilities/philippines-mpi-report-2017.pdf) (see page 8).
+
 - Excel / CSV (sample file: [mpi_define_sample.xlsx]('./test/data/mpi_define_sample.xlsx'))
   
   | Dimension | Indicator | Weight | Description |
@@ -70,10 +72,6 @@ There are multiple ways to define dimensions, indicators, and weights to be used
       # Description (optional)
    )
    ```
-
-:::
-The following examples use the MPI definition for the Philippines's MPI Interim Methodology. The MPI definition for the Philippines is available in the [MPI Philippines 2017 report](https://www4.hks.harvard.edu/cid/programs/building-state-capabilities/philippines-mpi-report-2017.pdf) (see page 8).
-:::
 
 ## 2. Define poverty cutoffs
 
