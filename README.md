@@ -17,8 +17,9 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
   Note: The column names must be exactly the same as the sample file (but not case sensitive). The order of the columns does not matter. Description is optional.
 
 - Using JSON (sample file: [mpi-define-sample.json]('./tests/data/mpi-define-sample.json'))
+
   ```json
-  [-
+    [
       {
         "Dimension": "Education ",
         "Indicator": "School attendance",
