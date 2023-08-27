@@ -8,11 +8,11 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
 
 - Excel / CSV (sample file: [mpi_define_sample.xlsx]('./test/data/mpi_define_sample.xlsx'))
   
-  | Dimension | Indicator | Weight | Description |
-  |-----------|-----------|--------|-------------|
-  | Education | School attendance | 0.125 | If any child in the family aged 5 to 17 age child not attending years old is not school is currently attending school |
+  | Dimension | Indicator | Weight | Variable | Description |
+  |-----------|-----------|--------|----------|-------------|
+  | Education | School attendance | 0.125 | school_attendace | If any child in the family aged 5 to 17 age child not attending years old is not school is currently attending school |
   | ... | ... | ... | ... |
-  | Employment | Working children not in school | 0.125 | If any family member aged 5 to 17 years old is working and not currently attending school |
+  | Employment | Working children not in school | 0.125 | working_children | If any family member aged 5 to 17 years old is working and not currently attending school |
 
   Note: The column names must be exactly the same as the sample file (but not case sensitive). The order of the columns does not matter. Description is optional.
 
@@ -23,6 +23,7 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
         "Dimension": "Education ",
         "Indicator": "School attendance",
         "Weight": 0.125,
+        "Variable": "school_attendance",
         "Description": "If any child in the family aged 5 to 17 years old not currently attending school"
       },
        //...
@@ -30,6 +31,7 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
         "Dimension": "Employment",
         "Indicator": "Working children not in school",
         "Weight": 0.125,
+        "Variable": "working_children",
         "Description": "If any family member aged 5 to 17 years old is working and not currently attending school"
       }
     ]
@@ -69,6 +71,21 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
         "Working children not in school"
       ),
       Weight = c(0.125, 0.125, 0.0833, 0.083, 0.0833, 0.0417, 0.0417, 0.0417, 0.0417, 0.0417, 0.0417, 0.125, 0.125),
+      Variable = c(
+        "school_attendance", 
+        "educational_attainment", 
+        "hunger", 
+        "food_consumption", 
+        "health_insurance", 
+        "assets", 
+        "toilet", 
+        "water", 
+        "tenure", 
+        "housing_materials", 
+        "electricity", 
+        "underemployment", 
+        "working_children"
+      ),
       # Description (optional)
    )
    ```
