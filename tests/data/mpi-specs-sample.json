@@ -1,13 +1,13 @@
 [
   {
-    "Dimension": "Education ",
+    "Dimension": "Education",
     "Indicator": "School attendance",
     "Weight": 0.125,
     "Variable": "school_attendance",
     "Description": "If any child in the family aged 5 to 17 years old not currently attending school"
   },
   {
-    "Dimension": "Education ",
+    "Dimension": "Education",
     "Indicator": "Educational attainment",
     "Weight": 0.125,
     "Variable": "educational_attainment",

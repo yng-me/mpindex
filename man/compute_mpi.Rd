@@ -4,10 +4,27 @@
 \alias{compute_mpi}
 \title{Compute MPI}
 \usage{
-compute_mpi(.data, ..., names_separator = "_")
+compute_mpi(
+  .deprivation_matrix,
+  ...,
+  .mpi_specs = getOption("mpi_specs"),
+  .names_separator = ">",
+  .generate_output = FALSE,
+  .output_filename = NULL
+)
 }
 \arguments{
-\item{names_separator}{}
+\item{.deprivation_matrix}{Deprivation matrix}
+
+\item{...}{Grouping columns}
+
+\item{.mpi_specs}{A data frame or tibble containing specifications of the MPI}
+
+\item{.names_separator}{Column separator that defines the hierarchy of the column header.}
+
+\item{.generate_output}{Whether to generate an output}
+
+\item{.output_filename}{Output filename}
 }
 \description{
 Compute MPI

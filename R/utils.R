@@ -1,70 +1,58 @@
-#' Convert to lowercase
-#' @export
 to_lowercase <- function(...) tolower(...)
 
-#' Convert to uppercase
-#' @export
 to_uppercase <- function(...) toupper(...)
 
-#' Trim whitespace
-#' @export
 trim_whitespace <- function(...) trimws(...)
 
-# TODO
-to_camel_case <- function(str) {
-  return(str)
+to_camel_case <- function(.value) {
+  if(!is.character(.value)) {
+    stop('Only accepts character')
+  }
+  .value <- to_lowercase(.value)
+  .value <- gsub('[-_\\s]+(.)', '\\U\\1', .value, perl = TRUE)
+  .value <- gsub('[-_\\s]', '', .value)
+  .value <- gsub('^(.)', '\\U\\1', .value, perl = TRUE)
+  .value <- clean_case(.value)
+  return(.value)
 }
 
-# TODO
-to_kebab_case <- function(str) {
-  return(str)
+to_kebab_case <- function(.value) {
+  if(!is.character(.value)) {
+    stop('Only accepts character')
+  }
+  .value <- to_lowercase(.value)
+  .value <- gsub('[-_\\s]+', '-', .value)
+  .value <- clean_case(.value)
+  .value <- gsub('[\\-]+', '-', .value)
+  return(.value)
 }
 
-# TODO
-to_snake_case <- function(str) {
-  return(str)
+to_snake_case <- function(.value) {
+  if(!is.character(.value)) {
+    stop('Only accepts character')
+  }
+  .value <- to_lowercase(.value)
+  .value <- gsub('[-_\\s]+', '_', .value)
+  .value <- clean_case(.value)
+  .value <- gsub('[_]+', '_', .value)
+
+  return(.value)
 }
 
-# TODO
-to_pascal_case <- function(str) {
-  return(str)
-}
-
-#' Clean column names
-#'
-#' @param .data
-#' @param to_lower
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#'
-
-clean_colnames <- function(.data, to_lower = TRUE) {
-  if(is.vector(.data)) stop('Only accepts data frame')
-  cols <- gsub('\\s+\\-?\\s*', '_', names(.data))
-  cols <- gsub('[^A-Za-z0-9_]', '', cols)
-  cols <- gsub('_+', '_', cols)
-  cols <- gsub('_+$', '', cols)
-  cols <- gsub('^_+', '', cols)
-  if(to_lower) cols <- to_lowercase(cols)
-  colnames(.data) <- cols
-  return(.data)
+to_pascal_case <- function(.value) {
+  if(!is.character(.value)) {
+    stop('Only accepts character')
+  }
+  .value <- to_lowercase(.value)
+  .value <- gsub('[-_\\s]+(.)', '\\U\\1', .value, perl = TRUE)
+  .value <- gsub('[-_\\s]', '', .value)
+  .value <- gsub('^(.)', '\\U\\1', .value, perl = TRUE)
+  .value <- clean_case(.value)
+  return(.value)
 }
 
 
-#' Convert to title case
-#'
-#' @param .x
-#' @param words_to_preserve
-#'
-#' @return
-#' @export
-#'
-#' @examples
-
-to_title_case <- function(.x, words_to_preserve = NULL) {
+to_title_case <- function(.x, .words_to_preserve = NULL) {
 
   if(!is.vector(.x)) {
     stop('Only accepts vector')
@@ -80,10 +68,10 @@ to_title_case <- function(.x, words_to_preserve = NULL) {
     split_words <- strsplit(.x[i], split = ' ')
 
     wtp <- NULL
-    if(inherits(words_to_preserve, 'list')) {
-      wtp <- words_to_preserve[[i]]
-    } else if (!inherits(words_to_preserve, 'list') & i == 1) {
-      wtp <- words_to_preserve
+    if(inherits(.words_to_preserve, 'list')) {
+      wtp <- .words_to_preserve[[i]]
+    } else if (!inherits(.words_to_preserve, 'list') & i == 1) {
+      wtp <- .words_to_preserve
     }
 
     if(!is.null(wtp)) {
@@ -115,20 +103,38 @@ to_title_case <- function(.x, words_to_preserve = NULL) {
 }
 
 
-#' Convert to sentence case
-#'
-#' @param .x
-#' @param words_to_preserve
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#'
-
-to_sentence_case <- function(.x, words_to_preserve = NULL) {
-  if(!is.vector(.x)) {
+to_sentence_case <- function(.value, .words_to_preserve = NULL) {
+  if(!is.vector(.value)) {
     stop('Only accepts vector')
   }
-  gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2", tolower(.x), perl = TRUE)
+
+  gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2", tolower(.value), perl = TRUE)
+}
+
+
+clean_case <- function(.value) {
+  if(!is.character(.value)) {
+    stop('Only accepts character')
+  }
+  .value <- gsub('\\s+', '', .value)
+  .value <- gsub('^[-\\s]+', '', .value)
+  .value <- gsub('[-\\s]+$', '', .value)
+  .value <- gsub('^[_]+', '', .value)
+  .value <- gsub('[_]+$', '', .value)
+  .value <- gsub('[^a-zA-Z0-9_\\-]+', '', .value)
+
+  return(.value)
+}
+
+
+clean_colnames <- function(.data, .to_lower = TRUE) {
+  if(is.vector(.data)) stop('Only accepts data frame')
+  cols <- gsub('\\s+\\-?\\s*', '_', names(.data))
+  cols <- gsub('[^A-Za-z0-9_]', '', cols)
+  cols <- gsub('_+', '_', cols)
+  cols <- gsub('_+$', '', cols)
+  cols <- gsub('^_+', '', cols)
+  if(.to_lower) cols <- to_lowercase(cols)
+  colnames(.data) <- cols
+  return(.data)
 }

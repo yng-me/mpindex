@@ -4,18 +4,20 @@ Title: MPI
 Version: 0.1.0
 Author: Bhas Abdulsamad
 Maintainer: Bhas Abdulsamad <aeabdulsamad@gmail.com>
-Description: MPI
+Description: Multidimensional Povery Index (MPI).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    dplyr,
-    tidyr,
-    stringr,
-    jsonlite,
-    openxlsx,
-    testthat (>= 3.0.0)
+  rlang,
+  utils,
+  dplyr,
+  tidyr,
+  tibble,
+  stringr,
+  jsonlite,
+  openxlsx,
+  testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 URL: https://github.com/yng-me/mpi
-VignetteBuilder: knitr
