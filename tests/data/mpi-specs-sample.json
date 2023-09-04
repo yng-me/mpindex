@@ -1,13 +1,13 @@
 [
   {
-    "Dimension": "Education ",
+    "Dimension": "Education",
     "Indicator": "School attendance",
     "Weight": 0.125,
     "Variable": "school_attendance",
     "Description": "If any child in the family aged 5 to 17 years old not currently attending school"
   },
   {
-    "Dimension": "Education ",
+    "Dimension": "Education",
     "Indicator": "Educational attainment",
     "Weight": 0.125,
     "Variable": "educational_attainment",
@@ -35,42 +35,42 @@
     "Description": "If no family member is a beneficiary/member/dependent of health insurance program"
   },
   {
-    "Dimension": "Housing, Water, and Sanitation",
+    "Dimension": "Housing, water, and sanitation",
     "Indicator": "Assets",
     "Weight": 0.0417,
     "Variable": "assets",
     "Description": "If the household does not own: (a) at least one each of the communication assets; or (b) at least one mobility asset"
   },
   {
-    "Dimension": "Housing, Water, and Sanitation",
+    "Dimension": "Housing, water, and sanitation",
     "Indicator": "Toilet",
     "Weight": 0.0417,
     "Variable": "toilet",
     "Description": "If family does not use: (a) own flush toilet; or (b) closed pit toilet which is not shared with other families"
   },
   {
-    "Dimension": "Housing, Water, and Sanitation",
+    "Dimension": "Housing, water, and sanitation",
     "Indicator": "Water",
     "Weight": 0.0417,
     "Variable": "water",
     "Description": "If source of water supply is not piped into dwelling, yard/plot or protected well"
   },
   {
-    "Dimension": "Housing, Water, and Sanitation",
+    "Dimension": "Housing, water, and sanitation",
     "Indicator": "Tenure",
     "Weight": 0.0417,
     "Variable": "tenure",
     "Description": "If the family resiedes in a: (a) rent-free house and lot without consent of owner; or (b) own house, rent-free lot without consent of owner"
   },
   {
-    "Dimension": "Housing, Water, and Sanitation",
+    "Dimension": "Housing, water, and sanitation",
     "Indicator": "Housing materials",
     "Weight": 0.0417,
     "Variable": "housing_materials",
     "Description": "If root and wall of housing unit are made of salvaged or light materials"
   },
   {
-    "Dimension": "Housing, Water, and Sanitation",
+    "Dimension": "Housing, water, and sanitation",
     "Indicator": "Electricity",
     "Weight": 0.0417,
     "Variable": "electricity",

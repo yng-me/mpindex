@@ -1,35 +1,27 @@
-#' Compute headcount ratio
-#'
-#' @param .data data
-#' @param ... others
-#' @param censored boolean
-#'
-#' @return
-#'
-#' @export
-#'
-#' @examples
-#'
+compute_headcount_ratio <- function(
+  .data,
+  ...,
+  .mpi_specs = getOption('mpi_index'),
+  .cutoff_index = 1,
+  .uncensored = F
+) {
 
-compute_headcount_ratio <- function(.data, ..., censored = T) {
+  cutoff <- NULL
+  n <- NULL
 
   .data <- .data |>
-    dplyr::filter(cutoff == recommended_cutoff)
+    dplyr::filter(cutoff == .mpi_specs$poverty_cutoffs[.cutoff_index])
 
-  pattern <- '^d[1-5]_.*_u$'
-  if(censored == T) pattern <- '^d[1-5]_.*_u_k$'
-
-  count <- .data |>
-    dplyr::group_by(...) |>
-    dplyr::count() |>
-    dplyr::ungroup() |>
-    dplyr::select(n)
+  .pattern_str <- '^d\\d{2}_i\\d{2}.*_uncensored_k$'
+  if(.uncensored) .pattern_str <- '^d\\d{2}_i\\d{2}.*_uncensored$'
 
   df <- .data |>
     dplyr::group_by(...) |>
     dplyr::add_count() |>
-    dplyr::summarise_at(dplyr::vars(dplyr::matches(pattern)), mean) |>
-    dplyr::select(..., n, matches(pattern))
+    dplyr::ungroup() |>
+    dplyr::group_by(..., n) |>
+    dplyr::summarise_at(dplyr::vars(dplyr::matches(.pattern_str)), mean, na.rm = T) |>
+    dplyr::select(..., n, dplyr::matches(.pattern_str))
 
   return(df)
 }

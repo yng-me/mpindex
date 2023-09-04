@@ -1,12 +1,18 @@
 # Multidimensional Poverty Index
 
-## 1. Define dimensions, indicators, and weights
+## 1. Load dataset
+
+```r
+mpi_dataset <- openxlsx::read.xlsx('./tests/data/mpi-dataset-sample.xlsx')
+```
+
+## 2. Define dimensions, indicators, and weights
 
 There are multiple ways to define dimensions, indicators, and weights to be used in the MPI calculation. Choose one of the following methods (in order of preference).
 
-The following examples use the MPI definition for the Philippines's MPI Interim Methodology. The MPI definition for the Philippines is available in the [MPI Philippines 2017 report](https://www4.hks.harvard.edu/cid/programs/building-state-capabilities/philippines-mpi-report-2017.pdf) (see page 8).
+The following examples use the MPI definition for the Philippines's MPI Interim Methodology. The MPI definition for the Philippines is available in the [MPI Philippines 2017 report](https://www.mppn.org/wp-content/uploads/2018/11/Philippines-mpi-technical-notes.pdf) (see page 8).
 
-- Excel / CSV (sample file: [mpi-define-sample.xlsx]('./tests/data/mpi-define-sample.xlsx'))
+- Excel / CSV (sample file: [mpi-specs-sample.xlsx]('https://github.com/yng-me/mpi/blob/main/tests/data/mpi-specs-sample.xlsx'))
   
   | Dimension | Indicator | Weight | Variable | Description |
   |-----------|-----------|--------|----------|-------------|
@@ -16,7 +22,7 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
 
   Note: The column names must be exactly the same as the sample file (but not case sensitive). The order of the columns does not matter. Description is optional.
 
-- Using JSON (sample file: [mpi-define-sample.json]('./tests/data/mpi-define-sample.json'))
+- Using JSON (sample file: [mpi-specs-sample.json]('https://github.com/yng-me/mpi/blob/main/tests/data/mpi-specs-sample.json'))
   ```json
   [-
       {
@@ -36,60 +42,31 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
       }
     ]
   ```
-- Manually define in R
 
-   ```r
-     mpi_define <- data.frame(
-      Dimension = c(
-        "Education", 
-        "Education", 
-        "Health and nutrition", 
-        "Health and nutrition", 
-        "Health and nutrition", 
-        "Housing, Water, and Sanitation", 
-        "Housing, Water, and Sanitation", 
-        "Housing, Water, and Sanitation", 
-        "Housing, Water, and Sanitation", 
-        "Housing, Water, and Sanitation", 
-        "Housing, Water, and Sanitation", 
-        "Employment", 
-        "Employment"
-      ),
-      Indicator = c(
-        "School attendance", 
-        "Educational attainment", 
-        "Hunger", 
-        "Food consumption", 
-        "Health insurance", 
-        "Assets", 
-        "Toilet", 
-        "Water", 
-        "Tenure", 
-        "Housing materials", 
-        "Electricity", 
-        "Underemployment", 
-        "Working children not in school"
-      ),
-      Weight = c(0.125, 0.125, 0.0833, 0.083, 0.0833, 0.0417, 0.0417, 0.0417, 0.0417, 0.0417, 0.0417, 0.125, 0.125),
-      Variable = c(
-        "school_attendance", 
-        "educational_attainment", 
-        "hunger", 
-        "food_consumption", 
-        "health_insurance", 
-        "assets", 
-        "toilet", 
-        "water", 
-        "tenure", 
-        "housing_materials", 
-        "electricity", 
-        "underemployment", 
-        "working_children"
-      ),
-      # Description (optional)
-   )
-   ```
+```r
+mpi_definition <- define_mpi(
+  .definition_file = './tests/data/mpi-specs-sample.xlsx',
+  .poverty_cutoffs = c(1/3, 0.2, 0.4, 0.6, 0.8),
+  .row_id = 'case_id',
+)
+```
 
 ## 2. Define poverty cutoffs
+
+```r
+water <- mpi_dataset |>
+  define_deprivation_cutoff(
+    hunger, 
+    q03_improved_drinking_water == 2, 
+    mpi_definition
+  )
+
+housing_materials <- mpi_dataset |>
+  define_deprivation_cutoff(
+    housing_materials, 
+    r03_roof %in% c(5, 7, 9) & r04_outer_walls %in% c(5, 8, 9, 99), 
+    mpi_definition
+  )
+```
 
 ## 3. Calculate MPI
