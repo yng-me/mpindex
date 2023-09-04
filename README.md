@@ -24,7 +24,7 @@ The following examples use the MPI definition for the Philippines's MPI Interim 
 
 - Using JSON (sample file: [mpi-specs-sample.json]('https://github.com/yng-me/mpi/blob/main/tests/data/mpi-specs-sample.json'))
   ```json
-  [-
+    [
       {
         "Dimension": "Education ",
         "Indicator": "School attendance",
