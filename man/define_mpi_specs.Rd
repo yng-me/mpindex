@@ -8,7 +8,7 @@ define_mpi_specs(
   .mpi_specs_file,
   .poverty_cutoffs = 1/3,
   .unit_of_analysis = "household",
-  .id = NULL,
+  .uid = NULL,
   .source_of_data = NULL,
   .names_separator = ">"
 )
@@ -20,7 +20,7 @@ define_mpi_specs(
 
 \item{.unit_of_analysis}{Accepts  \code{individual} | \code{family} | \code{household} | \code{community}. Default value is \code{household}.}
 
-\item{.id}{Column name containing unique ID of the observation which defines the lowest level of disaggregation.}
+\item{.uid}{Column name containing unique ID of the observation which defines the lowest level of disaggregation.}
 
 \item{.source_of_data}{Source of data used in the computation}
 

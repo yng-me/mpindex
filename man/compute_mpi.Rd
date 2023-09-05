@@ -9,6 +9,8 @@ compute_mpi(
   ...,
   .mpi_specs = getOption("mpi_specs"),
   .names_separator = ">",
+  .include_deprivation_score = FALSE,
+  .include_deprivation_matrix = FALSE,
   .generate_output = FALSE,
   .output_filename = NULL
 )
@@ -21,6 +23,10 @@ compute_mpi(
 \item{.mpi_specs}{A data frame or tibble containing specifications of the MPI}
 
 \item{.names_separator}{Column separator that defines the hierarchy of the column header.}
+
+\item{.include_deprivation_score}{Include deprivation score}
+
+\item{.include_deprivation_matrix}{Include deprivation matrix}
 
 \item{.generate_output}{Whether to generate an output}
 

@@ -21,7 +21,7 @@ create_deprivation_matrix(
 \item{.mpi_specs}{A data frame or tibble containing the specifications of the MPI}
 }
 \value{
-A data frame or tibble
+A list
 }
 \description{
 Create deprivation matrix
