@@ -18,3 +18,4 @@ devtools::install_github('yng-me/mpi')
 -[] Synthetic data
 -[] Tests
 -[] Documentation
+
