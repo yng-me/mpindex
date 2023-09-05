@@ -14,18 +14,44 @@ define_mpi_specs(
 )
 }
 \arguments{
-\item{.mpi_specs_file}{Accepts \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV) file format. This file should contain the following columns/variables: \code{Dimension}, \code{Indicator}, \code{Variable}, \code{Weight}, and \code{Description} (optional). Click \href{https://github.com/yng-me/mpi/blob/main/tests/data}{here} to see some examples.}
+\item{.mpi_specs_file}{Accepts \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV) file format. This file should contain the following columns/variables: \code{Dimension}, \code{Indicator}, \code{Variable}, \code{Weight}, and \code{Description} (optional). See example below.}
 
 \item{.poverty_cutoffs}{Accepts single value or a vector of poverty cutoffs. See example below.}
 
 \item{.unit_of_analysis}{e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{households}.}
 
-\item{.uid}{Column name containing unique ID of the observation which defines the lowest level of disaggregation.}
+\item{.uid}{Column name containing unique ID of the observation which defines the lowest level of disaggregation (usually unit of analysis).}
 
-\item{.source_of_data}{Source of data used in the computation}
+\item{.source_of_data}{Source of data used in the computation. This will be used in the footnote of the table when generating an output.}
 
 \item{.names_separator}{Column separator that defines the hierarchy of the column header.}
 }
+\value{
+A list of objects containing MPI specifications needed by \link[mpindex]{compute_mpi} function.
+}
 \description{
-Use this function to define the identified MPI dimensions, indicators and its corresponding weights using any of the accessible file types: \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV). You can also set the poverty cutoff or list of poverty cutoffs (to achieve gradient list of MPIs) that will be used in the computation of MPI.
+Use to define MPI dimensions, indicators and its corresponding weights using any of the accessible file types: \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV). You can also set the poverty cutoff or list of poverty cutoffs (to achieve gradient list of MPIs) that will be used in the computation of MPI.
+}
+\examples{
+# Use sample specs file included in the package
+specs_file <- system.file(
+ "extdata",
+ "mpi-specs-sample.csv",
+ package = "mpindex"
+)
+# To see other sample specs file (with different supported file format)
+system.file("extdata", package = "mpindex") |>
+  list.files()
+
+# OPTIONS:
+# 1. Pass this `specs` object to `compute_mpi` function
+#
+specs <- define_mpi_specs(specs_file)
+
+# 2. Make it available globally (recommended approach)
+options(mpi_specs = specs)
+
+}
+\seealso{
+\link[mpindex]{compute_mpi}
 }
