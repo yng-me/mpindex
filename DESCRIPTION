@@ -1,10 +1,10 @@
-Package: mpi
+Package: mpindex
 Type: Package
 Title: Multidimensional Poverty Index (MPI)
 Version: 0.1.0
 Author: Bhas Abdulsamad
 Maintainer: Bhas Abdulsamad <aeabdulsamad@gmail.com>
-Description: This package is used to compute the Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method.
+Description: A set of easy-to-use functions for computating the Multidimensional Poverty Index (MPI) using the 'Alkire-Foster' (AF) counting method.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -20,4 +20,4 @@ Suggests:
   testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
-URL: https://github.com/yng-me/mpi
+URL: https://github.com/yng-me/mpindex

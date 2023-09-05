@@ -16,16 +16,30 @@ define_deprivation_cutoff(
 \arguments{
 \item{.data}{A data frame or tibble}
 
-\item{.indicator}{A string or symbol indicating the name of indicator to be used}
+\item{.indicator}{Name of indicator defined in MPI specs (must exactly match the specs).}
 
-\item{.condition}{A string or symbol indicating the condition to be used}
+\item{.condition}{A conditional logic that defines the poverty line to determine whether deprived or not.}
 
-\item{.mpi_specs}{A data frame or tibble containing specifications of the MPI}
+\item{.mpi_specs}{MPI specifications defined from \code{\link[mpindex]{define_mpi_specs}}.}
 
-\item{.collapse}{A boolean indicating whether to collapse the data frame or not}
+\item{.collapse}{A boolean indicating whether to collapse the data frame or not. This is useful, for instance, if the original data where the \code{.condition} argument above applies to an individual person but your unit of analysis in household.}
 
-\item{.collapse_condition}{A string or symbol indicating the condition to be used when collapsing the data}
+\item{.collapse_condition}{NOT YET FULLY IMPLEMENTED. ONLY WORKS WITH DEFAULT. A condition when \code{.collapse} is set to \code{TRUE}. If \code{NULL}, \code{max()} will be used as default.}
+}
+\value{
+A data frame of deprivation value for the indicator (\code{.*_unweighted}): \code{0} for "not deprived", \code{1} for deprived, and \code{NA} for missing and non-response; and product of \code{.*_unweighted} and its corresponding weight (\code{.*_weighted}).
 }
 \description{
-Define deprivation cutoffs
+A deprivation cutoff must be set for each indicator defined in the MPI specifications. This step establishes the first cutoff in the methodology where every person/household (defined as the unit of analysis) can be identified as deprived or non-deprived with respect to each indicator. \cr
+
+For each indicator, \code{0} will be used to indicate "not deprived", \code{1} if deprived, and \code{NA} if missing or non-response. Additional column containing the product of the value of the indicator obtained and its corresponding weight will also be computed for convenience.
+}
+\examples{
+#TODO
+}
+\references{
+\href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
+}
+\seealso{
+\link[mpindex]{define_mpi_specs}
 }

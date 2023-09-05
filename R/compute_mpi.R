@@ -1,26 +1,32 @@
-#' Compute MPI
+#' Compute Multidimensional Poverty Index (MPI)
 #'
-#' @param .data A data frame
-#' @param .deprivation_cutoffs list of deprivation cutoffs
-#' @param ... Grouping columns
-#' @param .mpi_specs A data frame or tibble containing specifications of the MPI
-#' @param .names_separator Column separator that defines the hierarchy of the column header.
-#' @param .generate_output Whether to generate an output
-#' @param .output_filename Output filename
-#' @param .include_deprivation_matrix Include deprivation matrix
-#' @param .formatted_output Whether formatting is to be applied to the output
+#' @description This function uses the Alkire-Foster (AF) counting method developed by OPHI’s Sabina Alkire and James Foster. To use the functionm it requires a list of deprivation cutoffs (\code{\link[mpindex]{define_deprivation_cutoff}}) containing all indicators defined in the specification files. \cr
 #'
-#' @return
+#'
+#' @param .data A tidy data frame where each observation is the unit of analysis defined in \code{\link[mpindex]{define_mpi_specs}}.
+#' @param .deprivation_cutoffs list of deprivation cutoffs defined from \code{\link[mpindex]{define_deprivation_cutoff}}.
+#' @param ... Grouping columns (supports tidyselect), e.g. area (country, urbanity, region, province), sex, ethnic group, etc.
+#' @param .mpi_specs MPI specifications defined from \code{\link[mpindex]{define_mpi_specs}}.
+#' @param .include_deprivation_matrix Whether to include deprivation matrix in the output.
+#' @param .generate_output NOT YET IMPLEMENTED. Whether to generate an output as side effect.
+#' @param .output_filename NOT YET IMPLEMENTED. Output filename.
+#' @param .formatted_output NOT YET IMPLEMENTED. Whether formatting is to be applied to the output.
+#'
+#' @return Returns list of objects: \code{MPI}, \code{Contribution of dimension}, \code{Headcount ratio} (censored and uncensored), and \code{Deprivation matrix} (censored and uncensored). If \code{poverty_cutoffs} defined in \code{\link[mpindex]{define_mpi_specs}} contains more than one (1) value, \code{MPI} and \code{Contribution of dimension} will output each cutoff in a separate table.
+#'
 #' @export
 #'
+#' @references \href{https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/}{Alkire-Foster Method} \cr
+#' \href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
+#' @seealso \link[mpindex]{define_mpi_specs} \link[mpindex]{define_deprivation_cutoff}
 #' @examples
+#' #TODO
 
 compute_mpi <- function(
   .data,
   .deprivation_cutoffs,
   ...,
   .mpi_specs = getOption('mpi_specs'),
-  .names_separator = '>',
   .include_deprivation_matrix = TRUE,
   .generate_output = FALSE,
   .formatted_output = TRUE,
@@ -109,7 +115,6 @@ compute_mpi <- function(
     `Contribution of dimension` = .contribution_list,
     `Headcount ratio` = .headcount_ratio_list
   )
-
 
   if(.include_deprivation_matrix) {
     .dm_n <- names(.deprivation_matrix)
