@@ -4,12 +4,12 @@
 
 Installing from CRAN (for approval)
 ```r
-install.packages('mpi')
+install.packages('mpindex')
 ```
 
 Installing from GitHub
 ```r
-devtools::install_github('yng-me/mpi')
+devtools::install_github('yng-me/mpindex')
 ```
 
 ## TODOS
