@@ -5,22 +5,23 @@ compute_contribution <- function(
 ) {
 
   n <- NULL
-  M_0 <- NULL
+  MPI <- NULL
   `:=` <- NULL
 
   .df_contrib <- .data |> dplyr::select(..., n)
-  .w <- .mpi_specs$indicators$weight
-  .mpi_label <- .mpi_specs$indicators$label
 
-  for(i in seq_along(.mpi_label)) {
+  .w <- .mpi_specs$indicators$weight
+  .ind <- .mpi_specs$indicators$variable_name
+
+  for(i in seq_along(.ind)) {
 
     .contrib <- .data |>
-      dplyr::select(M_0, !!as.name(.mpi_label[i])) |>
+      dplyr::select(MPI, !!as.name(.ind[i])) |>
       dplyr::transmute(
-        !!as.name(paste0(.mpi_label[i])) := dplyr::if_else(
-          M_0 == 0,
+        !!as.name(.ind[i]) := dplyr::if_else(
+          MPI == 0,
           0,
-          100 * (.w[i] * !!as.name(.mpi_label[i])) / M_0
+          (100 * (.w[i] * !!as.name(.ind[i]))) / MPI
         )
       )
 
@@ -28,5 +29,5 @@ compute_contribution <- function(
       dplyr::bind_cols(.contrib)
   }
 
-  return(.df_contrib)
+  return(.df_contrib |> rename_indicators(.mpi_specs = .mpi_specs))
 }

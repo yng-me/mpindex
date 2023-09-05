@@ -27,7 +27,7 @@ define_deprivation_cutoff <- function(
   variable_name <- NULL
   weight <- NULL
   `:=` <- NULL
-  row_id <- NULL
+  uid <- NULL
 
 
   if(is.null(.mpi_specs)) {
@@ -45,28 +45,28 @@ define_deprivation_cutoff <- function(
   v <- dplyr::pull(selected_indicator, indicator)
   w <- dplyr::pull(selected_indicator, weight)
 
-  uncensored <- paste0(ind[1], '_uncensored')
-  censored <- paste0(ind[1], '_censored')
+  unweighted <- paste0(ind[1], '_unweighted')
+  weighted <- paste0(ind[1], '_weighted')
 
-  with_row_id <- !is.null(.mpi_specs$row_id)
+  with_uid <- !is.null(.mpi_specs$uid)
 
-  if(with_row_id) {
-    row_id_name <- as.character(.mpi_specs$row_id)
-    .data <- .data |> dplyr::rename(row_id = !!as.name(row_id_name))
+  if(with_uid) {
+    uid_name <- as.character(.mpi_specs$uid)
+    .data <- .data |> dplyr::rename(uid = !!as.name(uid_name))
   } else {
-    row_id_name <- 'row_id'
-    .data <- .data |> tibble::rownames_to_column(var = row_id_name)
+    uid_name <- 'uid'
+    .data <- .data |> tibble::rownames_to_column(var = uid_name)
   }
 
   .data <- .data |>
     dplyr::transmute(
-      !!as.name(row_id_name) := row_id,
+      !!as.name(uid_name) := uid,
       !!as.name(v[1]) := dplyr::if_else({{.condition}}, 1L, 0L, NA_integer_)
     )
 
-  if(.collapse & with_row_id) {
+  if(.collapse & with_uid) {
     .data <- .data |>
-      dplyr::group_by(!!as.name(row_id_name))
+      dplyr::group_by(!!as.name(uid_name))
 
     if(to_enquo_str({{.collapse_condition}}) != 'NULL') {
       .data <- .data |>
@@ -87,6 +87,6 @@ define_deprivation_cutoff <- function(
   }
 
   .data |>
-    dplyr::mutate(!!as.name(censored) := w[1] * !!as.name(v[1])) |>
-    dplyr::rename(!!as.name(uncensored) := !!as.name(v[1]))
+    dplyr::mutate(!!as.name(weighted) := w[1] * !!as.name(v[1])) |>
+    dplyr::rename(!!as.name(unweighted) := !!as.name(v[1]))
 }

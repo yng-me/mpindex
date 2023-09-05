@@ -5,16 +5,21 @@
 \title{Compute MPI}
 \usage{
 compute_mpi(
-  .deprivation_matrix,
+  .data,
+  .deprivation_cutoffs,
   ...,
   .mpi_specs = getOption("mpi_specs"),
   .names_separator = ">",
+  .include_deprivation_matrix = TRUE,
   .generate_output = FALSE,
+  .formatted_output = TRUE,
   .output_filename = NULL
 )
 }
 \arguments{
-\item{.deprivation_matrix}{Deprivation matrix}
+\item{.data}{A data frame}
+
+\item{.deprivation_cutoffs}{list of deprivation cutoffs}
 
 \item{...}{Grouping columns}
 
@@ -22,7 +27,11 @@ compute_mpi(
 
 \item{.names_separator}{Column separator that defines the hierarchy of the column header.}
 
+\item{.include_deprivation_matrix}{Include deprivation matrix}
+
 \item{.generate_output}{Whether to generate an output}
+
+\item{.formatted_output}{Whether formatting is to be applied to the output}
 
 \item{.output_filename}{Output filename}
 }

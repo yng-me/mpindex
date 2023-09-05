@@ -102,7 +102,6 @@ to_title_case <- function(.x, .words_to_preserve = NULL) {
 
 }
 
-
 to_sentence_case <- function(.value, .words_to_preserve = NULL) {
   if(!is.vector(.value)) {
     stop('Only accepts vector')
