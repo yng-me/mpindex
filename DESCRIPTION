@@ -1,10 +1,10 @@
 Package: mpi
 Type: Package
-Title: MPI
+Title: Multidimensional Poverty Index (MPI) Package
 Version: 0.1.0
 Author: Bhas Abdulsamad
 Maintainer: Bhas Abdulsamad <aeabdulsamad@gmail.com>
-Description: Multidimensional Povery Index (MPI).
+Description: This package is used for the computation of Multidimensional Poverty Index (MPI) using the The Alkire-Foster (AF) counting method.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

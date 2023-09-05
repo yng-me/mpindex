@@ -1,5 +1,17 @@
 # Multidimensional Poverty Index
 
+## Package installation
+
+Installing from CRAN
+```r
+install.packages('mpi')
+```
+
+Installing from GitHub
+```r
+devtools::install_github('yng-me/mpi')
+```
+
 ## 1. Load dataset
 
 ```r

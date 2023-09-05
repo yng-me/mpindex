@@ -38,7 +38,7 @@ compute_mpi <- function(
   .cutoffs <- .mpi_specs$poverty_cutoffs
   .p_cutoffs <- set_cutoff_label(.cutoffs)
 
-  .incidence_list <- list()
+  .headcount_ratio_list <- list()
   .mpi_computed_list <- list()
   .contribution_list <- list()
 
@@ -50,8 +50,8 @@ compute_mpi <- function(
     )
 
   # Incidence of Poverty -------------------------------------------------------
-  .incidence_list[['Uncensored']] <- .deprivation_matrix$Uncensored |>
-    compute_incidence(...) |>
+  .headcount_ratio_list[['Uncensored']] <- .deprivation_matrix$Uncensored |>
+    compute_headcount_ratio(...) |>
     rename_indicators(.mpi_specs = .mpi_specs)
 
   for(i in seq_along(.p_cutoffs)) {
@@ -60,9 +60,9 @@ compute_mpi <- function(
     .dm_temp <- .deprivation_matrix[[.dep_label]]
 
     .incidence_temp <- .dm_temp |>
-      compute_incidence(...)
+      compute_headcount_ratio(...)
 
-    .incidence_list[[.dep_label]] <- .incidence_temp |>
+    .headcount_ratio_list[[.dep_label]] <- .incidence_temp |>
       rename_indicators(.mpi_specs = .mpi_specs)
 
     .mpi_computed_temp <- .dm_temp |>
@@ -107,7 +107,7 @@ compute_mpi <- function(
   .output <- list(
     `MPI` = .mpi_computed_list,
     `Contribution of dimension` = .contribution_list,
-    `Incidence of deprivation` = .incidence_list
+    `Headcount ratio` = .headcount_ratio_list
   )
 
 
