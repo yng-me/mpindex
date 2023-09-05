@@ -13,9 +13,9 @@ devtools::install_github('yng-me/mpi')
 ```
 
 ## TODOS
--[] Export to Excel
--[] Examples
--[] Synthetic data
--[] Tests
--[] Documentation
+- Export to Excel
+- Examples
+- Synthetic data
+- Tests
+- Documentation
 
