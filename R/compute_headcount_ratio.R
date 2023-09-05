@@ -1,4 +1,4 @@
-compute_incidence <- function(.data, ...) {
+compute_headcount_ratio <- function(.data, ...) {
 
   n <- NULL
   .pattern_str <- '^d\\d{2}_i\\d{2}.*'
