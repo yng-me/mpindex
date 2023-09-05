@@ -38,6 +38,8 @@ rename_indicators <- function(.data, .mpi_specs = getOption('mpi_specs')) {
 }
 
 rename_n <- function(.data, .label) {
+  n <- NULL
+  `:=` <- NULL
   .data |>
     dplyr::rename(!!as.name(paste0('Number of ', .label)) := n)
 }

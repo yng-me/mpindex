@@ -1,12 +1,12 @@
 #' Compute MPI
 #'
+#' @param .data A data frame
+#' @param .deprivation_cutoffs list of deprivation cutoffs
 #' @param ... Grouping columns
 #' @param .mpi_specs A data frame or tibble containing specifications of the MPI
 #' @param .names_separator Column separator that defines the hierarchy of the column header.
-#' @param .deprivation_matrix Deprivation matrix
 #' @param .generate_output Whether to generate an output
 #' @param .output_filename Output filename
-#' @param .include_deprivation_score Include deprivation score
 #' @param .include_deprivation_matrix Include deprivation matrix
 #' @param .formatted_output Whether formatting is to be applied to the output
 #'
@@ -16,7 +16,8 @@
 #' @examples
 
 compute_mpi <- function(
-  .deprivation_matrix,
+  .data,
+  .deprivation_cutoffs,
   ...,
   .mpi_specs = getOption('mpi_specs'),
   .names_separator = '>',
@@ -32,6 +33,7 @@ compute_mpi <- function(
   MPI <- NULL
   cutoff <- NULL
   is_deprived <- NULL
+  deprivation_score <- NULL
 
   .cutoffs <- .mpi_specs$poverty_cutoffs
   .p_cutoffs <- set_cutoff_label(.cutoffs)
@@ -39,6 +41,13 @@ compute_mpi <- function(
   .incidence_list <- list()
   .mpi_computed_list <- list()
   .contribution_list <- list()
+
+  .deprivation_matrix <- .data |>
+    create_deprivation_matrix(
+      ...,
+      .deprivation_cutoffs,
+      .mpi_specs = .mpi_specs
+    )
 
   # Incidence of Poverty -------------------------------------------------------
   .incidence_list[['Uncensored']] <- .deprivation_matrix$Uncensored |>
@@ -111,7 +120,7 @@ compute_mpi <- function(
       join_by <- 'uid'
     }
 
-    .output[['Deprivation matrix']] <- setNames(
+    .output[['Deprivation matrix']] <- stats::setNames(
       lapply(.dm_n, function(x) {
         .deprivation_matrix[[x]] |>
           dplyr::select(

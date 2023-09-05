@@ -1,16 +1,3 @@
-#' Create deprivation matrix
-#'
-#' @param .data A data frame or tibble
-#' @param ... A tidyselect specification of columns to select
-#' @param .mpi_specs A data frame or tibble containing the specifications of the MPI
-#' @param .deprivation_cutoffs A list of data frames or tibbles containing the deprivation cutoffs
-#'
-#' @return A list
-#' @export
-#'
-#' @examples
-#'
-
 create_deprivation_matrix <- function(
   .data,
   .deprivation_cutoffs,
