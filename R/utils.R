@@ -89,7 +89,6 @@ to_title_case <- function(.x, .words_to_preserve = NULL) {
     split_words_final <- strsplit(x_split, split = ' ')
 
     title_new <- sapply(split_words_final, function(w) {
-      print(w)
       if(!is.null(wtp)) w[wtp] <- retained_words
       paste(w, collapse = ' ')
     })
