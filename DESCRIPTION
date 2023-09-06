@@ -2,8 +2,15 @@ Package: mpindex
 Type: Package
 Title: Multidimensional Poverty Index (MPI)
 Version: 0.1.0
-Authors@R: c(person("Bhas", "Abdulsamad", email = "aeabdulsamad@gmail.com", role = c("aut", "cre", "cph")))
-Author: Bhas Abdulsamad [aut, cre, cph] (<https://bhasabdulsamad.com>)
+Authors@R: c(
+    person(
+      "Bhas", 
+      "Abdulsamad", 
+      email = "aeabdulsamad@gmail.com", 
+      role = c("aut", "cre", "cph")
+    )
+  )
+Author: Bhas Abdulsamad [aut, cre, cph]
 Maintainer: Bhas Abdulsamad <aeabdulsamad@gmail.com>
 Description: A set of easy-to-use functions for computing the Multidimensional Poverty Index (MPI).
 License: MIT + file LICENSE
