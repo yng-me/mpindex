@@ -1,6 +1,8 @@
 # Multidimensional Poverty Index
 
 ![](https://cranlogs.r-pkg.org/badges/mpindex)
+![](https://cranlogs.r-pkg.org/badges/grand-total/mltools)
+![](https://cranlogs.r-pkg.org/badges/last-day/mltools)
 
 ## Package installation
 
