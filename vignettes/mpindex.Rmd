@@ -1,0 +1,183 @@
+---
+title: "mpindex"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mpindex}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This document presents an illustration of a simple use case of using `mpindex` package for computing the Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster.
+
+## 1. Installation
+
+To install the `mpindex` package from CRAN:
+
+```{r, eval=F}
+install.packages('mpindex')
+```
+
+If you want to get the latest development version of `mpindex`, install it from GitHub. Note that you may need to install first the `devtools` package.
+
+```{r, eval=F}
+devtools::install_github('yng-me/mpindex')
+```
+
+
+Load the package once you have successfully completed the installation.
+
+```{r setup}
+library(mpindex)
+```
+
+## 2. MPI specifications
+
+The initial step is to prepare an MPI specification file which will serve as references in the computation as well as generation of output in the later part of the process. This file should contain information about the identified MPI dimensions, indicators and their corresponding weights.
+
+This file should also be easy to create using the most common and accessible file types such as `.xlsx` (Excel), `.json`, `.csv`, or `.txt` (TSV). 
+
+### Built-in specification files
+
+For convenience, `mpindex` has included built-in specification files (in different formats). Each file contains dimensions, indicators, weight, and other relevant information of the Global MPI. 
+
+To see the list of files available:
+
+```{r}
+system.file("extdata", package = "mpindex") |> list.files()
+```
+
+To use a built-in specification file, say the `.csv` file, use below script to first get the full path of the file.
+
+```{r}
+specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+```
+
+```{r, echo=F}
+read.csv(specs_file) |> 
+  kableExtra::kbl() |> 
+  kableExtra::footnote(
+    'Source: Alkire, S., Kanagaratnam, U. and Suppa, N. (2020). ‘The global Multidimensional Poverty Index (MPI): 2020 revision’, OPHI MPI Methodological Note 49, Oxford Poverty and Human Development Initiative, University of Oxford.',
+    general_title = '',
+    title_format = 'italic'
+  )
+```
+
+### User-defined specification file
+
+You can also define and create your own specification file if you prefer to or if you happen to use different sets of dimensions and indicators. At the minimum, however, this file should contain the following columns/variables: 
+
+- `Dimension`, 
+- `Indicator`, 
+- `Variable`, 
+- `Weight`,
+- `Description` (optional). 
+
+Note that the order in which you put these columns does not matter and also the names are not case sensitive, but make sure to spell the column names correctly.
+
+You may download the template here if you do not want to start from scratch: [MPI specification file sample](https://github.com/yng-me/mpindex/blob/main/inst/extdata/mpi-specs-sample.csv).
+
+
+### Using `define_mpi_specs`
+
+Once you have prepared the specification file, load it using the `define_mpi_specs` function (type `?define_mpi_specs` for a help text).
+
+For demonstration purposes, I will use the built-in specification file, discussed above.
+
+```{r}
+specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+mpi_specs <- define_mpi_specs(specs_file)
+```
+
+`define_mpi_specs` requires a specification file as its first argument. The default poverty cutoff is set to `1/3` (based on Global MPI), with a unit of analysis set to `households`. You can also define a list of poverty cutoffs by specifying in the `.poverty_cutoffs` argument to achieve gradient MPIs.
+
+```{r, eval=F}
+define_mpi_specs(
+  .mpi_specs_file = specs_file, 
+  .poverty_cutoffs = c(1/3, 0.2, 0.8)
+)
+```
+
+If your dataset contains unique ID (case ID), it is recommended to define it here using the `.uid` argument. For instance, if I have a column named `uuid` to identify each of the unique row in my dataset.
+
+```{r, eval=F}
+define_mpi_specs(
+  .mpi_specs_file = specs_file, 
+  .poverty_cutoffs = c(1/3, 0.2, 0.8),
+  .uid = 'uuid'
+)
+```
+
+`.unit_of_analysis`, `.source_of_data`, and `.names_separator` are merely used for auto labels when generating the output later. For example:
+
+```{r, eval=F}
+define_mpi_specs(
+  .mpi_specs_file = specs_file,
+  .poverty_cutoffs = c(1/3, 0.2, 0.8),
+  .uid = 'uuid',
+  .unit_of_analysis = '',
+  .source_of_data = '2020 Census of Population'
+  .names_separator = '.'
+)
+```
+
+### Make the specs available globally
+
+It is also recommended to make the MPI specification available globally, rather than providing the argument manually everytime you use other functions within the `mpindex` (more of this later).
+
+```{r}
+options(mpi_specs = mpi_specs)
+```
+
+Note: the key/name to be passed to `options` function must exactly be `mpi_specs`.
+
+## 3. Data preparation
+
+The user of `mpindex` is assumed to have basic familiarity with the concept of tidy data as well as able to perform data wrangling and transformation using the `tidyverse` ecosystem. Under the hood, `mpindex` uses `dplyr` verbs and other functions in the `tidyr` package to perform data manipulation.
+
+I also assume that your dataset is already tidy and ready for analysis. See [R for Data Science](https://r4ds.had.co.nz/tidy-data.html) by Hadley Wickham and Garrett Grolemund if you need a refresher.
+
+### Dataset
+
+For this demonstration, I will use two (2) synthetic datasets available within the package:
+
+- `data_hh_record` household-level data (type `?data_hh_record` for more info)
+- `data_hh_roster` individual-level data (type `?data_hh_roster` for more info)
+
+```{r, eval=F}
+str(data_hh_record)
+```
+
+```{r, eval=F}
+str(data_hh_roster)
+```
+
+
+### Using `define_deprivation_cutoff`
+
+```{r}
+deprivation_cutoffs <- list()
+```
+
+
+## 4. Computing the MPI
+
+### Using `compute_mpi`
+
+```{r}
+
+```
+
+
+### 5. Generate output
+
+```{r}
+
+```
+

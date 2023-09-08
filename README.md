@@ -11,10 +11,3 @@ Installing from GitHub
 ```r
 devtools::install_github('yng-me/mpi')
 ```
-
-## TODOS
--[] Export to Excel
--[] Examples
--[] Synthetic data
--[] Tests
--[] Documentation
