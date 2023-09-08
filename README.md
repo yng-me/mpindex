@@ -1,4 +1,4 @@
-# Multidimensional Poverty Index
+# Multidimensional Poverty Index (MPI) Package
 
 ![](https://cranlogs.r-pkg.org/badges/last-day/mpindex)
 ![](https://cranlogs.r-pkg.org/badges/mpindex)
