@@ -1,9 +1,5 @@
 # Multidimensional Poverty Index (MPI) Package
 
-![](https://cranlogs.r-pkg.org/badges/last-day/mpindex)
-![](https://cranlogs.r-pkg.org/badges/mpindex)
-![](https://cranlogs.r-pkg.org/badges/grand-total/mpindex)
-
 ## Package installation
 
 Installing from CRAN
