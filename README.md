@@ -1,8 +1,10 @@
 # Multidimensional Poverty Index
 
+![](https://cranlogs.r-pkg.org/badges/mpindex)
+
 ## Package installation
 
-Installing from CRAN (for approval)
+Installing from CRAN
 ```r
 install.packages('mpindex')
 ```
