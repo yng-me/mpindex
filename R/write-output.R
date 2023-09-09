@@ -1,10 +1,10 @@
 write_output <- function(
-  .mpi_output,
-  .mpi_specs = getOption('mpi_specs'),
-  .filename = NULL,
-  .formatted_output = TRUE,
-  .include_table_summary = TRUE,
-  .include_specs = FALSE
+    .mpi_output,
+    .mpi_specs = getOption('mpi_specs'),
+    .filename = NULL,
+    .formatted_output = TRUE,
+    .include_table_summary = TRUE,
+    .include_specs = FALSE
 ) {
 
   wb <- openxlsx::createWorkbook()
