@@ -18,4 +18,3 @@ devtools::install_github('yng-me/mpindex')
 - Synthetic data
 - Tests
 - Documentation
-

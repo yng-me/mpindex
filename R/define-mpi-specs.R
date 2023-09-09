@@ -18,7 +18,7 @@
 #' # Use sample specs file included in the package
 #' specs_file <- system.file(
 #'  "extdata",
-#'  "mpi-specs-sample.csv",
+#'  "global-mpi-specs.csv",
 #'  package = "mpindex"
 #' )
 #' # To see other sample specs file (with different supported file format)
@@ -51,6 +51,33 @@ define_mpi_specs <- function(
   indicator <- NULL
   dimension <- NULL
 
+  if(length(.poverty_cutoffs[.poverty_cutoffs >= 1]) > 0 | length(.poverty_cutoffs[.poverty_cutoffs <= 0]) > 0) {
+    stop('.poverty_cutoffs cannot contain values greater than 1.')
+  }
+
+  if(typeof(.unit_of_analysis) != 'character') {
+    stop('.unit_of_analysis argument only accepts string of characters.')
+  }
+
+  if(length(.unit_of_analysis) != 1) {
+    stop('.unit_of_analysis argument cannot accept multiple values.')
+  }
+
+  if(!is.null(.uid)) {
+    .uid <- as.character(.uid)
+    if(length(.uid) != 1) {
+      stop('.uid argument cannot accept multiple values.')
+    }
+  }
+
+  if(length(.names_separator) != 1) {
+    stop('.names_separator argument cannot accept multiple values.')
+  }
+
+  if(!(.names_separator %in% c('>', '<', '|', '.', '_', '-'))) {
+    stop(".names_separator only accept the following characters: '>' (greater than), '<' (less than), '|' (pipe), '_' (underscore), '-' (dash), '.' (period).")
+  }
+
   # accepts JSON, CSV, XLSX (Excel), TXT (TSV)
   if(grepl('\\.xlsx$', .mpi_specs_file, ignore.case = T)) {
 
@@ -67,13 +94,21 @@ define_mpi_specs <- function(
 
   } else if(grepl('\\.txt$', .mpi_specs_file, ignore.case = T)) {
 
-    df <- utils::read.delim(.mpi_specs_file, quote = '', strip.white = T)
+    df <- utils::read.delim(.mpi_specs_file, strip.white = T)
 
   } else {
 
     stop('Definition file format is invalid. Supports only TXT (TSV), CSV, XLSX (Excel), or JSON file format.')
 
   }
+
+  df <- df |>
+    clean_colnames() |>
+    dplyr::select(
+      dplyr::any_of(
+        c("dimension", "indicator", "variable", "weight", "description")
+      )
+    )
 
   valid_colnames <- c("dimension", "indicator", "variable", "weight")
   def_colnames <- to_lowercase(sort(names(df)))
@@ -84,12 +119,10 @@ define_mpi_specs <- function(
   if(!is_colnames_identical) stop('Invalid column names found.')
 
   dimensions <- df |>
-    clean_colnames() |>
     dplyr::distinct(dimension) |>
     dplyr::mutate(m = seq_along(dimension))
 
   df <- df |>
-    clean_colnames() |>
     dplyr::group_by(dimension) |>
     dplyr::mutate(n = seq_along(dimension)) |>
     dplyr::ungroup() |>

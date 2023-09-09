@@ -36,7 +36,7 @@ Use to define MPI dimensions, indicators and its corresponding weights using any
 # Use sample specs file included in the package
 specs_file <- system.file(
  "extdata",
- "mpi-specs-sample.csv",
+ "global-mpi-specs.csv",
  package = "mpindex"
 )
 # To see other sample specs file (with different supported file format)

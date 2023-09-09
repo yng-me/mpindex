@@ -58,7 +58,7 @@ set_dep_label <- function(.value, .index) {
   } else if (length(.value) > 1) {
     .v <- .value[.index]
   } else {
-    v <- 'Not applicable'
+    .v <- 'Not applicable'
   }
   return(.v)
 }

@@ -12,7 +12,9 @@ compute_mpi(
   .include_deprivation_matrix = TRUE,
   .generate_output = FALSE,
   .formatted_output = TRUE,
-  .output_filename = NULL
+  .output_filename = NULL,
+  .include_table_summary = TRUE,
+  .include_specs = FALSE
 )
 }
 \arguments{
@@ -36,7 +38,7 @@ compute_mpi(
 Returns list of objects: \code{MPI}, \code{Contribution of dimension}, \code{Headcount ratio} (censored and uncensored), and \code{Deprivation matrix} (censored and uncensored). If \code{poverty_cutoffs} defined in \code{\link[mpindex]{define_mpi_specs}} contains more than one (1) value, \code{MPI} and \code{Contribution of dimension} will output each cutoff in a separate table.
 }
 \description{
-This function uses the Alkire-Foster (AF) counting method developed by OPHI’s Sabina Alkire and James Foster. To use the functionm it requires a list of deprivation cutoffs (\code{\link[mpindex]{define_deprivation_cutoff}}) containing all indicators defined in the specification files. \cr
+This function uses the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster. To use the functionm it requires a list of deprivation cutoffs (\code{\link[mpindex]{define_deprivation_cutoff}}) containing all indicators defined in the specification files. \cr
 }
 \examples{
 #TODO

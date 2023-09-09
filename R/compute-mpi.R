@@ -1,6 +1,6 @@
 #' Compute Multidimensional Poverty Index (MPI)
 #'
-#' @description This function uses the Alkire-Foster (AF) counting method developed by OPHI’s Sabina Alkire and James Foster. To use the functionm it requires a list of deprivation cutoffs (\code{\link[mpindex]{define_deprivation_cutoff}}) containing all indicators defined in the specification files. \cr
+#' @description This function uses the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster. To use the functionm it requires a list of deprivation cutoffs (\code{\link[mpindex]{define_deprivation_cutoff}}) containing all indicators defined in the specification files. \cr
 #'
 #'
 #' @param .data A tidy data frame where each observation is the unit of analysis defined in \code{\link[mpindex]{define_mpi_specs}}.
@@ -11,6 +11,8 @@
 #' @param .generate_output NOT YET IMPLEMENTED. Whether to generate an output as side effect.
 #' @param .output_filename NOT YET IMPLEMENTED. Output filename.
 #' @param .formatted_output NOT YET IMPLEMENTED. Whether formatting is to be applied to the output.
+#' @param .include_table_summary
+#' @param .include_specs
 #'
 #' @return Returns list of objects: \code{MPI}, \code{Contribution of dimension}, \code{Headcount ratio} (censored and uncensored), and \code{Deprivation matrix} (censored and uncensored). If \code{poverty_cutoffs} defined in \code{\link[mpindex]{define_mpi_specs}} contains more than one (1) value, \code{MPI} and \code{Contribution of dimension} will output each cutoff in a separate table.
 #'
@@ -30,14 +32,15 @@ compute_mpi <- function(
   .include_deprivation_matrix = TRUE,
   .generate_output = FALSE,
   .formatted_output = TRUE,
-  .output_filename = NULL
+  .output_filename = NULL,
+  .include_table_summary = TRUE,
+  .include_specs = FALSE
 ) {
 
   n <- NULL
   H <- NULL
   A <- NULL
   MPI <- NULL
-  cutoff <- NULL
   is_deprived <- NULL
   deprivation_score <- NULL
 
@@ -72,17 +75,7 @@ compute_mpi <- function(
       rename_indicators(.mpi_specs = .mpi_specs)
 
     .mpi_computed_temp <- .dm_temp |>
-      dplyr::group_by(...) |>
-      dplyr::summarise(
-        n = dplyr::n(),
-        H = (sum(is_deprived, na.rm = T)) / n,
-        A = dplyr::if_else(
-          sum(is_deprived, na.rm = T) == 0, 0,
-          sum(deprivation_score, na.rm = T) * (1 / sum(is_deprived, na.rm = T))
-        ),
-        MPI = H * A, # OR, MPI = (1 / n) * sum(censored_score, na.rm = T),
-        .groups = 'drop'
-      )
+      compute_headcount_ratio_adj(...)
 
     .mpi_computed_list[[.dep_label]] <- .mpi_computed_temp |>
       dplyr::rename(
@@ -98,12 +91,6 @@ compute_mpi <- function(
       compute_contribution(..., .mpi_specs = .mpi_specs)
   }
 
-
-  if(.generate_output) {
-    if(is.null(.output_filename)) {
-      .output_filename <- 'MPI'
-    }
-  }
 
   if(length(.p_cutoffs) == 1) {
     .mpi_computed_list <- .mpi_computed_list[[1]]
@@ -137,6 +124,17 @@ compute_mpi <- function(
           rename_indicators(.mpi_specs = .mpi_specs)
       }),
     .dm_n
+    )
+  }
+
+  if(.generate_output) {
+    write_output(
+      .output,
+      .mpi_specs = .mpi_specs,
+      .formatted_output = .formatted_output,
+      .filename = .output_filename,
+      .include_table_summary = .include_table_summary,
+      .include_specs = .include_specs
     )
   }
 

@@ -1,0 +1,72 @@
+[
+  {
+    "Dimension": "Health",
+    "Indicator": "Nutrition",
+    "Variable": "nutrition",
+    "Weight": 0.1667,
+    "Description": "Any person under 70 years of age for whom there is nutritional information is undernourished."
+  },
+  {
+    "Dimension": "Health",
+    "Indicator": "Child mortality",
+    "Variable": "child_mortality",
+    "Weight": 0.1667,
+    "Description": "A child under 18 has died in the household in the five-year period preceding the survey."
+  },
+  {
+    "Dimension": "Education",
+    "Indicator": "Years of schooling",
+    "Variable": "year_schooling",
+    "Weight": 0.1667,
+    "Description": "No eligible household member has completed six years of schooling."
+  },
+  {
+    "Dimension": "Education",
+    "Indicator": "School attendance",
+    "Variable": "school_attendance",
+    "Weight": 0.1667,
+    "Description": "Any school-aged child is not attending school up to the age at which he/she would complete class 8."
+  },
+  {
+    "Dimension": "Living Standards",
+    "Indicator": "Cooking fuel",
+    "Variable": "cooking_fuel",
+    "Weight": 0.0556,
+    "Description": "A household cooks using solid fuel, such as dung, agricultural crop, shrubs, wood, charcoal, or coal."
+  },
+  {
+    "Dimension": "Living Standards",
+    "Indicator": "Sanitation",
+    "Variable": "sanitation",
+    "Weight": 0.0556,
+    "Description": "The household has unimproved or no sanitation facility or it is improved but shared with other households."
+  },
+  {
+    "Dimension": "Living Standards",
+    "Indicator": "Drinking water",
+    "Variable": "drinking_water",
+    "Weight": 0.0556,
+    "Description": "The household's source of drinking water is not safe or safe drinking water is a 30-minute or longer walk from home, roundtrip."
+  },
+  {
+    "Dimension": "Living Standards",
+    "Indicator": "Electricity",
+    "Variable": "electricity",
+    "Weight": 0.0556,
+    "Description": "The household has no electricity."
+  },
+  {
+    "Dimension": "Living Standards",
+    "Indicator": "Housing",
+    "Variable": "housing",
+    "Weight": 0.0556,
+    "Description": "The household has inadequate housing materials in any of the three components: floor, roof, or walls."
+  },
+  {
+    "Dimension": "Living Standards",
+    "Indicator": "Assets",
+    "Variable": "assets",
+    "Weight": 0.0556,
+    "Description": "The household does not own more than one of these assets: radio, TV, telephone, computer, animal cart, bicycle, motorbike, or refrigerator, and does not own a car or truck."
+  }
+]
