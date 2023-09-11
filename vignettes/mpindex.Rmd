@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This document presents an illustration of a simple use case of using `mpindex` package for computing the Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster.
+This document presents an illustration of a simple application of `mpindex` package for computing the Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster.
 
 ## 1. Installation
 
@@ -24,7 +24,7 @@ To install the `mpindex` package from CRAN:
 install.packages('mpindex')
 ```
 
-If you want to get the latest development version of `mpindex`, install it from GitHub. Note that you may need to install first the `devtools` package.
+If you want to get the latest development version of `mpindex`, install it from GitHub. Note that you may need to install first `devtools`.
 
 ```{r, eval=F}
 devtools::install_github('yng-me/mpindex')
@@ -192,7 +192,7 @@ deprivation_profile$nutrition <- df_household_roster |>
 
 #### 1.2. Child mortality
 
-For child mortality, we use the `df_household` dataset. But unlike in `nutrition`, we do not need to provide the `.collapse` argument since it is not applicable.
+For child mortality, we use the `df_household` dataset. But unlike in `nutrition`, we do not need to provide the `.collapse` argument since it is not applicable here.
 
 ```{r}
 deprivation_profile$child_mortality <- df_household |> 
