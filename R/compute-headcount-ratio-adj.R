@@ -1,4 +1,4 @@
-compute_headcount_ratio_adj <- function(.data, ...) {
+compute_headcount_ratio_adj <- function(.data, .aggregation = NULL, ...) {
 
   n <- NULL
   H <- NULL
@@ -7,8 +7,17 @@ compute_headcount_ratio_adj <- function(.data, ...) {
   is_deprived <- NULL
   deprivation_score <- NULL
 
-  .data |>
-    dplyr::group_by(...) |>
+  df <- .data |>
+    dplyr::group_by(...)
+
+  if(!is.null(.aggregation)) {
+    if(.aggregation %in% names(.data)) {
+      df <- .data |>
+        dplyr::group_by(!!as.name(.aggregation), ...)
+    }
+  }
+
+  df |>
     dplyr::summarise(
       n = dplyr::n(),
       H = (sum(is_deprived, na.rm = T)) / n,
