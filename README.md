@@ -1,3 +1,4 @@
+
 # Multidimensional Poverty Index (MPI) Package {mpindex}
 
 This document presents an illustration of a simple application of `mpindex` package for computing the Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster.
@@ -144,6 +145,7 @@ To create a deprivation profile for each indicator, we use the `define_deprivati
 #### 1.1. Nutrition
 
 For this indicator, we use the `df_household_roster` dataset. By default, `define_deprivation` sets the `.collapse = FALSE`. Since we need to collapse it to the household level, we need to set `.collapse = TRUE`.
+
 
 ```r
 deprivation_profile$nutrition <- df_household_roster |> 
@@ -397,4 +399,3 @@ mpi_result <- df_household |>
 # ----------------------------------
 # You may also save your output into an Excel file
 save_mpi(mpi_result, .filename = 'MPI Sample Output')
-```
