@@ -1,7 +1,7 @@
 Package: mpindex
 Type: Package
 Title: Multidimensional Poverty Index (MPI)
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person(
       "Bhas", 
@@ -16,8 +16,6 @@ Description: A set of easy-to-use functions for computing the Multidimensional P
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports:
-  tsg
 Suggests: 
   rlang,
   dplyr,
@@ -28,10 +26,13 @@ Suggests:
   openxlsx,
   testthat (>= 3.0.0),
   knitr,
+  purrr,
   rmarkdown,
-  kableExtra
+  gt
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 BugReports: https://github.com/yng-me/mpindex/issues
 URL: https://github.com/yng-me/mpindex
 VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)

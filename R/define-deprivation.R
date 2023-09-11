@@ -6,9 +6,9 @@
 #'
 #' @param .data A data frame or tibble
 #' @param .indicator Name of indicator defined in MPI specs (must exactly match the specs).
-#' @param .condition A conditional logic that defines the poverty line to determine whether deprived or not.
-#' @param .mpi_specs MPI specifications defined from \code{\link[mpindex]{define_mpi_specs}}.
-#' @param .collapse A boolean indicating whether to collapse the data frame or not. This is useful, for instance, if the original data where the \code{.condition} argument above applies to an individual person but your unit of analysis in household.
+#' @param .cutoff A conditional logic that defines the poverty line to determine whether deprived or not.
+#' @param .mpi_specs MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.
+#' @param .collapse A boolean indicating whether to collapse the data frame or not. This is useful, for instance, if the original data where the \code{.cutoff} argument above applies to an individual person but your unit of analysis in household.
 #' @param .collapse_condition NOT YET FULLY IMPLEMENTED. ONLY WORKS WITH DEFAULT. A condition when \code{.collapse} is set to \code{TRUE}. If \code{NULL}, \code{max()} will be used as default.
 #'
 #' @return A data frame of deprivation value for the indicator (\code{.*_unweighted}): \code{0} for "not deprived", \code{1} for deprived, and \code{NA} for missing and non-response; and product of \code{.*_unweighted} and its corresponding weight (\code{.*_weighted}).
@@ -18,12 +18,33 @@
 #'
 #' @seealso \link[mpindex]{define_mpi_specs}
 #' @examples
-#' #TODO
-
-define_deprivation_cutoff <- function(
+#' # Use sample specs file included in the package
+#' specs_file <- system.file(
+#'  "extdata",
+#'  "global-mpi-specs.csv",
+#'  package = "mpindex"
+#' )
+#' specs <- define_mpi_specs(specs_file, .uid = 'uuid')
+#' options(mpi_specs = specs)
+#'
+#' # Using built-in dataset
+#' df_household |>
+#'   define_deprivation(
+#'     .indicator = drinking_water,
+#'     .cutoff = drinking_water == 2
+#'   )
+#'
+#' df_household_roster |>
+#'   define_deprivation(
+#'     .indicator = school_attendance,
+#'     .cutoff = attending_school == 2,
+#'     .collapse = TRUE
+#'   )
+#'
+define_deprivation <- function(
   .data,
   .indicator,
-  .condition,
+  .cutoff,
   .mpi_specs = getOption('mpi_specs'),
   .collapse = FALSE,
   .collapse_condition = NULL
@@ -35,7 +56,6 @@ define_deprivation_cutoff <- function(
   weight <- NULL
   `:=` <- NULL
   uid <- NULL
-
 
   if(is.null(.mpi_specs)) {
     stop('MPI specifications must be defined first.')
@@ -68,7 +88,7 @@ define_deprivation_cutoff <- function(
   .data <- .data |>
     dplyr::transmute(
       !!as.name(uid_name) := uid,
-      !!as.name(v[1]) := dplyr::if_else({{.condition}}, 1L, 0L, NA_integer_)
+      !!as.name(v[1]) := dplyr::if_else({{.cutoff}}, 1L, 0L, NA_integer_)
     )
 
   if(.collapse & with_uid) {

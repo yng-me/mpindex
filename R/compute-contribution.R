@@ -8,7 +8,7 @@ compute_contribution <- function(
   MPI <- NULL
   `:=` <- NULL
 
-  .df_contrib <- .data |> dplyr::select(..., n)
+  .df_contrib <- .data |> dplyr::select(dplyr::any_of(.mpi_specs$aggregation), n, ...)
 
   .w <- .mpi_specs$indicators$weight
   .ind <- .mpi_specs$indicators$variable_name

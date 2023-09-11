@@ -3,8 +3,9 @@
 #' @description Use to define MPI dimensions, indicators and its corresponding weights using any of the accessible file types: \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV). You can also set the poverty cutoff or list of poverty cutoffs (to achieve gradient list of MPIs) that will be used in the computation of MPI.
 #'
 #' @param .mpi_specs_file Accepts \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV) file format. This file should contain the following columns/variables: \code{Dimension}, \code{Indicator}, \code{Variable}, \code{Weight}, and \code{Description} (optional). See example below.
-#' @param .poverty_cutoffs Accepts single value or a vector of poverty cutoffs. See example below.
+#' @param .poverty_cutoffs Accepts single value or a vector of poverty cutoffs. This parameter (usually denoted by \code{k}) reflects the minimum level of deprivations or deprivation score an individual or household must be suffering simultaneously to be considered poor. See example below.
 #' @param .unit_of_analysis e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{households}.
+#' @param .aggregation Column name in the dataset that defines an aggregation level.
 #' @param .uid Column name containing unique ID of the observation which defines the lowest level of disaggregation (usually unit of analysis).
 #' @param .source_of_data Source of data used in the computation. This will be used in the footnote of the table when generating an output.
 #' @param .names_separator Column separator that defines the hierarchy of the column header.
@@ -38,6 +39,7 @@ define_mpi_specs <- function(
   .mpi_specs_file,
   .poverty_cutoffs = 1/3,
   .unit_of_analysis = 'households',
+  .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
   .names_separator = '>'
@@ -51,9 +53,6 @@ define_mpi_specs <- function(
   indicator <- NULL
   dimension <- NULL
 
-  if(length(.poverty_cutoffs[.poverty_cutoffs >= 1]) > 0 | length(.poverty_cutoffs[.poverty_cutoffs <= 0]) > 0) {
-    stop('.poverty_cutoffs cannot contain values greater than 1.')
-  }
 
   if(typeof(.unit_of_analysis) != 'character') {
     stop('.unit_of_analysis argument only accepts string of characters.')
@@ -102,6 +101,7 @@ define_mpi_specs <- function(
 
   }
 
+
   df <- df |>
     clean_colnames() |>
     dplyr::select(
@@ -109,6 +109,15 @@ define_mpi_specs <- function(
         c("dimension", "indicator", "variable", "weight", "description")
       )
     )
+
+  if(length(.poverty_cutoffs[.poverty_cutoffs > 1]) > 0) {
+    stop('.poverty_cutoffs cannot contain values greater than 1.')
+  }
+
+  min_k <- 1 / nrow(df)
+  if(length(.poverty_cutoffs[.poverty_cutoffs < min_k]) > 0) {
+    stop('.poverty_cutoffs cannot contain values less than 1 divided by the total number of indicators.')
+  }
 
   valid_colnames <- c("dimension", "indicator", "variable", "weight")
   def_colnames <- to_lowercase(sort(names(df)))
@@ -145,6 +154,7 @@ define_mpi_specs <- function(
     poverty_cutoffs = .poverty_cutoffs,
     uid = .uid,
     unit_of_analysis = .unit_of_analysis,
+    aggregation = .aggregation,
     source_of_data = .source_of_data
   ))
 }
