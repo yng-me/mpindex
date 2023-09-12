@@ -29,6 +29,7 @@ save_mpi <- function(
 
   tb <- openxlsx::createWorkbook()
   openxlsx::modifyBaseFont(tb, fontName = 'Arial', fontSize = 10)
+  .n <- nrow(.mpi_specs$indicators)
   start_row <- 2
   start_col <- 2
 
@@ -48,17 +49,8 @@ save_mpi <- function(
       for(j in 1:length(df_names)) {
 
         df_j <- df[[j]]
-        if(tb_sheet == 'MPI') {
-          mpi_s <- ncol(df_j) - 2
-          decimal_format <- mpi_s:ncol(df_j)
-        } else if (tb_sheet == 'Contribution by dimension' | tb_sheet == 'Headcount ratio') {
-          mpi_d <- ncol(df_j) - nrow(.mpi_specs$indicators) + 1
-          decimal_format <- mpi_d:ncol(df_j)
-        } else if (grepl('deprivation matrix', tb_sheet, ignore.case = T)) {
-          decimal_format <- which(names(df_j) == 'Deprivation score')
-        } else {
-          decimal_format <- NULL
-        }
+
+        decimal_format <- set_decimal_format(df_j, tb_sheet, .n)
 
         df_name <- df_names[j]
         if(df_name == 'uncensored' | df_name == 'censored') {
@@ -67,31 +59,25 @@ save_mpi <- function(
           df_name <- paste0(stringr::str_replace(df_name, '^k_', ''), '% poverty cutoff')
         }
 
+        write_as_excel_here <- function(.df_j, ...) {
+          .df_j |>
+            write_as_excel(
+              df_j,
+              ...,
+              wb = tb,
+              sheet = tb_sheet,
+              subtitle = df_name,
+              format_precision = 3,
+              .names_separator = .mpi_specs$names_separator,
+              cols_with_decimal_format = decimal_format,
+              start_row = restart_row
+            )
+        }
+
         if(j == 1) {
-
-          tb_for_list <- write_as_excel(
-            df_j,
-            wb = tb,
-            title = tb_sheet,
-            subtitle = df_name,
-            sheet = tb_sheet,
-            format_precision = 3,
-            cols_with_decimal_format = decimal_format,
-            start_row = restart_row,
-          )
-
+          tb_for_list <- write_as_excel_here(title = tb_sheet)
         } else {
-
-          tb_for_list <- write_as_excel(
-            df_j,
-            wb = tb,
-            subtitle = df_name,
-            sheet = tb_sheet,
-            start_row = restart_row,
-            cols_with_decimal_format = decimal_format,
-            format_precision = 3,
-            append_to_existing_sheet = T,
-          )
+          tb_for_list <- write_as_excel_here(append_to_existing_sheet = T)
         }
 
         restart_row <- tb_for_list$start_row
@@ -100,24 +86,15 @@ save_mpi <- function(
 
     } else {
 
-      if(tb_sheet == 'MPI') {
-        mpi_s <- ncol(df) - 2
-        decimal_format <- mpi_s:ncol(df)
-      } else if (tb_sheet == 'Contribution by dimension' | tb_sheet == 'Headcount ratio') {
-        mpi_d <- ncol(df) - nrow(.mpi_specs$indicators) + 1
-        decimal_format <- mpi_d:ncol(df)
-      } else if (grepl('deprivation matrix', tb_sheet, ignore.case = T)) {
-        decimal_format <- which(names(df) == 'Deprivation score')
-      } else {
-        decimal_format <- NULL
-      }
+      decimal_format <- set_decimal_format(df, tb_sheet, .n)
 
       write_as_excel(
         df,
         wb = tb,
         sheet = tb_sheet,
         title = tb_sheet,
-        cols_with_decimal_format = decimal_format,
+        .names_separator = .mpi_specs$names_separator,
+        cols_with_decimal_format = ,
         format_precision = 3,
         start_col = start_col
       )

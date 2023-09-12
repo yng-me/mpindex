@@ -296,10 +296,10 @@ set_export_facade <- function(
 
 
 extract_column_names <- function(
-    df,
-    start_col = 1,
-    start_row = 1,
-    y_group_separator = '>'
+  df,
+  start_col = 1,
+  start_row = 1,
+  .names_separator = '>'
 ) {
 
   value <- NULL
@@ -310,7 +310,7 @@ extract_column_names <- function(
 
   dplyr::as_tibble(names(df)) |>
     dplyr::mutate(
-      value = stringr::str_split(value, y_group_separator),
+      value = stringr::str_split(value, .names_separator),
       col_from = 1:n()
     ) |>
     dplyr::mutate(col_from = col_from + start_col - 1) |>
@@ -359,4 +359,20 @@ set_mpi_sheets <- function(.mpi_output) {
     }
   }
   return(mpi_list)
+}
+
+
+set_decimal_format <- function(.data, .sheet, .n) {
+  if(.sheet == 'MPI') {
+    mpi_s <- ncol(.data) - 2
+    decimal_format <- mpi_s:ncol(.data)
+  } else if (.sheet == 'Contribution by dimension' | .sheet == 'Headcount ratio') {
+    mpi_d <- ncol(.data) - .n + 1
+    decimal_format <- mpi_d:ncol(.data)
+  } else if (grepl('deprivation matrix', .sheet, ignore.case = T)) {
+    decimal_format <- which(names(.data) == 'Deprivation score')
+  } else {
+    decimal_format <- NULL
+  }
+  return(decimal_format)
 }

@@ -1,4 +1,4 @@
-list_name <- c("indicators", "poverty_cutoffs", "uid", "unit_of_analysis", "aggregation", "source_of_data")
+list_name <- c("indicators", "poverty_cutoffs", "uid", "unit_of_analysis", "aggregation", "source_of_data", "names_separator")
 colname <- c("dimension", "indicator", "variable", "weight")
 
 get_file <- function(file_type) {

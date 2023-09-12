@@ -1,8 +1,8 @@
 ---
-title: "mpindex"
+title: "Introduction to mpindex"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{mpindex}
+  %\VignetteIndexEntry{Introduction to mpindex}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This document presents an illustration of a simple application of `mpindex` package for computing the Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster.
+This guide presents an illustration of a simple application of `mpindex` package for computing Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster.
 
 ## 1. Installation
 
@@ -24,7 +24,7 @@ To install the `mpindex` package from CRAN:
 install.packages('mpindex')
 ```
 
-If you want to get the latest development version of `mpindex`, install it from GitHub. Note that you may need to install first `devtools`.
+If you want to get the latest development version of `mpindex`, install it from GitHub. Note that you may need to install `devtools`.
 
 ```{r, eval=F}
 devtools::install_github('yng-me/mpindex')
@@ -83,7 +83,7 @@ You can also define and create your own specification file if you prefer to or i
 
 Note that the order in which you put these columns does not matter and also the names are not case sensitive, but make sure to spell the column names correctly.
 
-You may download the template here if you do not want to start from scratch: [MPI specification file sample](https://github.com/yng-me/mpindex/blob/main/inst/extdata/mpi-specs-sample.csv).
+You may download the template here if you do not want to start from scratch: [MPI specification file sample](https://github.com/yng-me/mpindex/blob/main/inst/extdata/global-mpi-specs.csv).
 
 
 ### Using `define_mpi_specs`
@@ -163,7 +163,7 @@ glimpse(df_household)
 glimpse(df_household_roster)
 ```
 
-## 4. Create deprivation profile
+## 4. Creating deprivation profile
 
 ### Using `define_deprivation`
 
@@ -309,7 +309,7 @@ deprivation_profile$assets <- df_household |>
   )
 ```
 
-## 4. Computing the MPI
+## 5. Computing the MPI
 
 ### Using `compute_mpi`
 
@@ -519,7 +519,7 @@ mpi_result$deprivation_matrix$censored |>
 ```
 
 
-## 5. Save output
+## 6. Saving output
 
 You may also save your output into an Excel file.
 

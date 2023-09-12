@@ -32,7 +32,7 @@ Suggests:
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 BugReports: https://github.com/yng-me/mpindex/issues
-URL: https://github.com/yng-me/mpindex
+URL: https://github.com/yng-me/mpindex, https://mpindex.r-lib.org, https://yng-me.github.io/mpindex/
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
