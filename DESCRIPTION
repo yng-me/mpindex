@@ -6,11 +6,12 @@ Authors@R: c(
     person(
       "Bhas", 
       "Abdulsamad", 
-      email = "aeabdulsamad@gmail.com", 
+      email = "aeabdulsamad@gmail.com",
+      comment = c(ORCID = "0009-0002-5891-8124"),
       role = c("aut", "cre", "cph")
     )
   )
-Author: Bhas Abdulsamad [aut, cre, cph]
+Author: Bhas Abdulsamad [aut, cre, cph] (<https://orcid.org/0009-0002-5891-8124>)
 Maintainer: Bhas Abdulsamad <aeabdulsamad@gmail.com>
 Description: A set of easy-to-use functions for computing the Multidimensional Poverty Index (MPI).
 License: MIT + file LICENSE
