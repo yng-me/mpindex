@@ -1,23 +1,21 @@
 write_as_excel <- function(
-    .data,
-    wb = NULL,
-    sheet = set_sheet_name(wb),
-    append_to_existing_sheet = F,
-    title = NULL,
-    subtitle = NULL,
-    description = NULL,
-    footnote = NULL,
-    source_note = NULL,
-    start_col = 2,
-    start_row = 2,
-    options = NULL,
-    y_group_separator = '>',
-    save_as_excel = FALSE,
-    cols_with_decimal_format = NULL,
-    filename = NULL,
-    format_precision = 2,
-    overwrite = TRUE,
-    ...
+  .data,
+  wb = NULL,
+  sheet = set_sheet_name(wb),
+  append_to_existing_sheet = F,
+  title = NULL,
+  subtitle = NULL,
+  description = NULL,
+  footnote = NULL,
+  source_note = NULL,
+  start_col = 2,
+  start_row = 2,
+  options = NULL,
+  .names_separator = '>',
+  cols_with_decimal_format = NULL,
+  format_precision = 2,
+  overwrite = TRUE,
+  ...
 ) {
 
   depth <- NULL
@@ -155,7 +153,7 @@ write_as_excel <- function(
     .data,
     start_col = start_col,
     start_row = restart_row,
-    y_group_separator = y_group_separator
+    .names_separator = .names_separator
   )
 
   row_depth <- max(merge_colnames$depth)
@@ -361,10 +359,6 @@ write_as_excel <- function(
     )
   }
 
-  if(is.null(cols_with_decimal_format)) {
-    cols_with_decimal_format <- which(grepl('percent|proportion', names(.data), ignore.case = T))
-  }
-
   set_export_facade(
     wb = wb,
     sheet = sheet,
@@ -379,15 +373,6 @@ write_as_excel <- function(
     format_precision = format_precision,
     options = options
   )
-
-  if(save_as_excel == T) {
-    if(is.null(filename)) filename <- 'Book 1.xlsx'
-    openxlsx::saveWorkbook(
-      wb = wb,
-      file = filename,
-      overwrite = overwrite
-    )
-  }
 
   return(list(start_row = start_row_note - 1))
 

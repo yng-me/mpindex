@@ -155,6 +155,7 @@ define_mpi_specs <- function(
     uid = .uid,
     unit_of_analysis = .unit_of_analysis,
     aggregation = .aggregation,
-    source_of_data = .source_of_data
+    source_of_data = .source_of_data,
+    names_separator = .names_separator
   ))
 }
