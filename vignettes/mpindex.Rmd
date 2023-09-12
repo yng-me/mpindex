@@ -27,6 +27,7 @@ install.packages('mpindex')
 If you want to get the latest development version of `mpindex`, install it from GitHub. Note that you may need to install `devtools`.
 
 ```{r, eval=F}
+# install.packages("devtools")
 devtools::install_github('yng-me/mpindex')
 ```
 

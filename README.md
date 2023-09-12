@@ -2,11 +2,14 @@
 
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=mpindex"
-class="mpindex-release"><img
+class="mpindex-release" target="_blank"><img
 src="https://www.r-pkg.org/badges/version/mpindex"
-alt="CRAN Status" /></a>
+alt="CRAN Status" /></a> 
 
-[![R-CMD-check](https://github.com/yng-me/mpi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/yng-me/mpi/actions/workflows/R-CMD-check.yaml)
+<a href="https://github.com/yng-me/mpi/actions/workflows/R-CMD-check.yaml"
+class="mpindex-release" target="_blank"><img
+src="https://github.com/yng-me/mpi/actions/workflows/R-CMD-check.yaml/badge.svg"
+alt="R-CMD-check" /></a> 
 <!-- badges: end -->
 
 `mpindex` offers a set of easy-to-use functions for computing Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster. Learn more in `vignette("mpindex")` and `?compute_mpi`.
