@@ -1,4 +1,4 @@
-source('../deprivation_profile.R')
+source('../deprivation-profile.R')
 
 test_that("contribution by dimension works correctly", {
   dm <- df_household |>

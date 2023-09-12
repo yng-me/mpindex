@@ -92,3 +92,4 @@ deprivation_profile$assets <- df_household |>
     .cutoff = !(with_hh_conveniences & with_mobility_assets),
     .mpi_specs = mpi_specs
   )
+

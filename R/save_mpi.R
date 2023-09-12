@@ -1,6 +1,6 @@
-#' Save MPI Output
+#' Save MPI output
 #'
-#' @description Save the MPI ouput into an Excel file format.
+#' @description Save the MPI output into an Excel file format.
 #'
 #' @param .mpi_output An object derived from \link[mpindex]{compute_mpi}.
 #' @param .mpi_specs MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.

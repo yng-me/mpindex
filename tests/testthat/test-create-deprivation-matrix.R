@@ -1,4 +1,4 @@
-source('../deprivation_profile.R')
+source('../deprivation-profile.R')
 
 test_that("error if specs file is not defined", {
   expect_error(
