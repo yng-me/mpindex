@@ -90,7 +90,8 @@ Sabina Alkire and James Foster.</p>
 <code>mpindex</code>, install it from GitHub. Note that you may need to
 install <code>devtools</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'yng-me/mpindex'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'yng-me/mpindex'</span><span class="op">)</span></span></code></pre></div>
 <p>Load the package once you have successfully completed the
 installation.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -122,23 +123,23 @@ Global MPI.</p>
 use below script to first get the full path of the file.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">specs_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"global-mpi-specs.csv"</span>, package <span class="op">=</span> <span class="st">"mpindex"</span><span class="op">)</span></span></code></pre></div>
-<div id="dbuqsxybux" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dbuqsxybux table {
+<div id="vgvhkiqnqj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vgvhkiqnqj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dbuqsxybux thead, #dbuqsxybux tbody, #dbuqsxybux tfoot, #dbuqsxybux tr, #dbuqsxybux td, #dbuqsxybux th {
+#vgvhkiqnqj thead, #vgvhkiqnqj tbody, #vgvhkiqnqj tfoot, #vgvhkiqnqj tr, #vgvhkiqnqj td, #vgvhkiqnqj th {
   border-style: none;
 }
 
-#dbuqsxybux p {
+#vgvhkiqnqj p {
   margin: 0;
   padding: 0;
 }
 
-#dbuqsxybux .gt_table {
+#vgvhkiqnqj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -164,12 +165,12 @@ use below script to first get the full path of the file.</p>
   border-left-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_caption {
+#vgvhkiqnqj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dbuqsxybux .gt_title {
+#vgvhkiqnqj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -181,7 +182,7 @@ use below script to first get the full path of the file.</p>
   border-bottom-width: 0;
 }
 
-#dbuqsxybux .gt_subtitle {
+#vgvhkiqnqj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -193,7 +194,7 @@ use below script to first get the full path of the file.</p>
   border-top-width: 0;
 }
 
-#dbuqsxybux .gt_heading {
+#vgvhkiqnqj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -205,13 +206,13 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_bottom_border {
+#vgvhkiqnqj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_col_headings {
+#vgvhkiqnqj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -226,7 +227,7 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_col_heading {
+#vgvhkiqnqj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -246,7 +247,7 @@ use below script to first get the full path of the file.</p>
   overflow-x: hidden;
 }
 
-#dbuqsxybux .gt_column_spanner_outer {
+#vgvhkiqnqj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -258,15 +259,15 @@ use below script to first get the full path of the file.</p>
   padding-right: 4px;
 }
 
-#dbuqsxybux .gt_column_spanner_outer:first-child {
+#vgvhkiqnqj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dbuqsxybux .gt_column_spanner_outer:last-child {
+#vgvhkiqnqj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dbuqsxybux .gt_column_spanner {
+#vgvhkiqnqj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -278,11 +279,11 @@ use below script to first get the full path of the file.</p>
   width: 100%;
 }
 
-#dbuqsxybux .gt_spanner_row {
+#vgvhkiqnqj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dbuqsxybux .gt_group_heading {
+#vgvhkiqnqj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -308,7 +309,7 @@ use below script to first get the full path of the file.</p>
   text-align: left;
 }
 
-#dbuqsxybux .gt_empty_group_heading {
+#vgvhkiqnqj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -323,15 +324,15 @@ use below script to first get the full path of the file.</p>
   vertical-align: middle;
 }
 
-#dbuqsxybux .gt_from_md > :first-child {
+#vgvhkiqnqj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dbuqsxybux .gt_from_md > :last-child {
+#vgvhkiqnqj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dbuqsxybux .gt_row {
+#vgvhkiqnqj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -350,7 +351,7 @@ use below script to first get the full path of the file.</p>
   overflow-x: hidden;
 }
 
-#dbuqsxybux .gt_stub {
+#vgvhkiqnqj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -363,7 +364,7 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dbuqsxybux .gt_stub_row_group {
+#vgvhkiqnqj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -377,15 +378,15 @@ use below script to first get the full path of the file.</p>
   vertical-align: top;
 }
 
-#dbuqsxybux .gt_row_group_first td {
+#vgvhkiqnqj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dbuqsxybux .gt_row_group_first th {
+#vgvhkiqnqj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dbuqsxybux .gt_summary_row {
+#vgvhkiqnqj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -395,16 +396,16 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dbuqsxybux .gt_first_summary_row {
+#vgvhkiqnqj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_first_summary_row.thick {
+#vgvhkiqnqj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dbuqsxybux .gt_last_summary_row {
+#vgvhkiqnqj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -414,7 +415,7 @@ use below script to first get the full path of the file.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_grand_summary_row {
+#vgvhkiqnqj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -424,7 +425,7 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dbuqsxybux .gt_first_grand_summary_row {
+#vgvhkiqnqj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -434,7 +435,7 @@ use below script to first get the full path of the file.</p>
   border-top-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_last_grand_summary_row_top {
+#vgvhkiqnqj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -444,11 +445,11 @@ use below script to first get the full path of the file.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_striped {
+#vgvhkiqnqj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dbuqsxybux .gt_table_body {
+#vgvhkiqnqj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -457,7 +458,7 @@ use below script to first get the full path of the file.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_footnotes {
+#vgvhkiqnqj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -471,7 +472,7 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_footnote {
+#vgvhkiqnqj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -480,7 +481,7 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dbuqsxybux .gt_sourcenotes {
+#vgvhkiqnqj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -494,7 +495,7 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dbuqsxybux .gt_sourcenote {
+#vgvhkiqnqj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -502,63 +503,63 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dbuqsxybux .gt_left {
+#vgvhkiqnqj .gt_left {
   text-align: left;
 }
 
-#dbuqsxybux .gt_center {
+#vgvhkiqnqj .gt_center {
   text-align: center;
 }
 
-#dbuqsxybux .gt_right {
+#vgvhkiqnqj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dbuqsxybux .gt_font_normal {
+#vgvhkiqnqj .gt_font_normal {
   font-weight: normal;
 }
 
-#dbuqsxybux .gt_font_bold {
+#vgvhkiqnqj .gt_font_bold {
   font-weight: bold;
 }
 
-#dbuqsxybux .gt_font_italic {
+#vgvhkiqnqj .gt_font_italic {
   font-style: italic;
 }
 
-#dbuqsxybux .gt_super {
+#vgvhkiqnqj .gt_super {
   font-size: 65%;
 }
 
-#dbuqsxybux .gt_footnote_marks {
+#vgvhkiqnqj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dbuqsxybux .gt_asterisk {
+#vgvhkiqnqj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dbuqsxybux .gt_indent_1 {
+#vgvhkiqnqj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dbuqsxybux .gt_indent_2 {
+#vgvhkiqnqj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dbuqsxybux .gt_indent_3 {
+#vgvhkiqnqj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dbuqsxybux .gt_indent_4 {
+#vgvhkiqnqj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dbuqsxybux .gt_indent_5 {
+#vgvhkiqnqj .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -983,23 +984,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">index</span></span></code></pre></div>
-<div id="tkvfnokeeg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tkvfnokeeg table {
+<div id="ksbplobsjs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ksbplobsjs table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tkvfnokeeg thead, #tkvfnokeeg tbody, #tkvfnokeeg tfoot, #tkvfnokeeg tr, #tkvfnokeeg td, #tkvfnokeeg th {
+#ksbplobsjs thead, #ksbplobsjs tbody, #ksbplobsjs tfoot, #ksbplobsjs tr, #ksbplobsjs td, #ksbplobsjs th {
   border-style: none;
 }
 
-#tkvfnokeeg p {
+#ksbplobsjs p {
   margin: 0;
   padding: 0;
 }
 
-#tkvfnokeeg .gt_table {
+#ksbplobsjs .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1025,12 +1026,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_caption {
+#ksbplobsjs .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tkvfnokeeg .gt_title {
+#ksbplobsjs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1042,7 +1043,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#tkvfnokeeg .gt_subtitle {
+#ksbplobsjs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1054,7 +1055,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#tkvfnokeeg .gt_heading {
+#ksbplobsjs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1066,13 +1067,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_bottom_border {
+#ksbplobsjs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_col_headings {
+#ksbplobsjs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1087,7 +1088,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_col_heading {
+#ksbplobsjs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1107,7 +1108,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#tkvfnokeeg .gt_column_spanner_outer {
+#ksbplobsjs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1119,15 +1120,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#tkvfnokeeg .gt_column_spanner_outer:first-child {
+#ksbplobsjs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tkvfnokeeg .gt_column_spanner_outer:last-child {
+#ksbplobsjs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tkvfnokeeg .gt_column_spanner {
+#ksbplobsjs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1139,11 +1140,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#tkvfnokeeg .gt_spanner_row {
+#ksbplobsjs .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tkvfnokeeg .gt_group_heading {
+#ksbplobsjs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1169,7 +1170,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#tkvfnokeeg .gt_empty_group_heading {
+#ksbplobsjs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1184,15 +1185,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#tkvfnokeeg .gt_from_md > :first-child {
+#ksbplobsjs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tkvfnokeeg .gt_from_md > :last-child {
+#ksbplobsjs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tkvfnokeeg .gt_row {
+#ksbplobsjs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1211,7 +1212,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#tkvfnokeeg .gt_stub {
+#ksbplobsjs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1224,7 +1225,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#tkvfnokeeg .gt_stub_row_group {
+#ksbplobsjs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1238,15 +1239,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#tkvfnokeeg .gt_row_group_first td {
+#ksbplobsjs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tkvfnokeeg .gt_row_group_first th {
+#ksbplobsjs .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tkvfnokeeg .gt_summary_row {
+#ksbplobsjs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1256,16 +1257,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#tkvfnokeeg .gt_first_summary_row {
+#ksbplobsjs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_first_summary_row.thick {
+#ksbplobsjs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tkvfnokeeg .gt_last_summary_row {
+#ksbplobsjs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1275,7 +1276,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_grand_summary_row {
+#ksbplobsjs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1285,7 +1286,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#tkvfnokeeg .gt_first_grand_summary_row {
+#ksbplobsjs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1295,7 +1296,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_last_grand_summary_row_top {
+#ksbplobsjs .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1305,11 +1306,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_striped {
+#ksbplobsjs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tkvfnokeeg .gt_table_body {
+#ksbplobsjs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1318,7 +1319,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_footnotes {
+#ksbplobsjs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1332,7 +1333,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_footnote {
+#ksbplobsjs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1341,7 +1342,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#tkvfnokeeg .gt_sourcenotes {
+#ksbplobsjs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1355,7 +1356,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#tkvfnokeeg .gt_sourcenote {
+#ksbplobsjs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1363,63 +1364,63 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#tkvfnokeeg .gt_left {
+#ksbplobsjs .gt_left {
   text-align: left;
 }
 
-#tkvfnokeeg .gt_center {
+#ksbplobsjs .gt_center {
   text-align: center;
 }
 
-#tkvfnokeeg .gt_right {
+#ksbplobsjs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tkvfnokeeg .gt_font_normal {
+#ksbplobsjs .gt_font_normal {
   font-weight: normal;
 }
 
-#tkvfnokeeg .gt_font_bold {
+#ksbplobsjs .gt_font_bold {
   font-weight: bold;
 }
 
-#tkvfnokeeg .gt_font_italic {
+#ksbplobsjs .gt_font_italic {
   font-style: italic;
 }
 
-#tkvfnokeeg .gt_super {
+#ksbplobsjs .gt_super {
   font-size: 65%;
 }
 
-#tkvfnokeeg .gt_footnote_marks {
+#ksbplobsjs .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tkvfnokeeg .gt_asterisk {
+#ksbplobsjs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tkvfnokeeg .gt_indent_1 {
+#ksbplobsjs .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tkvfnokeeg .gt_indent_2 {
+#ksbplobsjs .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tkvfnokeeg .gt_indent_3 {
+#ksbplobsjs .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tkvfnokeeg .gt_indent_4 {
+#ksbplobsjs .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tkvfnokeeg .gt_indent_5 {
+#ksbplobsjs .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1449,23 +1450,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">contribution</span></span></code></pre></div>
-<div id="woqxsfempz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#woqxsfempz table {
+<div id="jlgyqeuybu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jlgyqeuybu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#woqxsfempz thead, #woqxsfempz tbody, #woqxsfempz tfoot, #woqxsfempz tr, #woqxsfempz td, #woqxsfempz th {
+#jlgyqeuybu thead, #jlgyqeuybu tbody, #jlgyqeuybu tfoot, #jlgyqeuybu tr, #jlgyqeuybu td, #jlgyqeuybu th {
   border-style: none;
 }
 
-#woqxsfempz p {
+#jlgyqeuybu p {
   margin: 0;
   padding: 0;
 }
 
-#woqxsfempz .gt_table {
+#jlgyqeuybu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1491,12 +1492,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_caption {
+#jlgyqeuybu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#woqxsfempz .gt_title {
+#jlgyqeuybu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1508,7 +1509,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#woqxsfempz .gt_subtitle {
+#jlgyqeuybu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1520,7 +1521,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#woqxsfempz .gt_heading {
+#jlgyqeuybu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1532,13 +1533,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_bottom_border {
+#jlgyqeuybu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_col_headings {
+#jlgyqeuybu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1553,7 +1554,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_col_heading {
+#jlgyqeuybu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1573,7 +1574,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#woqxsfempz .gt_column_spanner_outer {
+#jlgyqeuybu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1585,15 +1586,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#woqxsfempz .gt_column_spanner_outer:first-child {
+#jlgyqeuybu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#woqxsfempz .gt_column_spanner_outer:last-child {
+#jlgyqeuybu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#woqxsfempz .gt_column_spanner {
+#jlgyqeuybu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1605,11 +1606,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#woqxsfempz .gt_spanner_row {
+#jlgyqeuybu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#woqxsfempz .gt_group_heading {
+#jlgyqeuybu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1635,7 +1636,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#woqxsfempz .gt_empty_group_heading {
+#jlgyqeuybu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1650,15 +1651,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#woqxsfempz .gt_from_md > :first-child {
+#jlgyqeuybu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#woqxsfempz .gt_from_md > :last-child {
+#jlgyqeuybu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#woqxsfempz .gt_row {
+#jlgyqeuybu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1677,7 +1678,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#woqxsfempz .gt_stub {
+#jlgyqeuybu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1690,7 +1691,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#woqxsfempz .gt_stub_row_group {
+#jlgyqeuybu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1704,15 +1705,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#woqxsfempz .gt_row_group_first td {
+#jlgyqeuybu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#woqxsfempz .gt_row_group_first th {
+#jlgyqeuybu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#woqxsfempz .gt_summary_row {
+#jlgyqeuybu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1722,16 +1723,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#woqxsfempz .gt_first_summary_row {
+#jlgyqeuybu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_first_summary_row.thick {
+#jlgyqeuybu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#woqxsfempz .gt_last_summary_row {
+#jlgyqeuybu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1741,7 +1742,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_grand_summary_row {
+#jlgyqeuybu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1751,7 +1752,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#woqxsfempz .gt_first_grand_summary_row {
+#jlgyqeuybu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1761,7 +1762,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_last_grand_summary_row_top {
+#jlgyqeuybu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1771,11 +1772,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_striped {
+#jlgyqeuybu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#woqxsfempz .gt_table_body {
+#jlgyqeuybu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1784,7 +1785,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_footnotes {
+#jlgyqeuybu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1798,7 +1799,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_footnote {
+#jlgyqeuybu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1807,7 +1808,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#woqxsfempz .gt_sourcenotes {
+#jlgyqeuybu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1821,7 +1822,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#woqxsfempz .gt_sourcenote {
+#jlgyqeuybu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1829,63 +1830,63 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#woqxsfempz .gt_left {
+#jlgyqeuybu .gt_left {
   text-align: left;
 }
 
-#woqxsfempz .gt_center {
+#jlgyqeuybu .gt_center {
   text-align: center;
 }
 
-#woqxsfempz .gt_right {
+#jlgyqeuybu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#woqxsfempz .gt_font_normal {
+#jlgyqeuybu .gt_font_normal {
   font-weight: normal;
 }
 
-#woqxsfempz .gt_font_bold {
+#jlgyqeuybu .gt_font_bold {
   font-weight: bold;
 }
 
-#woqxsfempz .gt_font_italic {
+#jlgyqeuybu .gt_font_italic {
   font-style: italic;
 }
 
-#woqxsfempz .gt_super {
+#jlgyqeuybu .gt_super {
   font-size: 65%;
 }
 
-#woqxsfempz .gt_footnote_marks {
+#jlgyqeuybu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#woqxsfempz .gt_asterisk {
+#jlgyqeuybu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#woqxsfempz .gt_indent_1 {
+#jlgyqeuybu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#woqxsfempz .gt_indent_2 {
+#jlgyqeuybu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#woqxsfempz .gt_indent_3 {
+#jlgyqeuybu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#woqxsfempz .gt_indent_4 {
+#jlgyqeuybu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#woqxsfempz .gt_indent_5 {
+#jlgyqeuybu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1940,23 +1941,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">headcount_ratio</span><span class="op">$</span><span class="va">uncensored</span></span></code></pre></div>
-<div id="bkuzbwzgyp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bkuzbwzgyp table {
+<div id="rbeoakwger" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rbeoakwger table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bkuzbwzgyp thead, #bkuzbwzgyp tbody, #bkuzbwzgyp tfoot, #bkuzbwzgyp tr, #bkuzbwzgyp td, #bkuzbwzgyp th {
+#rbeoakwger thead, #rbeoakwger tbody, #rbeoakwger tfoot, #rbeoakwger tr, #rbeoakwger td, #rbeoakwger th {
   border-style: none;
 }
 
-#bkuzbwzgyp p {
+#rbeoakwger p {
   margin: 0;
   padding: 0;
 }
 
-#bkuzbwzgyp .gt_table {
+#rbeoakwger .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1982,12 +1983,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_caption {
+#rbeoakwger .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bkuzbwzgyp .gt_title {
+#rbeoakwger .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1999,7 +2000,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#bkuzbwzgyp .gt_subtitle {
+#rbeoakwger .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2011,7 +2012,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#bkuzbwzgyp .gt_heading {
+#rbeoakwger .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2023,13 +2024,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_bottom_border {
+#rbeoakwger .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_col_headings {
+#rbeoakwger .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2044,7 +2045,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_col_heading {
+#rbeoakwger .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2064,7 +2065,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#bkuzbwzgyp .gt_column_spanner_outer {
+#rbeoakwger .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2076,15 +2077,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#bkuzbwzgyp .gt_column_spanner_outer:first-child {
+#rbeoakwger .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bkuzbwzgyp .gt_column_spanner_outer:last-child {
+#rbeoakwger .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bkuzbwzgyp .gt_column_spanner {
+#rbeoakwger .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2096,11 +2097,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#bkuzbwzgyp .gt_spanner_row {
+#rbeoakwger .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bkuzbwzgyp .gt_group_heading {
+#rbeoakwger .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2126,7 +2127,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#bkuzbwzgyp .gt_empty_group_heading {
+#rbeoakwger .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2141,15 +2142,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#bkuzbwzgyp .gt_from_md > :first-child {
+#rbeoakwger .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bkuzbwzgyp .gt_from_md > :last-child {
+#rbeoakwger .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bkuzbwzgyp .gt_row {
+#rbeoakwger .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2168,7 +2169,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#bkuzbwzgyp .gt_stub {
+#rbeoakwger .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2181,7 +2182,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#bkuzbwzgyp .gt_stub_row_group {
+#rbeoakwger .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2195,15 +2196,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#bkuzbwzgyp .gt_row_group_first td {
+#rbeoakwger .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bkuzbwzgyp .gt_row_group_first th {
+#rbeoakwger .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bkuzbwzgyp .gt_summary_row {
+#rbeoakwger .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2213,16 +2214,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#bkuzbwzgyp .gt_first_summary_row {
+#rbeoakwger .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_first_summary_row.thick {
+#rbeoakwger .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bkuzbwzgyp .gt_last_summary_row {
+#rbeoakwger .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2232,7 +2233,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_grand_summary_row {
+#rbeoakwger .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2242,7 +2243,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#bkuzbwzgyp .gt_first_grand_summary_row {
+#rbeoakwger .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2252,7 +2253,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_last_grand_summary_row_top {
+#rbeoakwger .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2262,11 +2263,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_striped {
+#rbeoakwger .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bkuzbwzgyp .gt_table_body {
+#rbeoakwger .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2275,7 +2276,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_footnotes {
+#rbeoakwger .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2289,7 +2290,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_footnote {
+#rbeoakwger .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2298,7 +2299,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#bkuzbwzgyp .gt_sourcenotes {
+#rbeoakwger .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2312,7 +2313,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#bkuzbwzgyp .gt_sourcenote {
+#rbeoakwger .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2320,63 +2321,63 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#bkuzbwzgyp .gt_left {
+#rbeoakwger .gt_left {
   text-align: left;
 }
 
-#bkuzbwzgyp .gt_center {
+#rbeoakwger .gt_center {
   text-align: center;
 }
 
-#bkuzbwzgyp .gt_right {
+#rbeoakwger .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bkuzbwzgyp .gt_font_normal {
+#rbeoakwger .gt_font_normal {
   font-weight: normal;
 }
 
-#bkuzbwzgyp .gt_font_bold {
+#rbeoakwger .gt_font_bold {
   font-weight: bold;
 }
 
-#bkuzbwzgyp .gt_font_italic {
+#rbeoakwger .gt_font_italic {
   font-style: italic;
 }
 
-#bkuzbwzgyp .gt_super {
+#rbeoakwger .gt_super {
   font-size: 65%;
 }
 
-#bkuzbwzgyp .gt_footnote_marks {
+#rbeoakwger .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bkuzbwzgyp .gt_asterisk {
+#rbeoakwger .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bkuzbwzgyp .gt_indent_1 {
+#rbeoakwger .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bkuzbwzgyp .gt_indent_2 {
+#rbeoakwger .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bkuzbwzgyp .gt_indent_3 {
+#rbeoakwger .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bkuzbwzgyp .gt_indent_4 {
+#rbeoakwger .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bkuzbwzgyp .gt_indent_5 {
+#rbeoakwger .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2427,23 +2428,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">headcount_ratio</span><span class="op">$</span><span class="va">censored</span></span></code></pre></div>
-<div id="aqnayyizan" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aqnayyizan table {
+<div id="euafiivmzx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#euafiivmzx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aqnayyizan thead, #aqnayyizan tbody, #aqnayyizan tfoot, #aqnayyizan tr, #aqnayyizan td, #aqnayyizan th {
+#euafiivmzx thead, #euafiivmzx tbody, #euafiivmzx tfoot, #euafiivmzx tr, #euafiivmzx td, #euafiivmzx th {
   border-style: none;
 }
 
-#aqnayyizan p {
+#euafiivmzx p {
   margin: 0;
   padding: 0;
 }
 
-#aqnayyizan .gt_table {
+#euafiivmzx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2469,12 +2470,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_caption {
+#euafiivmzx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aqnayyizan .gt_title {
+#euafiivmzx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2486,7 +2487,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#aqnayyizan .gt_subtitle {
+#euafiivmzx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2498,7 +2499,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#aqnayyizan .gt_heading {
+#euafiivmzx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2510,13 +2511,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_bottom_border {
+#euafiivmzx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_col_headings {
+#euafiivmzx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2531,7 +2532,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_col_heading {
+#euafiivmzx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2551,7 +2552,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#aqnayyizan .gt_column_spanner_outer {
+#euafiivmzx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2563,15 +2564,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#aqnayyizan .gt_column_spanner_outer:first-child {
+#euafiivmzx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aqnayyizan .gt_column_spanner_outer:last-child {
+#euafiivmzx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aqnayyizan .gt_column_spanner {
+#euafiivmzx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2583,11 +2584,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#aqnayyizan .gt_spanner_row {
+#euafiivmzx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aqnayyizan .gt_group_heading {
+#euafiivmzx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2613,7 +2614,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#aqnayyizan .gt_empty_group_heading {
+#euafiivmzx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2628,15 +2629,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#aqnayyizan .gt_from_md > :first-child {
+#euafiivmzx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aqnayyizan .gt_from_md > :last-child {
+#euafiivmzx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aqnayyizan .gt_row {
+#euafiivmzx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2655,7 +2656,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#aqnayyizan .gt_stub {
+#euafiivmzx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2668,7 +2669,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aqnayyizan .gt_stub_row_group {
+#euafiivmzx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2682,15 +2683,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#aqnayyizan .gt_row_group_first td {
+#euafiivmzx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aqnayyizan .gt_row_group_first th {
+#euafiivmzx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aqnayyizan .gt_summary_row {
+#euafiivmzx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2700,16 +2701,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aqnayyizan .gt_first_summary_row {
+#euafiivmzx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_first_summary_row.thick {
+#euafiivmzx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aqnayyizan .gt_last_summary_row {
+#euafiivmzx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2719,7 +2720,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_grand_summary_row {
+#euafiivmzx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2729,7 +2730,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aqnayyizan .gt_first_grand_summary_row {
+#euafiivmzx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2739,7 +2740,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_last_grand_summary_row_top {
+#euafiivmzx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2749,11 +2750,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_striped {
+#euafiivmzx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aqnayyizan .gt_table_body {
+#euafiivmzx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2762,7 +2763,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_footnotes {
+#euafiivmzx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2776,7 +2777,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_footnote {
+#euafiivmzx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2785,7 +2786,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aqnayyizan .gt_sourcenotes {
+#euafiivmzx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2799,7 +2800,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aqnayyizan .gt_sourcenote {
+#euafiivmzx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2807,63 +2808,63 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aqnayyizan .gt_left {
+#euafiivmzx .gt_left {
   text-align: left;
 }
 
-#aqnayyizan .gt_center {
+#euafiivmzx .gt_center {
   text-align: center;
 }
 
-#aqnayyizan .gt_right {
+#euafiivmzx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aqnayyizan .gt_font_normal {
+#euafiivmzx .gt_font_normal {
   font-weight: normal;
 }
 
-#aqnayyizan .gt_font_bold {
+#euafiivmzx .gt_font_bold {
   font-weight: bold;
 }
 
-#aqnayyizan .gt_font_italic {
+#euafiivmzx .gt_font_italic {
   font-style: italic;
 }
 
-#aqnayyizan .gt_super {
+#euafiivmzx .gt_super {
   font-size: 65%;
 }
 
-#aqnayyizan .gt_footnote_marks {
+#euafiivmzx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aqnayyizan .gt_asterisk {
+#euafiivmzx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aqnayyizan .gt_indent_1 {
+#euafiivmzx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aqnayyizan .gt_indent_2 {
+#euafiivmzx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aqnayyizan .gt_indent_3 {
+#euafiivmzx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aqnayyizan .gt_indent_4 {
+#euafiivmzx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aqnayyizan .gt_indent_5 {
+#euafiivmzx .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2918,23 +2919,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">deprivation_matrix</span><span class="op">$</span><span class="va">uncensored</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="hlqzrowoti" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hlqzrowoti table {
+<div id="npluaohors" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#npluaohors table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hlqzrowoti thead, #hlqzrowoti tbody, #hlqzrowoti tfoot, #hlqzrowoti tr, #hlqzrowoti td, #hlqzrowoti th {
+#npluaohors thead, #npluaohors tbody, #npluaohors tfoot, #npluaohors tr, #npluaohors td, #npluaohors th {
   border-style: none;
 }
 
-#hlqzrowoti p {
+#npluaohors p {
   margin: 0;
   padding: 0;
 }
 
-#hlqzrowoti .gt_table {
+#npluaohors .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2960,12 +2961,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_caption {
+#npluaohors .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hlqzrowoti .gt_title {
+#npluaohors .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2977,7 +2978,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#hlqzrowoti .gt_subtitle {
+#npluaohors .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2989,7 +2990,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#hlqzrowoti .gt_heading {
+#npluaohors .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3001,13 +3002,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_bottom_border {
+#npluaohors .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_col_headings {
+#npluaohors .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3022,7 +3023,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_col_heading {
+#npluaohors .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3042,7 +3043,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#hlqzrowoti .gt_column_spanner_outer {
+#npluaohors .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3054,15 +3055,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#hlqzrowoti .gt_column_spanner_outer:first-child {
+#npluaohors .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hlqzrowoti .gt_column_spanner_outer:last-child {
+#npluaohors .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hlqzrowoti .gt_column_spanner {
+#npluaohors .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3074,11 +3075,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#hlqzrowoti .gt_spanner_row {
+#npluaohors .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hlqzrowoti .gt_group_heading {
+#npluaohors .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3104,7 +3105,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#hlqzrowoti .gt_empty_group_heading {
+#npluaohors .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3119,15 +3120,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#hlqzrowoti .gt_from_md > :first-child {
+#npluaohors .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hlqzrowoti .gt_from_md > :last-child {
+#npluaohors .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hlqzrowoti .gt_row {
+#npluaohors .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3146,7 +3147,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#hlqzrowoti .gt_stub {
+#npluaohors .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3159,7 +3160,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hlqzrowoti .gt_stub_row_group {
+#npluaohors .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3173,15 +3174,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#hlqzrowoti .gt_row_group_first td {
+#npluaohors .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hlqzrowoti .gt_row_group_first th {
+#npluaohors .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hlqzrowoti .gt_summary_row {
+#npluaohors .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3191,16 +3192,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hlqzrowoti .gt_first_summary_row {
+#npluaohors .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_first_summary_row.thick {
+#npluaohors .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hlqzrowoti .gt_last_summary_row {
+#npluaohors .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3210,7 +3211,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_grand_summary_row {
+#npluaohors .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3220,7 +3221,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hlqzrowoti .gt_first_grand_summary_row {
+#npluaohors .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3230,7 +3231,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_last_grand_summary_row_top {
+#npluaohors .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3240,11 +3241,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_striped {
+#npluaohors .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hlqzrowoti .gt_table_body {
+#npluaohors .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3253,7 +3254,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_footnotes {
+#npluaohors .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3267,7 +3268,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_footnote {
+#npluaohors .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3276,7 +3277,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hlqzrowoti .gt_sourcenotes {
+#npluaohors .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3290,7 +3291,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hlqzrowoti .gt_sourcenote {
+#npluaohors .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3298,63 +3299,63 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hlqzrowoti .gt_left {
+#npluaohors .gt_left {
   text-align: left;
 }
 
-#hlqzrowoti .gt_center {
+#npluaohors .gt_center {
   text-align: center;
 }
 
-#hlqzrowoti .gt_right {
+#npluaohors .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hlqzrowoti .gt_font_normal {
+#npluaohors .gt_font_normal {
   font-weight: normal;
 }
 
-#hlqzrowoti .gt_font_bold {
+#npluaohors .gt_font_bold {
   font-weight: bold;
 }
 
-#hlqzrowoti .gt_font_italic {
+#npluaohors .gt_font_italic {
   font-style: italic;
 }
 
-#hlqzrowoti .gt_super {
+#npluaohors .gt_super {
   font-size: 65%;
 }
 
-#hlqzrowoti .gt_footnote_marks {
+#npluaohors .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hlqzrowoti .gt_asterisk {
+#npluaohors .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hlqzrowoti .gt_indent_1 {
+#npluaohors .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hlqzrowoti .gt_indent_2 {
+#npluaohors .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hlqzrowoti .gt_indent_3 {
+#npluaohors .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hlqzrowoti .gt_indent_4 {
+#npluaohors .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hlqzrowoti .gt_indent_5 {
+#npluaohors .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3479,23 +3480,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </div>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">deprivation_matrix</span><span class="op">$</span><span class="va">censored</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="fvqxiysida" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fvqxiysida table {
+<div id="onjvowkfue" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#onjvowkfue table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fvqxiysida thead, #fvqxiysida tbody, #fvqxiysida tfoot, #fvqxiysida tr, #fvqxiysida td, #fvqxiysida th {
+#onjvowkfue thead, #onjvowkfue tbody, #onjvowkfue tfoot, #onjvowkfue tr, #onjvowkfue td, #onjvowkfue th {
   border-style: none;
 }
 
-#fvqxiysida p {
+#onjvowkfue p {
   margin: 0;
   padding: 0;
 }
 
-#fvqxiysida .gt_table {
+#onjvowkfue .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3521,12 +3522,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_caption {
+#onjvowkfue .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fvqxiysida .gt_title {
+#onjvowkfue .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3538,7 +3539,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#fvqxiysida .gt_subtitle {
+#onjvowkfue .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3550,7 +3551,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#fvqxiysida .gt_heading {
+#onjvowkfue .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3562,13 +3563,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_bottom_border {
+#onjvowkfue .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_col_headings {
+#onjvowkfue .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3583,7 +3584,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_col_heading {
+#onjvowkfue .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3603,7 +3604,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#fvqxiysida .gt_column_spanner_outer {
+#onjvowkfue .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3615,15 +3616,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#fvqxiysida .gt_column_spanner_outer:first-child {
+#onjvowkfue .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fvqxiysida .gt_column_spanner_outer:last-child {
+#onjvowkfue .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fvqxiysida .gt_column_spanner {
+#onjvowkfue .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3635,11 +3636,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#fvqxiysida .gt_spanner_row {
+#onjvowkfue .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fvqxiysida .gt_group_heading {
+#onjvowkfue .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3665,7 +3666,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#fvqxiysida .gt_empty_group_heading {
+#onjvowkfue .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3680,15 +3681,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#fvqxiysida .gt_from_md > :first-child {
+#onjvowkfue .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fvqxiysida .gt_from_md > :last-child {
+#onjvowkfue .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fvqxiysida .gt_row {
+#onjvowkfue .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3707,7 +3708,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#fvqxiysida .gt_stub {
+#onjvowkfue .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3720,7 +3721,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#fvqxiysida .gt_stub_row_group {
+#onjvowkfue .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3734,15 +3735,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#fvqxiysida .gt_row_group_first td {
+#onjvowkfue .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fvqxiysida .gt_row_group_first th {
+#onjvowkfue .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fvqxiysida .gt_summary_row {
+#onjvowkfue .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3752,16 +3753,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#fvqxiysida .gt_first_summary_row {
+#onjvowkfue .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_first_summary_row.thick {
+#onjvowkfue .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fvqxiysida .gt_last_summary_row {
+#onjvowkfue .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3771,7 +3772,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_grand_summary_row {
+#onjvowkfue .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3781,7 +3782,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#fvqxiysida .gt_first_grand_summary_row {
+#onjvowkfue .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3791,7 +3792,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_last_grand_summary_row_top {
+#onjvowkfue .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3801,11 +3802,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_striped {
+#onjvowkfue .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fvqxiysida .gt_table_body {
+#onjvowkfue .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3814,7 +3815,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_footnotes {
+#onjvowkfue .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3828,7 +3829,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_footnote {
+#onjvowkfue .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3837,7 +3838,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#fvqxiysida .gt_sourcenotes {
+#onjvowkfue .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3851,7 +3852,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#fvqxiysida .gt_sourcenote {
+#onjvowkfue .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3859,63 +3860,63 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#fvqxiysida .gt_left {
+#onjvowkfue .gt_left {
   text-align: left;
 }
 
-#fvqxiysida .gt_center {
+#onjvowkfue .gt_center {
   text-align: center;
 }
 
-#fvqxiysida .gt_right {
+#onjvowkfue .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fvqxiysida .gt_font_normal {
+#onjvowkfue .gt_font_normal {
   font-weight: normal;
 }
 
-#fvqxiysida .gt_font_bold {
+#onjvowkfue .gt_font_bold {
   font-weight: bold;
 }
 
-#fvqxiysida .gt_font_italic {
+#onjvowkfue .gt_font_italic {
   font-style: italic;
 }
 
-#fvqxiysida .gt_super {
+#onjvowkfue .gt_super {
   font-size: 65%;
 }
 
-#fvqxiysida .gt_footnote_marks {
+#onjvowkfue .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fvqxiysida .gt_asterisk {
+#onjvowkfue .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fvqxiysida .gt_indent_1 {
+#onjvowkfue .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fvqxiysida .gt_indent_2 {
+#onjvowkfue .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fvqxiysida .gt_indent_3 {
+#onjvowkfue .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fvqxiysida .gt_indent_4 {
+#onjvowkfue .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fvqxiysida .gt_indent_5 {
+#onjvowkfue .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
