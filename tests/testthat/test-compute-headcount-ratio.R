@@ -1,4 +1,4 @@
-source('../deprivation_profile.R')
+source('../deprivation-profile.R')
 
 test_that("headcount ratio works correctly", {
   dm <- df_household |>
