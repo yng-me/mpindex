@@ -1,7 +1,7 @@
 # mpindex
 
 <!-- badges: start -->
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
+<div style="display: flex; align-items: center; padding: 20px;">
   <a style="display: inline-flex;" href="https://cran.r-project.org/package=mpindex" target="_blank">
     <img src="https://www.r-pkg.org/badges/version/mpindex" alt="CRAN Status" />
   </a> 
