@@ -9,7 +9,7 @@
   <img src="https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check" />
   </a>
   <a style="display: inline-flex;" href="https://app.codecov.io/github/yng-me/mpindex?branch=main" target="_blank">
-    <img src="https://codecov.io/github/yng-me/mpindex/branch/main/graph/badge" alt="codecov" />
+    <img src="https://codecov.io/github/yng-me/mpindex/branch/main/graph/badge.svg" alt="codecov" />
   </a>
 </div>
 <!-- badges: end -->
