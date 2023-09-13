@@ -13,6 +13,7 @@
       <img src="https://codecov.io/github/yng-me/mpindex/branch/main/graph/badge.svg" alt="codecov" />
     </a>
   </div>
+  <br>
 </div>
 <!-- badges: end -->
 
