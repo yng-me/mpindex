@@ -2,17 +2,15 @@
 
 <!-- badges: start -->
 <div style="display: flex; align-items: center; ">
-  <a href="https://cran.r-project.org/package=mpindex" target="_blank"><img
-  src="https://www.r-pkg.org/badges/version/mpindex"
-  alt="CRAN Status" /></a> 
-
-  <a href="https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml" target="_blank"><img
-  src="https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml/badge.svg"
-  alt="R-CMD-check" /></a>
-  
-  <a href="https://app.codecov.io/gh/yng-me/mpindex?branch=main" target="_blank"><img
-  src="https://codecov.io/gh/yng-me/mpindex/branch/main/graph/badge.svg"
-  alt="codecov" /></a>
+  <a style="display: inline-flex;" href="https://cran.r-project.org/package=mpindex" target="_blank">
+    <img src="https://www.r-pkg.org/badges/version/mpindex" alt="CRAN Status" />
+  </a> 
+  <a style="display: inline-flex;" href="https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml" target="_blank">
+  <img src="https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check" />
+  </a>
+  <a style="display: inline-flex;" href="https://app.codecov.io/gh/yng-me/mpindex?branch=main" target="_blank">
+    <img src="https://codecov.io/gh/yng-me/mpindex/branch/main/graph/badge.svg" alt="codecov" />
+  </a>
 </div>
 <!-- badges: end -->
 
