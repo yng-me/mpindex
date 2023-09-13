@@ -1,15 +1,19 @@
 # mpindex
 
 <!-- badges: start -->
-<a href="https://cran.r-project.org/package=mpindex"
-class="mpindex-release" target="_blank"><img
-src="https://www.r-pkg.org/badges/version/mpindex"
-alt="CRAN Status" /></a> 
-
-<a href="https://github.com/yng-me/mpi/actions/workflows/R-CMD-check.yaml"
-class="mpindex-release" target="_blank"><img
-src="https://github.com/yng-me/mpi/actions/workflows/R-CMD-check.yaml/badge.svg"
-alt="R-CMD-check" /></a> 
+<div style="display: inline-flex;">
+  <a href="https://cran.r-project.org/package=mpindex" target="_blank"><img
+  src="https://www.r-pkg.org/badges/version/mpindex"
+  alt="CRAN Status" /></a> 
+  
+  <a href="https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml" target="_blank"><img
+  src="https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml/badge.svg"
+  alt="R-CMD-check" /></a>
+  
+  <a href="https://app.codecov.io/gh/yng-me/mpindex?branch=main" target="_blank"><img
+  src="https://codecov.io/gh/yng-me/mpindex/branch/main/graph/badge.svg"
+  alt="R-CMD-check" /></a>
+</div>
 <!-- badges: end -->
 
 `mpindex` offers a set of easy-to-use functions for computing Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster. Learn more in `vignette("mpindex")` and `?compute_mpi`.
