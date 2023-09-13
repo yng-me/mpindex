@@ -14,10 +14,6 @@
 </div>
 <!-- badges: end -->
 
-<br />
-<br />
-
-
 `mpindex` offers a set of easy-to-use functions for computing Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster. Learn more in `vignette("mpindex")` and `?compute_mpi`.
 
 ## Installation
