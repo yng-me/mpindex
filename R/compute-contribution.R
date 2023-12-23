@@ -7,7 +7,7 @@ compute_contribution <- function(
   validate_mpi_specs(.mpi_specs)
 
   n <- NULL
-  MPI <- NULL
+  mpi <- NULL
   `:=` <- NULL
   spec_attr <- attributes(.mpi_specs)
 
@@ -19,18 +19,20 @@ compute_contribution <- function(
 
   for (i in seq_along(indicator)) {
     contrib <- .data |>
-      dplyr::select(MPI, !!as.name(indicator[i])) |>
+      dplyr::select(mpi, !!as.name(indicator[i])) |>
       dplyr::transmute(
         !!as.name(indicator[i]) := dplyr::if_else(
-          MPI == 0,
+          mpi == 0,
           0,
-          (100 * (w[i] * !!as.name(indicator[i]))) / MPI
+          (100 * (w[i] * !!as.name(indicator[i]))) / mpi
         )
       )
 
     df_contrib <- df_contrib |>
       dplyr::bind_cols(contrib)
   }
+
+  class(df_contrib) <- c("mpi_dim_contribution_df", class(df_contrib))
 
   return(df_contrib |> rename_indicators(.mpi_specs = .mpi_specs))
 }

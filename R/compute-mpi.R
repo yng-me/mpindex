@@ -126,9 +126,7 @@ compute_mpi <- function(
   validate_mpi_specs(.mpi_specs)
 
   n <- NULL
-  H <- NULL
-  A <- NULL
-  MPI <- NULL
+  mpi <- NULL
   is_deprived <- NULL
   deprivation_score <- NULL
 
@@ -188,15 +186,10 @@ compute_mpi <- function(
       compute_headcount_ratio_adj(.aggregation = spec_attr$aggregation, ...)
 
     mpi_computed_list[[dep_label]] <- mpi_computed_temp |>
-      dplyr::rename(
-        'Headcount Ratio (H)' = H,
-        'Intensity of Deprivation Among the Poor (A)' = A,
-        'MPI (H x A)' = MPI
-      ) |>
       rename_n(spec_attr$unit_of_analysis)
 
     contribution_list[[dep_label]] <- mpi_computed_temp |>
-      dplyr::select(MPI) |>
+      dplyr::select(mpi) |>
       dplyr::bind_cols(incidence_temp) |>
       compute_contribution(..., .mpi_specs = .mpi_specs)
   }

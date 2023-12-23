@@ -23,11 +23,12 @@ Imports:
     stringr,
     jsonlite,
     purrr,
+    tibble,
     openxlsx
 Suggests: 
     rlang,
     testthat (>= 3.0.0),
-    tibble,
+    lifecycle,
     knitr,
     rmarkdown,
     gt

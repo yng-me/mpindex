@@ -9,7 +9,7 @@
 #' @param .aggregation Column name in the dataset that defines an aggregation level.
 #' @param .uid Column name containing unique ID of the dataset which defines the lowest level of disaggregation (usually unit of analysis).
 #' @param .source_of_data Source of data used in the computation. This will be used in the footnote of the table when generating an output.
-#' @param .names_separator Column separator that defines the hierarchy of the column header.
+#' @param .names_separator \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Column separator that defines the hierarchy of the column header.
 #' @param .save_as_global_options Whether to save the specs globally. Equivalent to invoking \code{options()}.
 #'
 #' @return MPI specifications data frame required in \link[mpindex]{compute_mpi} function. As as side effect, a global option named `mpi_specs` will be saved for efficiency. See `getOption('mpi_specs')`.

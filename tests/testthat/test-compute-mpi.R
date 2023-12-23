@@ -5,12 +5,12 @@ test_that("mpi computation is implemented correctly", {
   mpi <- df_simple |> compute_mpi(dp_simple, .mpi_specs = specs_simple)
   s <- mpi$contribution |> dplyr::mutate(s = rowSums(dplyr::across(2:5)))
   expect_equal(s$s[1], 100, tolerance = 0.001)
-  expect_equal(dplyr::pull(mpi$index[4]), 0.375)
-  expect_equal(dplyr::pull(mpi$index[3]), 0.75)
-  expect_equal(dplyr::pull(mpi$index[2]), 0.5)
+  expect_equal(mpi$index[[4]][1], 0.375)
+  expect_equal(mpi$index[[3]][1], 0.75)
+  expect_equal(mpi$index[[2]][1], 0.5)
   expect_equal(
-    dplyr::pull(mpi$index[2]) * dplyr::pull(mpi$index[3]),
-    dplyr::pull(mpi$index[4])
+    mpi$index[[3]][1] * mpi$index[[2]][1],
+    mpi$index[[4]][1]
   )
 })
 

@@ -9,18 +9,29 @@ bind_list <- function(.data, .list, .by) {
 }
 
 rename_indicators <- function(.data, .mpi_specs = getOption("mpi_specs")) {
+
   value <- NULL
   label <- NULL
+  dimension <- NULL
+  indicator <- NULL
   deprivation_score <- NULL
 
-  .mpi_colnames <- names(.data) |>
+  mpi_colnames <- names(.data) |>
     dplyr::as_tibble() |>
     dplyr::mutate(variable_name = value) |>
     dplyr::left_join(.mpi_specs, by = "variable_name") |>
-    dplyr::mutate(label = dplyr::if_else(is.na(label), value, label)) |>
-    dplyr::pull(label)
+    dplyr::mutate(label = dplyr::if_else(
+      is.na(label),
+      value,
+      paste0(dimension, ' - ',  indicator)
+    ))
 
-  colnames(.data) <- .mpi_colnames
+  for(i in seq_along(mpi_colnames$value)) {
+    mpi_col <- mpi_colnames$value[i]
+    attr(.data[[mpi_col]], "label") <- mpi_colnames$label[i]
+    attr(.data[[mpi_col]], "dimension") <- mpi_colnames$dimension[i]
+    attr(.data[[mpi_col]], "indicator") <- mpi_colnames$indicator[i]
+  }
 
   if ("n" %in% names(.data)) {
     attr_specs <- attributes(.mpi_specs)
@@ -28,19 +39,31 @@ rename_indicators <- function(.data, .mpi_specs = getOption("mpi_specs")) {
       rename_n(attr_specs$unit_of_analysis)
   }
 
+  if ("uuid" %in% names(.data)) {
+    attr(.data$uuid, "label") <- "UUID"
+  }
+
   if ("deprivation_score" %in% names(.data)) {
-    .data <- .data |>
-      dplyr::rename("Deprivation score" = deprivation_score)
+    attr(.data$deprivation_score, "label") <- "Deprivation score"
+    # .data <- .data |>
+    #   dplyr::rename("Deprivation score" = deprivation_score)
   }
 
   return(.data)
 }
 
 rename_n <- function(.data, .label) {
-  n <- NULL
+
   `:=` <- NULL
-  .data |>
-    dplyr::rename(!!as.name(paste0("Number of ", .label)) := n)
+  n <- NULL
+  mpi_colname <- paste0("number_of_", to_lowercase(.label))
+
+  .data <- .data |>
+    dplyr::rename(!!as.name(mpi_colname) := n)
+
+  attr(.data[[mpi_colname]], "label") <- paste0("Number of ", .label)
+
+  return(.data)
 }
 
 to_enquo_str <- function(to_str) {

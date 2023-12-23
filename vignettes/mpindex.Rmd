@@ -129,7 +129,7 @@ mpi_specs <- define_mpi_specs(
 
 `.unit_of_analysis`, `.source_of_data`, and `.names_separator` are merely used for auto labels when generating the output later.
 
-Note: `define_mpi_specs` returns a data frame of MPI specs defined in the specs file. By default, this function saves a global option named `mpi_specs` which can be accessed using `getOption('mpi_specs')`.
+Note: `define_mpi_specs` returns a data frame of MPI specs defined in the specs file. By default, it saves a global option named `mpi_specs` which can be accessed using `getOption('mpi_specs')`.
 
 ## 3. Data preparation
 

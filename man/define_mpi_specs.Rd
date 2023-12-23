@@ -31,7 +31,7 @@ define_mpi_specs(
 
 \item{.source_of_data}{Source of data used in the computation. This will be used in the footnote of the table when generating an output.}
 
-\item{.names_separator}{Column separator that defines the hierarchy of the column header.}
+\item{.names_separator}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Column separator that defines the hierarchy of the column header.}
 
 \item{.save_as_global_options}{Whether to save the specs globally. Equivalent to invoking \code{options()}.}
 }
