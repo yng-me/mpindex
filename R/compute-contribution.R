@@ -1,7 +1,9 @@
 compute_contribution <- function(
-    .data,
-    ...,
-    .mpi_specs = getOption("mpi_specs")) {
+  .data,
+  ...,
+  .mpi_specs = getOption("mpi_specs")
+
+) {
   validate_mpi_specs(.mpi_specs)
 
   n <- NULL

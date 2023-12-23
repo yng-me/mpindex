@@ -17,13 +17,15 @@
 #' # It requires an MPI output (list type) in the first argument
 #' save_mpi(mpi_result, .filename = "MPI Sample Output")
 #' }
+#'
 save_mpi <- function(
-    .mpi_output,
-    .mpi_specs = getOption("mpi_specs"),
-    .filename = NULL,
-    .formatted_output = TRUE,
-    .include_table_summary = TRUE,
-    .include_specs = FALSE) {
+  .mpi_output,
+  .mpi_specs = getOption("mpi_specs"),
+  .filename = NULL,
+  .formatted_output = TRUE,
+  .include_table_summary = TRUE,
+  .include_specs = FALSE
+) {
   validate_mpi_specs(.mpi_specs)
   spec_attr <- attributes(.mpi_specs)
 
