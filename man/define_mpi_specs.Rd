@@ -5,17 +5,21 @@
 \title{Define MPI specifications: dimensions, indicators, and weights}
 \usage{
 define_mpi_specs(
-  .mpi_specs_file,
+  .mpi_specs_file = NULL,
+  .indicators = NULL,
   .poverty_cutoffs = 1/3,
   .unit_of_analysis = "households",
   .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
-  .names_separator = ">"
+  .names_separator = ">",
+  .save_as_global_options = TRUE
 )
 }
 \arguments{
 \item{.mpi_specs_file}{Accepts \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV) file format. This file should contain the following columns/variables: \code{Dimension}, \code{Indicator}, \code{Variable}, \code{Weight}, and \code{Description} (optional). See example below.}
+
+\item{.indicators}{A data frame of MPI indicators. Useful if prefer define your indicators instead of using an external file.}
 
 \item{.poverty_cutoffs}{Accepts single value or a vector of poverty cutoffs. This parameter (usually denoted by \code{k}) reflects the minimum level of deprivations or deprivation score an individual or household must be suffering simultaneously to be considered poor. See example below.}
 
@@ -28,9 +32,11 @@ define_mpi_specs(
 \item{.source_of_data}{Source of data used in the computation. This will be used in the footnote of the table when generating an output.}
 
 \item{.names_separator}{Column separator that defines the hierarchy of the column header.}
+
+\item{.save_as_global_options}{Whether to save the specs globally. Equivalent to invoking \code{options()}.}
 }
 \value{
-A list of objects containing MPI specifications needed by \link[mpindex]{compute_mpi} function.
+MPI specifications data frame required in \link[mpindex]{compute_mpi} function.
 }
 \description{
 Use to define MPI dimensions, indicators and its corresponding weights using any of the accessible file types: \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV). You can also set the poverty cutoff or list of poverty cutoffs (to achieve gradient list of MPIs) that will be used in the computation of MPI.

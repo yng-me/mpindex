@@ -50,6 +50,8 @@ define_deprivation <- function(
   .collapse_condition = NULL
 ) {
 
+  validate_mpi_specs(.mpi_specs)
+
   variable <- NULL
   indicator <- NULL
   variable_name <- NULL
@@ -57,11 +59,9 @@ define_deprivation <- function(
   `:=` <- NULL
   uid <- NULL
 
-  if(is.null(.mpi_specs)) {
-    stop('MPI specifications must be defined first.')
-  }
+  spec_attr <- attributes(.mpi_specs)
 
-  selected_indicator <- .mpi_specs$indicators |>
+  selected_indicator <- .mpi_specs |>
     dplyr::filter(variable == to_enquo_str({{.indicator}}))
 
   if(nrow(selected_indicator) == 0) {
@@ -75,10 +75,10 @@ define_deprivation <- function(
   unweighted <- paste0(ind[1], '_unweighted')
   weighted <- paste0(ind[1], '_weighted')
 
-  with_uid <- !is.null(.mpi_specs$uid)
+  with_uid <- !is.null(spec_attr$uid)
 
   if(with_uid) {
-    uid_name <- as.character(.mpi_specs$uid)
+    uid_name <- as.character(spec_attr$uid)
     .data <- .data |> dplyr::rename(uid = !!as.name(uid_name))
   } else {
     uid_name <- 'uid'

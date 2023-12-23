@@ -15,48 +15,48 @@
 #' @examples
 #' \dontrun{
 #' # It requires an MPI output (list type) in the first argument
-#' save_mpi(mpi_result, .filename = 'MPI Sample Output')
+#' save_mpi(mpi_result, .filename = "MPI Sample Output")
 #' }
-
 save_mpi <- function(
-  .mpi_output,
-  .mpi_specs = getOption('mpi_specs'),
-  .filename = NULL,
-  .formatted_output = TRUE,
-  .include_table_summary = TRUE,
-  .include_specs = FALSE
-) {
+    .mpi_output,
+    .mpi_specs = getOption("mpi_specs"),
+    .filename = NULL,
+    .formatted_output = TRUE,
+    .include_table_summary = TRUE,
+    .include_specs = FALSE) {
+  validate_mpi_specs(.mpi_specs)
+  spec_attr <- attributes(.mpi_specs)
 
   tb <- openxlsx::createWorkbook()
-  openxlsx::modifyBaseFont(tb, fontName = 'Arial', fontSize = 10)
-  .n <- nrow(.mpi_specs$indicators)
+  openxlsx::modifyBaseFont(tb, fontName = "Arial", fontSize = 10)
+  indicators_count <- nrow(.mpi_specs)
   start_row <- 2
   start_col <- 2
 
   tb_mpi <- set_mpi_sheets(.mpi_output)
   tb_sheets <- names(tb_mpi)
 
-  for(i in seq_along(tb_sheets)) {
-
+  for (i in seq_along(tb_sheets)) {
     tb_sheet <- tb_sheets[i]
     df <- tb_mpi[[tb_sheet]]
 
-    if(inherits(df, 'list')) {
-
+    if (inherits(df, "list")) {
       restart_row <- start_row
       df_names <- names(df)
 
-      for(j in 1:length(df_names)) {
-
+      for (j in seq_along(df_names)) {
         df_j <- df[[j]]
 
-        decimal_format <- set_decimal_format(df_j, tb_sheet, .n)
+        decimal_format <- set_decimal_format(df_j, tb_sheet, indicators_count)
 
         df_name <- df_names[j]
-        if(df_name == 'uncensored' | df_name == 'censored') {
+        if (df_name == "uncensored" | df_name == "censored") {
           df_name <- to_title_case(df_name)
-        } else if (grepl('^k_', df_name)) {
-          df_name <- paste0(stringr::str_replace(df_name, '^k_', ''), '% poverty cutoff')
+        } else if (grepl("^k_", df_name)) {
+          df_name <- paste0(
+            stringr::str_replace(df_name, "^k_", ""),
+            "% poverty cutoff"
+          )
         }
 
         write_as_excel_here <- function(.df_j, ...) {
@@ -68,32 +68,29 @@ save_mpi <- function(
               sheet = tb_sheet,
               subtitle = df_name,
               format_precision = 3,
-              .names_separator = .mpi_specs$names_separator,
+              .names_separator = spec_attr$names_separator,
               cols_with_decimal_format = decimal_format,
               start_row = restart_row
             )
         }
 
-        if(j == 1) {
+        if (j == 1) {
           tb_for_list <- write_as_excel_here(title = tb_sheet)
         } else {
           tb_for_list <- write_as_excel_here(append_to_existing_sheet = T)
         }
 
         restart_row <- tb_for_list$start_row
-
       }
-
     } else {
-
-      decimal_format <- set_decimal_format(df, tb_sheet, .n)
+      decimal_format <- set_decimal_format(df, tb_sheet, indicators_count)
 
       write_as_excel(
         df,
         wb = tb,
         sheet = tb_sheet,
         title = tb_sheet,
-        .names_separator = .mpi_specs$names_separator,
+        .names_separator = spec_attr$names_separator,
         cols_with_decimal_format = ,
         format_precision = 3,
         start_col = start_col
@@ -101,15 +98,17 @@ save_mpi <- function(
     }
   }
 
-  if(is.null(.filename)) file <- 'Book 1.xlsx'
-  else file <- .filename
-
-  if(!grepl('\\.xlsx$', .filename)) {
-    file <- paste0(.filename, '.xlsx')
+  if (is.null(.filename)) {
+    file <- "Book 1.xlsx"
+  } else {
+    file <- .filename
   }
 
-  openxlsx::saveWorkbook(tb, file, overwrite = T)
+  if (!grepl("\\.xlsx$", .filename)) {
+    file <- paste0(.filename, ".xlsx")
+  }
 
-  return(paste0(getwd(), '/', file))
+  openxlsx::saveWorkbook(tb, file, overwrite = TRUE)
 
+  return(paste0(getwd(), "/", file))
 }
