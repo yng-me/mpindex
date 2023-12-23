@@ -49,7 +49,6 @@ This function uses the Alkire-Foster (AF) counting method developed by Sabina Al
 # Load MPI specs from the built-in specs file
 specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
 mpi_specs <- define_mpi_specs(specs_file, .uid = 'uuid')
-options(mpi_specs = mpi_specs)
 
 # ----------------------------------
 # Create an empty list to store deprivation profile for each indicator

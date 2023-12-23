@@ -1,8 +1,9 @@
 create_deprivation_matrix <- function(
-    .data,
-    .deprivation_profile,
-    ...,
-    .mpi_specs = getOption("mpi_specs")) {
+  .data,
+  .deprivation_profile,
+  ...,
+  .mpi_specs = getOption("mpi_specs")
+) {
   validate_mpi_specs(.mpi_specs)
 
   cutoff <- NULL

@@ -25,7 +25,6 @@
 #'  package = "mpindex"
 #' )
 #' specs <- define_mpi_specs(specs_file, .uid = 'uuid')
-#' options(mpi_specs = specs)
 #'
 #' # Using built-in dataset
 #' df_household |>

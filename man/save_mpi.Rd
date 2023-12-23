@@ -37,4 +37,5 @@ Save the MPI output into an Excel file format.
 # It requires an MPI output (list type) in the first argument
 save_mpi(mpi_result, .filename = "MPI Sample Output")
 }
+
 }

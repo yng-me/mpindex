@@ -27,7 +27,7 @@ define_mpi_specs(
 
 \item{.aggregation}{Column name in the dataset that defines an aggregation level.}
 
-\item{.uid}{Column name containing unique ID of the observation which defines the lowest level of disaggregation (usually unit of analysis).}
+\item{.uid}{Column name containing unique ID of the dataset which defines the lowest level of disaggregation (usually unit of analysis).}
 
 \item{.source_of_data}{Source of data used in the computation. This will be used in the footnote of the table when generating an output.}
 
@@ -36,7 +36,7 @@ define_mpi_specs(
 \item{.save_as_global_options}{Whether to save the specs globally. Equivalent to invoking \code{options()}.}
 }
 \value{
-MPI specifications data frame required in \link[mpindex]{compute_mpi} function.
+MPI specifications data frame required in \link[mpindex]{compute_mpi} function. As as side effect, a global option named `mpi_specs` will be saved for efficiency. See `getOption('mpi_specs')`.
 }
 \description{
 Use to define MPI dimensions, indicators and its corresponding weights using any of the accessible file types: \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV). You can also set the poverty cutoff or list of poverty cutoffs (to achieve gradient list of MPIs) that will be used in the computation of MPI.
@@ -44,21 +44,13 @@ Use to define MPI dimensions, indicators and its corresponding weights using any
 \examples{
 # Use sample specs file included in the package
 specs_file <- system.file(
- "extdata",
- "global-mpi-specs.csv",
- package = "mpindex"
+  "extdata",
+  "global-mpi-specs.csv",
+  package = "mpindex"
 )
 # To see other sample specs file (with different supported file format)
 system.file("extdata", package = "mpindex") |>
   list.files()
-
-# OPTIONS:
-# 1. Pass this `specs` object to `compute_mpi` function
-#
-specs <- define_mpi_specs(specs_file)
-
-# 2. Make it available globally (recommended approach)
-options(mpi_specs = specs)
 
 }
 \seealso{

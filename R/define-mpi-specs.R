@@ -7,12 +7,12 @@
 #' @param .poverty_cutoffs Accepts single value or a vector of poverty cutoffs. This parameter (usually denoted by \code{k}) reflects the minimum level of deprivations or deprivation score an individual or household must be suffering simultaneously to be considered poor. See example below.
 #' @param .unit_of_analysis e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{households}.
 #' @param .aggregation Column name in the dataset that defines an aggregation level.
-#' @param .uid Column name containing unique ID of the observation which defines the lowest level of disaggregation (usually unit of analysis).
+#' @param .uid Column name containing unique ID of the dataset which defines the lowest level of disaggregation (usually unit of analysis).
 #' @param .source_of_data Source of data used in the computation. This will be used in the footnote of the table when generating an output.
 #' @param .names_separator Column separator that defines the hierarchy of the column header.
 #' @param .save_as_global_options Whether to save the specs globally. Equivalent to invoking \code{options()}.
 #'
-#' @return MPI specifications data frame required in \link[mpindex]{compute_mpi} function.
+#' @return MPI specifications data frame required in \link[mpindex]{compute_mpi} function. As as side effect, a global option named `mpi_specs` will be saved for efficiency. See `getOption('mpi_specs')`.
 #' @export
 #'
 #' @seealso \link[mpindex]{compute_mpi}
@@ -20,103 +20,76 @@
 #' @examples
 #' # Use sample specs file included in the package
 #' specs_file <- system.file(
-#'  "extdata",
-#'  "global-mpi-specs.csv",
-#'  package = "mpindex"
+#'   "extdata",
+#'   "global-mpi-specs.csv",
+#'   package = "mpindex"
 #' )
 #' # To see other sample specs file (with different supported file format)
 #' system.file("extdata", package = "mpindex") |>
 #'   list.files()
 #'
-#' # OPTIONS:
-#' # 1. Pass this `specs` object to `compute_mpi` function
-#' #
-#' specs <- define_mpi_specs(specs_file)
-#'
-#' # 2. Make it available globally (recommended approach)
-#' options(mpi_specs = specs)
-#'
-
 define_mpi_specs <- function(
   .mpi_specs_file = NULL,
   .indicators = NULL,
-  .poverty_cutoffs = 1/3,
-  .unit_of_analysis = 'households',
+  .poverty_cutoffs = 1 / 3,
+  .unit_of_analysis = "households",
   .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
-  .names_separator = '>',
+  .names_separator = ">",
   .save_as_global_options = TRUE
 ) {
-
   n <- NULL
   m <- NULL
-  value <- NULL
-  label <- NULL
   variable <- NULL
   indicator <- NULL
   dimension <- NULL
 
 
-  if(typeof(.unit_of_analysis) != 'character') {
-    stop('.unit_of_analysis argument only accepts string of characters.')
+  if (typeof(.unit_of_analysis) != "character") {
+    stop(".unit_of_analysis argument only accepts string of characters.")
   }
 
-  if(length(.unit_of_analysis) != 1) {
-    stop('.unit_of_analysis argument cannot accept multiple values.')
+  if (length(.unit_of_analysis) != 1) {
+    stop(".unit_of_analysis argument cannot accept multiple values.")
   }
 
-  if(!is.null(.uid)) {
-    .uid <- as.character(.uid)
-    if(length(.uid) != 1) {
-      stop('.uid argument cannot accept multiple values.')
+  if (!is.null(.uid)) {
+    .uid <- stringr::str_trim(as.character(.uid))
+    if (length(.uid) != 1) {
+      stop(".uid argument cannot accept multiple values.")
     }
   }
 
-  if(length(.names_separator) != 1) {
-    stop('.names_separator argument cannot accept multiple values.')
+  if (length(.names_separator) != 1) {
+    stop(".names_separator argument cannot accept multiple values.")
   }
 
-  if(!(.names_separator %in% c('>', '<', '|', '.', '_', '-'))) {
+  if (!(.names_separator %in% c(">", "<", "|", ".", "_", "-"))) {
     stop(".names_separator only accept the following characters: '>' (greater than), '<' (less than), '|' (pipe), '_' (underscore), '-' (dash), '.' (period).")
   }
 
   # accepts JSON, CSV, XLSX (Excel), TXT (TSV)
-  if(!is.null(.mpi_specs_file)) {
-
-    if(grepl('\\.xlsx$', .mpi_specs_file, ignore.case = T)) {
-
+  if (!is.null(.mpi_specs_file)) {
+    if (grepl("\\.xlsx$", .mpi_specs_file, ignore.case = T)) {
       df <- openxlsx::read.xlsx(.mpi_specs_file, skipEmptyRows = T, skipEmptyCols = T) |>
         dplyr::mutate(dplyr::across(dplyr::where(is.character), trim_whitespace))
-
-    } else if(grepl('\\.csv$', .mpi_specs_file, ignore.case = T)) {
-
+    } else if (grepl("\\.csv$", .mpi_specs_file, ignore.case = T)) {
       df <- utils::read.csv(.mpi_specs_file, strip.white = T)
-
-    } else if(grepl('\\.json$', .mpi_specs_file, ignore.case = T)) {
-
+    } else if (grepl("\\.json$", .mpi_specs_file, ignore.case = T)) {
       df <- jsonlite::read_json(.mpi_specs_file, simplifyVector = T)
-
-    } else if(grepl('\\.txt$', .mpi_specs_file, ignore.case = T)) {
-
+    } else if (grepl("\\.txt$", .mpi_specs_file, ignore.case = T)) {
       df <- utils::read.delim(.mpi_specs_file, strip.white = T)
-
     } else {
-
-      stop('Definition file format is invalid. Supports only TXT (TSV), CSV, XLSX (Excel), or JSON file format.')
-
+      stop("Definition file format is invalid. Supports only TXT (TSV), CSV, XLSX (Excel), or JSON file format.")
     }
-
   } else {
-
-    if(!is.null(.indicators)) {
-
+    if (!is.null(.indicators)) {
       df <- .indicators
-
     } else {
-      stop('Indictors must be defined.')
+      stop("Indictors must be defined.")
     }
-}
+  }
 
 
   df <- df |>
@@ -127,22 +100,22 @@ define_mpi_specs <- function(
       )
     )
 
-  if(length(.poverty_cutoffs[.poverty_cutoffs > 1]) > 0) {
-    stop('.poverty_cutoffs cannot contain values greater than 1.')
+  if (length(.poverty_cutoffs[.poverty_cutoffs > 1]) > 0) {
+    stop(".poverty_cutoffs cannot contain values greater than 1.")
   }
 
   min_k <- 1 / nrow(df)
-  if(length(.poverty_cutoffs[.poverty_cutoffs < min_k]) > 0) {
-    stop('.poverty_cutoffs cannot contain values less than 1 divided by the total number of indicators.')
+  if (length(.poverty_cutoffs[.poverty_cutoffs < min_k]) > 0) {
+    stop(".poverty_cutoffs cannot contain values less than 1 divided by the total number of indicators.")
   }
 
   valid_colnames <- c("dimension", "indicator", "variable", "weight")
   def_colnames <- to_lowercase(sort(names(df)))
 
   is_colnames_identical <- identical(def_colnames, valid_colnames) |
-    identical(def_colnames, c('description', valid_colnames))
+    identical(def_colnames, c("description", valid_colnames))
 
-  if(!is_colnames_identical) stop('Invalid column names found.')
+  if (!is_colnames_identical) stop("Invalid column names found.")
 
   dimensions <- df |>
     dplyr::distinct(dimension) |>
@@ -152,14 +125,14 @@ define_mpi_specs <- function(
     dplyr::group_by(dimension) |>
     dplyr::mutate(n = seq_along(dimension)) |>
     dplyr::ungroup() |>
-    dplyr::left_join(dimensions, by = 'dimension') |>
+    dplyr::left_join(dimensions, by = "dimension") |>
     dplyr::mutate(
       variable_name = paste0(
-        'd',
-        stringr::str_pad(m, width = 2, pad = '0'),
-        '_i',
-        stringr::str_pad(n, width = 2, pad = '0'),
-        '_',
+        "d",
+        stringr::str_pad(m, width = 2, pad = "0"),
+        "_i",
+        stringr::str_pad(n, width = 2, pad = "0"),
+        "_",
         to_lowercase(variable)
       ),
       label = paste0(dimension, .names_separator, indicator)
@@ -174,24 +147,23 @@ define_mpi_specs <- function(
   attr(df, "source_of_data") <- .source_of_data
   attr(df, "names_separator") <- .names_separator
 
-  class(df) <- c('mpi_specs_df', class(df))
+  class(df) <- c("mpi_specs_df", class(df))
 
-  if(.save_as_global_options) {
+  if (.save_as_global_options) {
     options(mpi_specs = df)
   }
 
   return(df)
-
 }
 
 
 validate_mpi_specs <- function(.mpi_specs) {
-  if(is.null(.mpi_specs)) {
-    stop('MPI specifications must be defined first.')
+  if (is.null(.mpi_specs)) {
+    stop("MPI specifications must be defined first.")
   }
 
-  if(!('mpi_specs_df' %in% class(.mpi_specs))) {
-    stop('Invalid MPI specifications.')
+  if (!("mpi_specs_df" %in% class(.mpi_specs))) {
+    stop("Invalid MPI specifications.")
   }
 }
 
@@ -208,9 +180,11 @@ validate_mpi_specs <- function(.mpi_specs) {
 #' @examples
 #'
 #' use_global_mpi_specs()
-
 use_global_mpi_specs <- function(...) {
-  specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+  specs_file <- system.file(
+    "extdata",
+    "global-mpi-specs.csv",
+    package = "mpindex"
+  )
   define_mpi_specs(specs_file, ...)
 }
-
