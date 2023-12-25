@@ -94,7 +94,7 @@ create_deprivation_matrix <- function(
       dplyr::rename_all(~ stringr::str_remove(., "_unweighted_censored$"))
   }
 
-  class(dep_matrix) <- c("mpi_dep_matrix", class(dep_matrix))
+  class(dep_matrix) <- c("mpi_deprivation_matrix", class(dep_matrix))
 
   return(dep_matrix)
 }

@@ -146,7 +146,7 @@ compute_mpi <- function(
   }
 
 
-  if('mpi_dep_matrix' %in% class(.data)) {
+  if('mpi_deprivation_matrix' %in% class(.data)) {
 
     .deprivation_profile <- NULL
     deprivation_matrix <- .data
@@ -177,13 +177,19 @@ compute_mpi <- function(
     dm_temp <- deprivation_matrix[[dep_label]]
 
     incidence_temp <- dm_temp |>
-      compute_headcount_ratio(.aggregation = spec_attr$aggregation, ...)
+      compute_headcount_ratio(
+        .aggregation = spec_attr$aggregation,
+        ...
+      )
 
     headcount_ratio_list[[dep_label]] <- incidence_temp |>
       rename_indicators(.mpi_specs = .mpi_specs)
 
     mpi_computed_temp <- dm_temp |>
-      compute_headcount_ratio_adj(.aggregation = spec_attr$aggregation, ...)
+      compute_headcount_ratio_adjusted(
+        .aggregation = spec_attr$aggregation,
+        ...
+      )
 
     mpi_computed_list[[dep_label]] <- mpi_computed_temp |>
       rename_n(spec_attr$unit_of_analysis)

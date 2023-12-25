@@ -112,6 +112,8 @@ define_deprivation <- function(
     }
   }
 
+  class(.data) <- c("mpi_deprivation_matrix", class(.data))
+
   .data |>
     dplyr::mutate(!!as.name(weighted) := w[1] * !!as.name(v[1])) |>
     dplyr::rename(!!as.name(unweighted) := !!as.name(v[1]))

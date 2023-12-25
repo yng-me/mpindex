@@ -8,7 +8,7 @@ test_that("contribution by dimension works correctly", {
     compute_headcount_ratio(.aggregation = attr_spec$aggregation)
 
   m_0 <- dm$censored |>
-    compute_headcount_ratio_adj(.aggregation = attr_spec$aggregation) |>
+    compute_headcount_ratio_adjusted(.aggregation = attr_spec$aggregation) |>
     dplyr::select(mpi) |>
     dplyr::bind_cols(hr) |>
     compute_contribution(.mpi_specs = mpi_specs)
@@ -30,7 +30,7 @@ test_that("contribution by dimension works correctly", {
 #     compute_headcount_ratio(.aggregation = attr_spec$aggregation)
 #
 #   m_0 <- dm$censored |>
-#     compute_headcount_ratio_adj(.aggregation = attr_spec$aggregation) |>
+#     compute_headcount_ratio_adjusted(.aggregation = attr_spec$aggregation) |>
 #     dplyr::select(MPI) |>
 #     dplyr::bind_cols(hr) |>
 #     compute_contribution(.mpi_specs = mpi_specs)

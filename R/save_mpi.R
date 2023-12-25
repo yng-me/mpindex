@@ -26,21 +26,54 @@ save_mpi <- function(
   .include_table_summary = TRUE,
   .include_specs = FALSE
 ) {
+
   validate_mpi_specs(.mpi_specs)
   spec_attr <- attributes(.mpi_specs)
 
   tb <- openxlsx::createWorkbook()
   openxlsx::modifyBaseFont(tb, fontName = "Arial", fontSize = 10)
-  indicators_count <- nrow(.mpi_specs)
+
+  if(.formatted_output) {
+
+    save_mpi_formatted(
+      tb,
+      set_mpi_sheets(.mpi_output),
+      nrow(.mpi_specs)
+    )
+
+  } else {
+
+    save_mpi_unformatted(
+      tb,
+      set_mpi_sheets(.mpi_output),
+      nrow(.mpi_specs)
+    )
+  }
+
+  if (is.null(.filename)) file <- "MPI Results.xlsx"
+  else file <- .filename
+
+  if (!grepl("\\.xlsx$", .filename)) {
+    file <- paste0(.filename, ".xlsx")
+  }
+
+  openxlsx::saveWorkbook(tb, file, overwrite = TRUE)
+
+  return(paste0(getwd(), "/", file))
+}
+
+
+save_mpi_formatted <- function(.wb, .data, .indicator_count) {
+
+  tb_sheets <- names(.data)
+
   start_row <- 2
   start_col <- 2
 
-  tb_mpi <- set_mpi_sheets(.mpi_output)
-  tb_sheets <- names(tb_mpi)
-
   for (i in seq_along(tb_sheets)) {
+
     tb_sheet <- tb_sheets[i]
-    df <- tb_mpi[[tb_sheet]]
+    df <- .data[[tb_sheet]]
 
     if (inherits(df, "list")) {
       restart_row <- start_row
@@ -49,7 +82,11 @@ save_mpi <- function(
       for (j in seq_along(df_names)) {
         df_j <- df[[j]]
 
-        decimal_format <- set_decimal_format(df_j, tb_sheet, indicators_count)
+        decimal_format <- set_decimal_format(
+          df_j,
+          tb_sheet,
+          .indicator_count
+        )
 
         df_name <- df_names[j]
         if (df_name == "uncensored" | df_name == "censored") {
@@ -64,53 +101,81 @@ save_mpi <- function(
         write_as_excel_here <- function(.df_j, ...) {
           .df_j |>
             write_as_excel(
-              df_j,
               ...,
-              wb = tb,
+              wb = .wb,
               sheet = tb_sheet,
               subtitle = df_name,
               format_precision = 3,
-              .names_separator = spec_attr$names_separator,
+              # .names_separator = spec_attr$names_separator,
               cols_with_decimal_format = decimal_format,
               start_row = restart_row
             )
         }
 
         if (j == 1) {
-          tb_for_list <- write_as_excel_here(title = tb_sheet)
+          tb_for_list <- df_j |> write_as_excel_here(title = tb_sheet)
         } else {
-          tb_for_list <- write_as_excel_here(append_to_existing_sheet = T)
+          tb_for_list <- df_j |> write_as_excel_here(append_to_existing_sheet = T)
         }
 
         restart_row <- tb_for_list$start_row
       }
     } else {
-      decimal_format <- set_decimal_format(df, tb_sheet, indicators_count)
+      decimal_format <- set_decimal_format(df, tb_sheet, .indicator_count)
 
       write_as_excel(
         df,
-        wb = tb,
+        wb = .wb,
         sheet = tb_sheet,
         title = tb_sheet,
-        .names_separator = spec_attr$names_separator,
-        cols_with_decimal_format = ,
+        # .names_separator = spec_attr$names_separator,
+        cols_with_decimal_format = decimal_format,
         format_precision = 3,
         start_col = start_col
       )
     }
   }
+}
 
-  if (is.null(.filename)) {
-    file <- "Book 1.xlsx"
-  } else {
-    file <- .filename
+save_mpi_unformatted <- function(.wb, .data, .indicator_count) {
+
+  tb_sheets <- names(.data)
+
+  for (i in seq_along(tb_sheets)) {
+
+    tb_sheet <- tb_sheets[i]
+    df <- .data[[tb_sheet]]
+
+    if (inherits(df, "list") && !grepl("[Dd]eprivation matrix", tb_sheet)) {
+
+      df_list <- list()
+      df_names <- names(df)
+
+      for (j in seq_along(df_names)) {
+        df_name <- df_names[j]
+        df_list[[j]] <- df[[df_name]] |>
+          dplyr::mutate(
+            cuttoff = paste0(stringr::str_remove(df_name, "^k_"), "%"),
+            .before = 1
+          )
+
+      }
+
+      df <- do.call("rbind", df_list)
+    }
+
+    decimal_format <- set_decimal_format(df, tb_sheet, .indicator_count)
+
+    write_as_excel(
+      df,
+      wb = .wb,
+      sheet = tb_sheet,
+      cols_with_decimal_format = decimal_format,
+      format_precision = 3,
+      start_row = 1,
+      start_col = 1,
+      format_output = FALSE
+    )
+
   }
-
-  if (!grepl("\\.xlsx$", .filename)) {
-    file <- paste0(.filename, ".xlsx")
-  }
-
-  openxlsx::saveWorkbook(tb, file, overwrite = TRUE)
-
-  return(paste0(getwd(), "/", file))
 }

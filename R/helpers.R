@@ -23,7 +23,7 @@ rename_indicators <- function(.data, .mpi_specs = getOption("mpi_specs")) {
     dplyr::mutate(label = dplyr::if_else(
       is.na(label),
       value,
-      paste0(dimension, ' - ',  indicator)
+      paste0(indicator, " (", dimension, ")")
     ))
 
   for(i in seq_along(mpi_colnames$value)) {
@@ -45,9 +45,10 @@ rename_indicators <- function(.data, .mpi_specs = getOption("mpi_specs")) {
 
   if ("deprivation_score" %in% names(.data)) {
     attr(.data$deprivation_score, "label") <- "Deprivation score"
-    # .data <- .data |>
-    #   dplyr::rename("Deprivation score" = deprivation_score)
   }
+
+  .data <- .data |>
+    dplyr::rename_with(~ stringr::str_remove_all(., '^d\\d{2}_i\\d{2}_'))
 
   return(.data)
 }
@@ -107,24 +108,25 @@ increment_inner_depth <- function(vec) {
 
 
 set_export_facade <- function(
-    ...,
-    header_depth,
-    start_row_init,
-    start_row,
-    start_col,
-    end_row,
-    end_col,
-    start_row_note,
-    decimal_format_cols = NULL,
-    format_precision = 2,
-    options = NULL) {
+  ...,
+  header_depth,
+  start_row_init,
+  start_row,
+  start_col,
+  end_row,
+  end_col,
+  start_row_note,
+  decimal_format_cols = NULL,
+  format_precision = 2,
+  options = NULL
+) {
+
   options_default <- list()
 
-  options_default$col_width_first <- 38
-  options_default$col_width_all <- 20
+  options_default$col_width_first <- 35
+  options_default$col_width_all <- 18
   options_default$row_height <- 20
-  options_default$row_height_header <- 32
-
+  options_default$row_height_header <- 30
 
   options_default$style_indent <- openxlsx::createStyle(
     indent = 1,
@@ -347,29 +349,48 @@ extract_column_names <- function(
   .start_row = 1,
   .names_separator = ">"
 ) {
+  data <- NULL
   value <- NULL
   col_from <- NULL
   row_from <- NULL
+  n <- NULL
   df <- NULL
 
-  dplyr::as_tibble(names(.data)) |>
+  headers <- NULL
+  df_names <- names(.data)
+  for(i in seq_along(df_names)) {
+    attr_name <- attributes(.data[[i]])
+    label <- attr_name$label
+    if(is.null(label)) label <- df_names[i]
+    dimension <- attr_name$dimension
+    indicator <- attr_name$indicator
+
+    if(!is.null(dimension) & !is.null(indicator)) {
+      if(!is.na(dimension) & !is.na(indicator)) {
+        label <- paste0(dimension, ">", indicator)
+      }
+    }
+    headers <- c(headers, label)
+  }
+
+  dplyr::as_tibble(headers) |>
     dplyr::mutate(
       value = stringr::str_split(value, .names_separator),
-      col_from = seq_len(length(names(.data)))
+      col_from = 1:dplyr::n()
     ) |>
     dplyr::mutate(col_from = col_from + .start_col - 1) |>
     tidyr::unnest(value) |>
     dplyr::group_by(col_from) |>
-    dplyr::mutate(row_from = seq_len(length(names(.data)))) |>
+    dplyr::mutate(row_from = 1:dplyr::n()) |>
     dplyr::mutate(row_from = row_from + .start_row - 1) |>
     tidyr::nest() |>
-    dplyr::mutate(depth = purrr::map_int(df, nrow)) |>
-    tidyr::unnest(df) |>
+    dplyr::mutate(depth = purrr::map_int(data, nrow)) |>
+    tidyr::unnest(data) |>
     dplyr::ungroup() |>
     dplyr::group_by(value) |>
     tidyr::nest() |>
-    dplyr::mutate(r = purrr::map_int(df, nrow)) |>
-    tidyr::unnest(df) |>
+    dplyr::mutate(r = purrr::map_int(data, nrow)) |>
+    tidyr::unnest(data) |>
     dplyr::arrange(col_from)
 }
 
@@ -407,16 +428,20 @@ set_mpi_sheets <- function(.mpi_output) {
   return(mpi_list)
 }
 
+set_mpi_sheets_unformatted <- function(.mpi_output) {
 
-set_decimal_format <- function(.data, .sheet, .n) {
+}
+
+
+set_decimal_format <- function(.data, .sheet, .n, .offset = 0) {
   if (.sheet == "MPI") {
-    mpi_s <- ncol(.data) - 2
+    mpi_s <- ncol(.data) - (2 + .offset)
     decimal_format <- mpi_s:ncol(.data)
   } else if (.sheet %in% c("Contribution by dimension", "Headcount ratio")) {
-    mpi_d <- ncol(.data) - .n + 1
+    mpi_d <- ncol(.data) - (.n + 1 + .offset)
     decimal_format <- mpi_d:ncol(.data)
   } else if (grepl("deprivation matrix", .sheet, ignore.case = TRUE)) {
-    decimal_format <- which(names(.data) == "Deprivation score")
+    decimal_format <- which(names(.data) == "Deprivation score" | names(.data) == "deprivation_score")
   } else {
     decimal_format <- NULL
   }

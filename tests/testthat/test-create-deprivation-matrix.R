@@ -21,7 +21,7 @@ test_that("deprivation profile is incomplete.", {
 test_that("deprivation matrix works correctly", {
   dm <- df_household |>
     create_deprivation_matrix(deprivation_profile, .mpi_specs = mpi_specs)
-  expect_s3_class(dm, "mpi_dep_matrix")
+  expect_s3_class(dm, "mpi_deprivation_matrix")
   expect_named(dm, c("uncensored", "censored"))
   expect_length(names(dm$uncensored), 12)
   expect_length(names(dm$censored), 14)

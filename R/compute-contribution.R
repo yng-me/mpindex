@@ -11,7 +11,7 @@ compute_contribution <- function(
   `:=` <- NULL
   spec_attr <- attributes(.mpi_specs)
 
-  df_contrib <- .data |>
+  df <- .data |>
     dplyr::select(dplyr::any_of(attributes(spec_attr$aggregation)), n, ...)
 
   w <- .mpi_specs$weight
@@ -28,11 +28,11 @@ compute_contribution <- function(
         )
       )
 
-    df_contrib <- df_contrib |>
+    df <- df |>
       dplyr::bind_cols(contrib)
   }
 
-  class(df_contrib) <- c("mpi_dim_contribution_df", class(df_contrib))
+  class(df) <- c("mpi_contribution", class(df))
 
-  return(df_contrib |> rename_indicators(.mpi_specs = .mpi_specs))
+  return(df |> rename_indicators(.mpi_specs = .mpi_specs))
 }

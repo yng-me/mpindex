@@ -5,13 +5,13 @@ test_that("adjusted headcount ratio works correctly", {
     create_deprivation_matrix(deprivation_profile, .mpi_specs = mpi_specs)
 
   ahr_uncensored <- dm$uncensored |>
-    compute_headcount_ratio_adj(.aggregation = attr_spec$aggregation)
+    compute_headcount_ratio_adjusted(.aggregation = attr_spec$aggregation)
 
   expect_equal(nrow(ahr_uncensored), 1)
   expect_equal(ncol(ahr_uncensored), 4)
 
   ahr_censored <- dm$censored |>
-    compute_headcount_ratio_adj(.aggregation = attr_spec$aggregation)
+    compute_headcount_ratio_adjusted(.aggregation = attr_spec$aggregation)
 
   expect_equal(nrow(ahr_censored), 1)
   expect_equal(ncol(ahr_censored), 4)
@@ -25,13 +25,13 @@ test_that("adjusted headcount ratio works correctly with aggregation", {
     create_deprivation_matrix(deprivation_profile, .mpi_specs = mpi_specs)
 
   ahr_uncensored <- dm$uncensored |>
-    compute_headcount_ratio_adj(.aggregation = attr_spec$aggregation)
+    compute_headcount_ratio_adjusted(.aggregation = attr_spec$aggregation)
 
   expect_equal(nrow(ahr_uncensored), 2)
   expect_equal(ncol(ahr_uncensored), 5)
 
   ahr_censored <- dm$censored |>
-    compute_headcount_ratio_adj(.aggregation = attr_spec$aggregation)
+    compute_headcount_ratio_adjusted(.aggregation = attr_spec$aggregation)
 
   expect_equal(nrow(ahr_censored), 2)
   expect_equal(ncol(ahr_censored), 5)

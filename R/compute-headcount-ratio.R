@@ -34,7 +34,7 @@ compute_headcount_ratio <- function(.data, .aggregation = NULL, ...) {
     }
   }
 
-  class(df) <- c("mpi_headcount_ratio_df", class(df))
+  class(df) <- c("mpi_headcount_ratio", class(df))
 
   return(df)
 }
