@@ -8,9 +8,9 @@
 <meta name="description" content="mpindex">
 <title>Introduction to mpindex • mpindex</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to mpindex">
@@ -48,6 +48,9 @@
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -93,8 +96,8 @@ Sabina Alkire and James Foster.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'mpindex'</span><span class="op">)</span></span></code></pre></div>
 <p>If you want to get the latest development version of
-<code>mpindex</code>, install it from GitHub. Note that you may need to
-install <code>devtools</code>.</p>
+<code>mpindex</code>, install it from <a href="https://github.com/yng-me/mpindex" class="external-link">GitHub</a>. Note that you may
+need to install <code>devtools</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'yng-me/mpindex'</span><span class="op">)</span></span></code></pre></div>
@@ -129,23 +132,23 @@ Global MPI.</p>
 use below script to first get the full path of the file.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">specs_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"global-mpi-specs.csv"</span>, package <span class="op">=</span> <span class="st">"mpindex"</span><span class="op">)</span></span></code></pre></div>
-<div id="dwvdiqnmbk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dwvdiqnmbk table {
+<div id="hazentxmck" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hazentxmck table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dwvdiqnmbk thead, #dwvdiqnmbk tbody, #dwvdiqnmbk tfoot, #dwvdiqnmbk tr, #dwvdiqnmbk td, #dwvdiqnmbk th {
+#hazentxmck thead, #hazentxmck tbody, #hazentxmck tfoot, #hazentxmck tr, #hazentxmck td, #hazentxmck th {
   border-style: none;
 }
 
-#dwvdiqnmbk p {
+#hazentxmck p {
   margin: 0;
   padding: 0;
 }
 
-#dwvdiqnmbk .gt_table {
+#hazentxmck .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -171,12 +174,12 @@ use below script to first get the full path of the file.</p>
   border-left-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_caption {
+#hazentxmck .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dwvdiqnmbk .gt_title {
+#hazentxmck .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -188,7 +191,7 @@ use below script to first get the full path of the file.</p>
   border-bottom-width: 0;
 }
 
-#dwvdiqnmbk .gt_subtitle {
+#hazentxmck .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -200,7 +203,7 @@ use below script to first get the full path of the file.</p>
   border-top-width: 0;
 }
 
-#dwvdiqnmbk .gt_heading {
+#hazentxmck .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -212,13 +215,13 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_bottom_border {
+#hazentxmck .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_col_headings {
+#hazentxmck .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -233,7 +236,7 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_col_heading {
+#hazentxmck .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -253,7 +256,7 @@ use below script to first get the full path of the file.</p>
   overflow-x: hidden;
 }
 
-#dwvdiqnmbk .gt_column_spanner_outer {
+#hazentxmck .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -265,15 +268,15 @@ use below script to first get the full path of the file.</p>
   padding-right: 4px;
 }
 
-#dwvdiqnmbk .gt_column_spanner_outer:first-child {
+#hazentxmck .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dwvdiqnmbk .gt_column_spanner_outer:last-child {
+#hazentxmck .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dwvdiqnmbk .gt_column_spanner {
+#hazentxmck .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -285,11 +288,11 @@ use below script to first get the full path of the file.</p>
   width: 100%;
 }
 
-#dwvdiqnmbk .gt_spanner_row {
+#hazentxmck .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dwvdiqnmbk .gt_group_heading {
+#hazentxmck .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -315,7 +318,7 @@ use below script to first get the full path of the file.</p>
   text-align: left;
 }
 
-#dwvdiqnmbk .gt_empty_group_heading {
+#hazentxmck .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -330,15 +333,15 @@ use below script to first get the full path of the file.</p>
   vertical-align: middle;
 }
 
-#dwvdiqnmbk .gt_from_md > :first-child {
+#hazentxmck .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dwvdiqnmbk .gt_from_md > :last-child {
+#hazentxmck .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dwvdiqnmbk .gt_row {
+#hazentxmck .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -357,7 +360,7 @@ use below script to first get the full path of the file.</p>
   overflow-x: hidden;
 }
 
-#dwvdiqnmbk .gt_stub {
+#hazentxmck .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -370,7 +373,7 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dwvdiqnmbk .gt_stub_row_group {
+#hazentxmck .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -384,15 +387,15 @@ use below script to first get the full path of the file.</p>
   vertical-align: top;
 }
 
-#dwvdiqnmbk .gt_row_group_first td {
+#hazentxmck .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dwvdiqnmbk .gt_row_group_first th {
+#hazentxmck .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dwvdiqnmbk .gt_summary_row {
+#hazentxmck .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -402,16 +405,16 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dwvdiqnmbk .gt_first_summary_row {
+#hazentxmck .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_first_summary_row.thick {
+#hazentxmck .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dwvdiqnmbk .gt_last_summary_row {
+#hazentxmck .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -421,7 +424,7 @@ use below script to first get the full path of the file.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_grand_summary_row {
+#hazentxmck .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -431,7 +434,7 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dwvdiqnmbk .gt_first_grand_summary_row {
+#hazentxmck .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -441,7 +444,7 @@ use below script to first get the full path of the file.</p>
   border-top-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_last_grand_summary_row_top {
+#hazentxmck .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -451,11 +454,11 @@ use below script to first get the full path of the file.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_striped {
+#hazentxmck .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dwvdiqnmbk .gt_table_body {
+#hazentxmck .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -464,7 +467,7 @@ use below script to first get the full path of the file.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_footnotes {
+#hazentxmck .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -478,7 +481,7 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_footnote {
+#hazentxmck .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -487,7 +490,7 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dwvdiqnmbk .gt_sourcenotes {
+#hazentxmck .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -501,7 +504,7 @@ use below script to first get the full path of the file.</p>
   border-right-color: #D3D3D3;
 }
 
-#dwvdiqnmbk .gt_sourcenote {
+#hazentxmck .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -509,63 +512,63 @@ use below script to first get the full path of the file.</p>
   padding-right: 5px;
 }
 
-#dwvdiqnmbk .gt_left {
+#hazentxmck .gt_left {
   text-align: left;
 }
 
-#dwvdiqnmbk .gt_center {
+#hazentxmck .gt_center {
   text-align: center;
 }
 
-#dwvdiqnmbk .gt_right {
+#hazentxmck .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dwvdiqnmbk .gt_font_normal {
+#hazentxmck .gt_font_normal {
   font-weight: normal;
 }
 
-#dwvdiqnmbk .gt_font_bold {
+#hazentxmck .gt_font_bold {
   font-weight: bold;
 }
 
-#dwvdiqnmbk .gt_font_italic {
+#hazentxmck .gt_font_italic {
   font-style: italic;
 }
 
-#dwvdiqnmbk .gt_super {
+#hazentxmck .gt_super {
   font-size: 65%;
 }
 
-#dwvdiqnmbk .gt_footnote_marks {
+#hazentxmck .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dwvdiqnmbk .gt_asterisk {
+#hazentxmck .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dwvdiqnmbk .gt_indent_1 {
+#hazentxmck .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dwvdiqnmbk .gt_indent_2 {
+#hazentxmck .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dwvdiqnmbk .gt_indent_3 {
+#hazentxmck .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dwvdiqnmbk .gt_indent_4 {
+#hazentxmck .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dwvdiqnmbk .gt_indent_5 {
+#hazentxmck .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -587,70 +590,70 @@ use below script to first get the full path of the file.</p>
 <td headers="Dimension" class="gt_row gt_left">Health</td>
 <td headers="Indicator" class="gt_row gt_left">Nutrition</td>
 <td headers="Variable" class="gt_row gt_left">nutrition</td>
-<td headers="Weight" class="gt_row gt_right">0.16666667</td>
+<td headers="Weight" class="gt_row gt_right">0.167</td>
 <td headers="Description" class="gt_row gt_left">Any person under 70 years of age for whom there is nutritional information is undernourished.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Health</td>
 <td headers="Indicator" class="gt_row gt_left">Child mortality</td>
 <td headers="Variable" class="gt_row gt_left">child_mortality</td>
-<td headers="Weight" class="gt_row gt_right">0.16666667</td>
+<td headers="Weight" class="gt_row gt_right">0.167</td>
 <td headers="Description" class="gt_row gt_left">A child under 18 has died in the household in the five-year period preceding the survey.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Education</td>
 <td headers="Indicator" class="gt_row gt_left">Years of schooling</td>
 <td headers="Variable" class="gt_row gt_left">year_schooling</td>
-<td headers="Weight" class="gt_row gt_right">0.16666667</td>
+<td headers="Weight" class="gt_row gt_right">0.167</td>
 <td headers="Description" class="gt_row gt_left">No eligible household member has completed six years of schooling.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Education</td>
 <td headers="Indicator" class="gt_row gt_left">School attendance</td>
 <td headers="Variable" class="gt_row gt_left">school_attendance</td>
-<td headers="Weight" class="gt_row gt_right">0.16666667</td>
+<td headers="Weight" class="gt_row gt_right">0.167</td>
 <td headers="Description" class="gt_row gt_left">Any school-aged child is not attending school up to the age at which he/she would complete class 8.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Living Standards</td>
 <td headers="Indicator" class="gt_row gt_left">Cooking fuel</td>
 <td headers="Variable" class="gt_row gt_left">cooking_fuel</td>
-<td headers="Weight" class="gt_row gt_right">0.05555556</td>
+<td headers="Weight" class="gt_row gt_right">0.056</td>
 <td headers="Description" class="gt_row gt_left">A household cooks using solid fuel, such as dung, agricultural crop, shrubs, wood, charcoal, or coal.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Living Standards</td>
 <td headers="Indicator" class="gt_row gt_left">Sanitation</td>
 <td headers="Variable" class="gt_row gt_left">sanitation</td>
-<td headers="Weight" class="gt_row gt_right">0.05555556</td>
+<td headers="Weight" class="gt_row gt_right">0.056</td>
 <td headers="Description" class="gt_row gt_left">The household has unimproved or no sanitation facility or it is improved but shared with other households.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Living Standards</td>
 <td headers="Indicator" class="gt_row gt_left">Drinking water</td>
 <td headers="Variable" class="gt_row gt_left">drinking_water</td>
-<td headers="Weight" class="gt_row gt_right">0.05555556</td>
+<td headers="Weight" class="gt_row gt_right">0.056</td>
 <td headers="Description" class="gt_row gt_left">The household's source of drinking water is not safe or safe drinking water is a 30-minute or longer walk from home, roundtrip.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Living Standards</td>
 <td headers="Indicator" class="gt_row gt_left">Electricity</td>
 <td headers="Variable" class="gt_row gt_left">electricity</td>
-<td headers="Weight" class="gt_row gt_right">0.05555556</td>
+<td headers="Weight" class="gt_row gt_right">0.056</td>
 <td headers="Description" class="gt_row gt_left">The household has no electricity.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Living Standards</td>
 <td headers="Indicator" class="gt_row gt_left">Housing</td>
 <td headers="Variable" class="gt_row gt_left">housing</td>
-<td headers="Weight" class="gt_row gt_right">0.05555556</td>
+<td headers="Weight" class="gt_row gt_right">0.056</td>
 <td headers="Description" class="gt_row gt_left">The household has inadequate housing materials in any of the three components: floor, roof, or walls.</td>
 </tr>
 <tr>
 <td headers="Dimension" class="gt_row gt_left">Living Standards</td>
 <td headers="Indicator" class="gt_row gt_left">Assets</td>
 <td headers="Variable" class="gt_row gt_left">assets</td>
-<td headers="Weight" class="gt_row gt_right">0.05555556</td>
+<td headers="Weight" class="gt_row gt_right">0.056</td>
 <td headers="Description" class="gt_row gt_left">The household does not own more than one of these assets: radio, TV, telephone, computer, animal cart, bicycle, motorbike, or refrigerator, and does not own a car or truck.</td>
 </tr>
 </tbody>
@@ -696,22 +699,34 @@ specification file sample</a>.</p>
 file, discussed above.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">specs_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"global-mpi-specs.csv"</span>, package <span class="op">=</span> <span class="st">"mpindex"</span><span class="op">)</span></span>
-<span><span class="va">mpi_specs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span><span class="va">specs_file</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span><span class="va">specs_file</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 7</span></span></span>
+<span><span class="co">#&gt;    dimension        indicator    variable weight description variable_name label</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Health           Nutrition    nutriti… 0.167  Any person… d01_i01_nutr… Heal…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Health           Child morta… child_m… 0.167  A child un… d01_i02_chil… Heal…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Education        Years of sc… year_sc… 0.167  No eligibl… d02_i01_year… Educ…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Education        School atte… school_… 0.167  Any school… d02_i02_scho… Educ…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Living Standards Cooking fuel cooking… 0.055<span style="text-decoration: underline;">6</span> A househol… d03_i01_cook… Livi…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Living Standards Sanitation   sanitat… 0.055<span style="text-decoration: underline;">6</span> The househ… d03_i02_sani… Livi…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Living Standards Drinking wa… drinkin… 0.055<span style="text-decoration: underline;">6</span> The househ… d03_i03_drin… Livi…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Living Standards Electricity  electri… 0.055<span style="text-decoration: underline;">6</span> The househ… d03_i04_elec… Livi…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Living Standards Housing      housing  0.055<span style="text-decoration: underline;">6</span> The househ… d03_i05_hous… Livi…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Living Standards Assets       assets   0.055<span style="text-decoration: underline;">6</span> The househ… d03_i06_asse… Livi…</span></span></code></pre></div>
 <p><code>define_mpi_specs</code> requires a specification file as its
 first argument. The default poverty cutoff is set to <code>1/3</code>
-(based on Global MPI), with a unit of analysis set to
-<code>households</code>. You can also define a list of poverty cutoffs
-by specifying in the <code>.poverty_cutoffs</code> argument to achieve
+(based on Global MPI). You can also define a list of poverty cutoffs by
+specifying in the <code>.poverty_cutoffs</code> argument to achieve
 gradient MPIs.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mpi_specs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span></span>
 <span>  .mpi_specs_file <span class="op">=</span> <span class="va">specs_file</span>, </span>
 <span>  .poverty_cutoffs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>If your dataset contains unique ID, like <code>uuid</code>, it is
 recommended to define it here using the <code>.uid</code> argument.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mpi_specs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span></span>
 <span>  .mpi_specs_file <span class="op">=</span> <span class="va">specs_file</span>, </span>
 <span>  .uid <span class="op">=</span> <span class="st">'uuid'</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -719,7 +734,7 @@ recommended to define it here using the <code>.uid</code> argument.</p>
 the column name present in your dataset (see <code>?df_househod</code>
 and more below).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mpi_specs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span></span>
 <span>  .mpi_specs_file <span class="op">=</span> <span class="va">specs_file</span>, </span>
 <span>  .poverty_cutoffs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span>, <span class="fl">0.2</span>, <span class="fl">0.8</span><span class="op">)</span>,</span>
 <span>  .uid <span class="op">=</span> <span class="st">'uuid'</span>,</span>
@@ -728,18 +743,19 @@ and more below).</p>
 <p><code>.unit_of_analysis</code>, <code>.source_of_data</code>, and
 <code>.names_separator</code> are merely used for auto labels when
 generating the output later.</p>
-</div>
-<div class="section level3">
-<h3 id="make-the-specs-available-globally">Make the specs available globally<a class="anchor" aria-label="anchor" href="#make-the-specs-available-globally"></a>
-</h3>
-<p>It is also recommended to make the MPI specification available
-globally, rather than providing the argument manually everytime you use
-other functions within the <code>mpindex</code> (more of this
-later).</p>
+<p>Note: <code>define_mpi_specs</code> returns a data frame of MPI specs
+defined in the specs file. By default, it saves a global option named
+<code>mpi_specs</code> which can be accessed using
+<code>getOption('mpi_specs')</code>.</p>
+<p>For our demonstration, we will use the
+<code><a href="../reference/use_global_mpi_specs.html">use_global_mpi_specs()</a></code> wrapper function, which yields the
+same result as calling <code>define_mpi_specs</code> and passing the
+built-in specs file.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span><span class="op">)</span></span></code></pre></div>
-<p>Note: the name to be passed to <code>options</code> must exactly be
-<code>mpi_specs</code>.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/use_global_mpi_specs.html">use_global_mpi_specs</a></span><span class="op">(</span></span>
+<span>  .uid <span class="op">=</span> <span class="st">'uuid'</span>,</span>
+<span>  .aggregation <span class="op">=</span> <span class="st">'class'</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -973,7 +989,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h3>
 <p>After completing the deprivation profile, use the
 <code>compute_mpi</code> function and pass the
-<code>deprivation_profile</code> list you created above.</p>
+<code>deprivation_profile</code> list as the first argument.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span> <span class="op">&lt;-</span> <span class="va">df_household</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span><span class="va">deprivation_profile</span><span class="op">)</span></span>
@@ -990,23 +1006,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">index</span></span></code></pre></div>
-<div id="rdvsxgnukw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rdvsxgnukw table {
+<div id="pmzahvatpr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pmzahvatpr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rdvsxgnukw thead, #rdvsxgnukw tbody, #rdvsxgnukw tfoot, #rdvsxgnukw tr, #rdvsxgnukw td, #rdvsxgnukw th {
+#pmzahvatpr thead, #pmzahvatpr tbody, #pmzahvatpr tfoot, #pmzahvatpr tr, #pmzahvatpr td, #pmzahvatpr th {
   border-style: none;
 }
 
-#rdvsxgnukw p {
+#pmzahvatpr p {
   margin: 0;
   padding: 0;
 }
 
-#rdvsxgnukw .gt_table {
+#pmzahvatpr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1032,12 +1048,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_caption {
+#pmzahvatpr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rdvsxgnukw .gt_title {
+#pmzahvatpr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1049,7 +1065,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#rdvsxgnukw .gt_subtitle {
+#pmzahvatpr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1061,7 +1077,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#rdvsxgnukw .gt_heading {
+#pmzahvatpr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1073,13 +1089,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_bottom_border {
+#pmzahvatpr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_col_headings {
+#pmzahvatpr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1094,7 +1110,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_col_heading {
+#pmzahvatpr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1114,7 +1130,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#rdvsxgnukw .gt_column_spanner_outer {
+#pmzahvatpr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1126,15 +1142,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#rdvsxgnukw .gt_column_spanner_outer:first-child {
+#pmzahvatpr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rdvsxgnukw .gt_column_spanner_outer:last-child {
+#pmzahvatpr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rdvsxgnukw .gt_column_spanner {
+#pmzahvatpr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1146,11 +1162,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#rdvsxgnukw .gt_spanner_row {
+#pmzahvatpr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rdvsxgnukw .gt_group_heading {
+#pmzahvatpr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1176,7 +1192,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#rdvsxgnukw .gt_empty_group_heading {
+#pmzahvatpr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1191,15 +1207,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#rdvsxgnukw .gt_from_md > :first-child {
+#pmzahvatpr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rdvsxgnukw .gt_from_md > :last-child {
+#pmzahvatpr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rdvsxgnukw .gt_row {
+#pmzahvatpr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1218,7 +1234,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#rdvsxgnukw .gt_stub {
+#pmzahvatpr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1231,7 +1247,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#rdvsxgnukw .gt_stub_row_group {
+#pmzahvatpr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1245,15 +1261,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#rdvsxgnukw .gt_row_group_first td {
+#pmzahvatpr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rdvsxgnukw .gt_row_group_first th {
+#pmzahvatpr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rdvsxgnukw .gt_summary_row {
+#pmzahvatpr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1263,16 +1279,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#rdvsxgnukw .gt_first_summary_row {
+#pmzahvatpr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_first_summary_row.thick {
+#pmzahvatpr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rdvsxgnukw .gt_last_summary_row {
+#pmzahvatpr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1282,7 +1298,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_grand_summary_row {
+#pmzahvatpr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1292,7 +1308,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#rdvsxgnukw .gt_first_grand_summary_row {
+#pmzahvatpr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1302,7 +1318,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_last_grand_summary_row_top {
+#pmzahvatpr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1312,11 +1328,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_striped {
+#pmzahvatpr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rdvsxgnukw .gt_table_body {
+#pmzahvatpr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1325,7 +1341,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_footnotes {
+#pmzahvatpr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1339,7 +1355,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_footnote {
+#pmzahvatpr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1348,7 +1364,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#rdvsxgnukw .gt_sourcenotes {
+#pmzahvatpr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1362,7 +1378,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#rdvsxgnukw .gt_sourcenote {
+#pmzahvatpr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1370,84 +1386,95 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#rdvsxgnukw .gt_left {
+#pmzahvatpr .gt_left {
   text-align: left;
 }
 
-#rdvsxgnukw .gt_center {
+#pmzahvatpr .gt_center {
   text-align: center;
 }
 
-#rdvsxgnukw .gt_right {
+#pmzahvatpr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rdvsxgnukw .gt_font_normal {
+#pmzahvatpr .gt_font_normal {
   font-weight: normal;
 }
 
-#rdvsxgnukw .gt_font_bold {
+#pmzahvatpr .gt_font_bold {
   font-weight: bold;
 }
 
-#rdvsxgnukw .gt_font_italic {
+#pmzahvatpr .gt_font_italic {
   font-style: italic;
 }
 
-#rdvsxgnukw .gt_super {
+#pmzahvatpr .gt_super {
   font-size: 65%;
 }
 
-#rdvsxgnukw .gt_footnote_marks {
+#pmzahvatpr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rdvsxgnukw .gt_asterisk {
+#pmzahvatpr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rdvsxgnukw .gt_indent_1 {
+#pmzahvatpr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rdvsxgnukw .gt_indent_2 {
+#pmzahvatpr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rdvsxgnukw .gt_indent_3 {
+#pmzahvatpr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rdvsxgnukw .gt_indent_4 {
+#pmzahvatpr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rdvsxgnukw .gt_indent_5 {
+#pmzahvatpr .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>MPI Results using 33% Poverty Cutoff</td>
+<td colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>MPI Results using 33% Poverty Cutoff</td>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Number of households">Number of households</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Class">Class</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Number of cases">Number of cases</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Headcount Ratio (H)">Headcount Ratio (H)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Intensity of Deprivation Among the Poor (A)">Intensity of Deprivation Among the Poor (A)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="MPI (H x A)">MPI (H x A)</th>
     </tr>
 </thead>
-<tbody class="gt_table_body"><tr>
-<td headers="Number of households" class="gt_row gt_right">198</td>
-<td headers="Headcount Ratio (H)" class="gt_row gt_right">0.379</td>
-<td headers="Intensity of Deprivation Among the Poor (A)" class="gt_row gt_right">0.473</td>
-<td headers="MPI (H x A)" class="gt_row gt_right">0.179</td>
-</tr></tbody>
+<tbody class="gt_table_body">
+<tr>
+<td headers="Class" class="gt_row gt_left">Rural</td>
+<td headers="number_of_cases" class="gt_row gt_right">98</td>
+<td headers="headcount_ratio" class="gt_row gt_right">0.480</td>
+<td headers="intensity" class="gt_row gt_right">0.513</td>
+<td headers="mpi" class="gt_row gt_right">0.246</td>
+</tr>
+<tr>
+<td headers="Class" class="gt_row gt_left">Urban</td>
+<td headers="number_of_cases" class="gt_row gt_right">100</td>
+<td headers="headcount_ratio" class="gt_row gt_right">0.280</td>
+<td headers="intensity" class="gt_row gt_right">0.405</td>
+<td headers="mpi" class="gt_row gt_right">0.113</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
@@ -1456,23 +1483,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">contribution</span></span></code></pre></div>
-<div id="hujshjcnkc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hujshjcnkc table {
+<div id="wyelwnmjbo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wyelwnmjbo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hujshjcnkc thead, #hujshjcnkc tbody, #hujshjcnkc tfoot, #hujshjcnkc tr, #hujshjcnkc td, #hujshjcnkc th {
+#wyelwnmjbo thead, #wyelwnmjbo tbody, #wyelwnmjbo tfoot, #wyelwnmjbo tr, #wyelwnmjbo td, #wyelwnmjbo th {
   border-style: none;
 }
 
-#hujshjcnkc p {
+#wyelwnmjbo p {
   margin: 0;
   padding: 0;
 }
 
-#hujshjcnkc .gt_table {
+#wyelwnmjbo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1498,12 +1525,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_caption {
+#wyelwnmjbo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hujshjcnkc .gt_title {
+#wyelwnmjbo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1515,7 +1542,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#hujshjcnkc .gt_subtitle {
+#wyelwnmjbo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1527,7 +1554,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#hujshjcnkc .gt_heading {
+#wyelwnmjbo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1539,13 +1566,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_bottom_border {
+#wyelwnmjbo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_col_headings {
+#wyelwnmjbo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1560,7 +1587,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_col_heading {
+#wyelwnmjbo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1580,7 +1607,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#hujshjcnkc .gt_column_spanner_outer {
+#wyelwnmjbo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1592,15 +1619,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#hujshjcnkc .gt_column_spanner_outer:first-child {
+#wyelwnmjbo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hujshjcnkc .gt_column_spanner_outer:last-child {
+#wyelwnmjbo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hujshjcnkc .gt_column_spanner {
+#wyelwnmjbo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1612,11 +1639,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#hujshjcnkc .gt_spanner_row {
+#wyelwnmjbo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hujshjcnkc .gt_group_heading {
+#wyelwnmjbo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1642,7 +1669,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#hujshjcnkc .gt_empty_group_heading {
+#wyelwnmjbo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1657,15 +1684,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#hujshjcnkc .gt_from_md > :first-child {
+#wyelwnmjbo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hujshjcnkc .gt_from_md > :last-child {
+#wyelwnmjbo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hujshjcnkc .gt_row {
+#wyelwnmjbo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1684,7 +1711,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#hujshjcnkc .gt_stub {
+#wyelwnmjbo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1697,7 +1724,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hujshjcnkc .gt_stub_row_group {
+#wyelwnmjbo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1711,15 +1738,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#hujshjcnkc .gt_row_group_first td {
+#wyelwnmjbo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hujshjcnkc .gt_row_group_first th {
+#wyelwnmjbo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hujshjcnkc .gt_summary_row {
+#wyelwnmjbo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1729,16 +1756,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hujshjcnkc .gt_first_summary_row {
+#wyelwnmjbo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_first_summary_row.thick {
+#wyelwnmjbo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hujshjcnkc .gt_last_summary_row {
+#wyelwnmjbo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1748,7 +1775,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_grand_summary_row {
+#wyelwnmjbo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1758,7 +1785,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hujshjcnkc .gt_first_grand_summary_row {
+#wyelwnmjbo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1768,7 +1795,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_last_grand_summary_row_top {
+#wyelwnmjbo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1778,11 +1805,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_striped {
+#wyelwnmjbo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hujshjcnkc .gt_table_body {
+#wyelwnmjbo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1791,7 +1818,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_footnotes {
+#wyelwnmjbo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1805,7 +1832,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_footnote {
+#wyelwnmjbo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1814,7 +1841,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hujshjcnkc .gt_sourcenotes {
+#wyelwnmjbo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1828,7 +1855,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hujshjcnkc .gt_sourcenote {
+#wyelwnmjbo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1836,73 +1863,74 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hujshjcnkc .gt_left {
+#wyelwnmjbo .gt_left {
   text-align: left;
 }
 
-#hujshjcnkc .gt_center {
+#wyelwnmjbo .gt_center {
   text-align: center;
 }
 
-#hujshjcnkc .gt_right {
+#wyelwnmjbo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hujshjcnkc .gt_font_normal {
+#wyelwnmjbo .gt_font_normal {
   font-weight: normal;
 }
 
-#hujshjcnkc .gt_font_bold {
+#wyelwnmjbo .gt_font_bold {
   font-weight: bold;
 }
 
-#hujshjcnkc .gt_font_italic {
+#wyelwnmjbo .gt_font_italic {
   font-style: italic;
 }
 
-#hujshjcnkc .gt_super {
+#wyelwnmjbo .gt_super {
   font-size: 65%;
 }
 
-#hujshjcnkc .gt_footnote_marks {
+#wyelwnmjbo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hujshjcnkc .gt_asterisk {
+#wyelwnmjbo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hujshjcnkc .gt_indent_1 {
+#wyelwnmjbo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hujshjcnkc .gt_indent_2 {
+#wyelwnmjbo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hujshjcnkc .gt_indent_3 {
+#wyelwnmjbo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hujshjcnkc .gt_indent_4 {
+#wyelwnmjbo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hujshjcnkc .gt_indent_5 {
+#wyelwnmjbo .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Contribution by Dimenstion and Indicator to MPI using 33% Poverty Cutoff</td>
+<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Contribution by Dimenstion and Indicator to MPI using 33% Poverty Cutoff</td>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Number of households">Number of households</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Class">Class</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Number of cases">Number of cases</th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Health">
         <span class="gt_column_spanner">Health</span>
       </th>
@@ -1926,19 +1954,36 @@ But unlike in <code>nutrition</code>, we do not need to provide the
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Assets">Assets</th>
     </tr>
 </thead>
-<tbody class="gt_table_body"><tr>
-<td headers="Number of households" class="gt_row gt_right">198</td>
-<td headers="Nutrition" class="gt_row gt_right">21.2</td>
-<td headers="Child mortality" class="gt_row gt_right">1.4</td>
-<td headers="Years of schooling" class="gt_row gt_right">33.9</td>
-<td headers="School attendance" class="gt_row gt_right">20.2</td>
-<td headers="Cooking fuel" class="gt_row gt_right">6.1</td>
-<td headers="Sanitation" class="gt_row gt_right">1.7</td>
-<td headers="Drinking water" class="gt_row gt_right">0.6</td>
-<td headers="Electricity" class="gt_row gt_right">1.4</td>
-<td headers="Housing" class="gt_row gt_right">2.7</td>
-<td headers="Assets" class="gt_row gt_right">10.8</td>
-</tr></tbody>
+<tbody class="gt_table_body">
+<tr>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="number_of_cases" class="gt_row gt_right">98</td>
+<td headers="nutrition" class="gt_row gt_right">20.7</td>
+<td headers="child_mortality" class="gt_row gt_right">1.4</td>
+<td headers="year_schooling" class="gt_row gt_right">32.5</td>
+<td headers="school_attendance" class="gt_row gt_right">18.0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">9.0</td>
+<td headers="sanitation" class="gt_row gt_right">1.4</td>
+<td headers="drinking_water" class="gt_row gt_right">0.7</td>
+<td headers="electricity" class="gt_row gt_right">2.1</td>
+<td headers="housing" class="gt_row gt_right">3.7</td>
+<td headers="assets" class="gt_row gt_right">10.6</td>
+</tr>
+<tr>
+<td headers="class" class="gt_row gt_left">Urban</td>
+<td headers="number_of_cases" class="gt_row gt_right">100</td>
+<td headers="nutrition" class="gt_row gt_right">22.1</td>
+<td headers="child_mortality" class="gt_row gt_right">1.5</td>
+<td headers="year_schooling" class="gt_row gt_right">36.8</td>
+<td headers="school_attendance" class="gt_row gt_right">25.0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0.0</td>
+<td headers="sanitation" class="gt_row gt_right">2.5</td>
+<td headers="drinking_water" class="gt_row gt_right">0.5</td>
+<td headers="electricity" class="gt_row gt_right">0.0</td>
+<td headers="housing" class="gt_row gt_right">0.5</td>
+<td headers="assets" class="gt_row gt_right">11.3</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
@@ -1947,23 +1992,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">headcount_ratio</span><span class="op">$</span><span class="va">uncensored</span></span></code></pre></div>
-<div id="nawjksqbrr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nawjksqbrr table {
+<div id="fihavpwzpv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fihavpwzpv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nawjksqbrr thead, #nawjksqbrr tbody, #nawjksqbrr tfoot, #nawjksqbrr tr, #nawjksqbrr td, #nawjksqbrr th {
+#fihavpwzpv thead, #fihavpwzpv tbody, #fihavpwzpv tfoot, #fihavpwzpv tr, #fihavpwzpv td, #fihavpwzpv th {
   border-style: none;
 }
 
-#nawjksqbrr p {
+#fihavpwzpv p {
   margin: 0;
   padding: 0;
 }
 
-#nawjksqbrr .gt_table {
+#fihavpwzpv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1989,12 +2034,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_caption {
+#fihavpwzpv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nawjksqbrr .gt_title {
+#fihavpwzpv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2006,7 +2051,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#nawjksqbrr .gt_subtitle {
+#fihavpwzpv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2018,7 +2063,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#nawjksqbrr .gt_heading {
+#fihavpwzpv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2030,13 +2075,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_bottom_border {
+#fihavpwzpv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_col_headings {
+#fihavpwzpv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2051,7 +2096,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_col_heading {
+#fihavpwzpv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2071,7 +2116,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#nawjksqbrr .gt_column_spanner_outer {
+#fihavpwzpv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2083,15 +2128,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#nawjksqbrr .gt_column_spanner_outer:first-child {
+#fihavpwzpv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nawjksqbrr .gt_column_spanner_outer:last-child {
+#fihavpwzpv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nawjksqbrr .gt_column_spanner {
+#fihavpwzpv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2103,11 +2148,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#nawjksqbrr .gt_spanner_row {
+#fihavpwzpv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nawjksqbrr .gt_group_heading {
+#fihavpwzpv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2133,7 +2178,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#nawjksqbrr .gt_empty_group_heading {
+#fihavpwzpv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2148,15 +2193,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#nawjksqbrr .gt_from_md > :first-child {
+#fihavpwzpv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nawjksqbrr .gt_from_md > :last-child {
+#fihavpwzpv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nawjksqbrr .gt_row {
+#fihavpwzpv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2175,7 +2220,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#nawjksqbrr .gt_stub {
+#fihavpwzpv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2188,7 +2233,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#nawjksqbrr .gt_stub_row_group {
+#fihavpwzpv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2202,15 +2247,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#nawjksqbrr .gt_row_group_first td {
+#fihavpwzpv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nawjksqbrr .gt_row_group_first th {
+#fihavpwzpv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nawjksqbrr .gt_summary_row {
+#fihavpwzpv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2220,16 +2265,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#nawjksqbrr .gt_first_summary_row {
+#fihavpwzpv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_first_summary_row.thick {
+#fihavpwzpv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nawjksqbrr .gt_last_summary_row {
+#fihavpwzpv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2239,7 +2284,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_grand_summary_row {
+#fihavpwzpv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2249,7 +2294,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#nawjksqbrr .gt_first_grand_summary_row {
+#fihavpwzpv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2259,7 +2304,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_last_grand_summary_row_top {
+#fihavpwzpv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2269,11 +2314,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_striped {
+#fihavpwzpv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nawjksqbrr .gt_table_body {
+#fihavpwzpv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2282,7 +2327,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_footnotes {
+#fihavpwzpv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2296,7 +2341,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_footnote {
+#fihavpwzpv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2305,7 +2350,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#nawjksqbrr .gt_sourcenotes {
+#fihavpwzpv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2319,7 +2364,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#nawjksqbrr .gt_sourcenote {
+#fihavpwzpv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2327,73 +2372,74 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#nawjksqbrr .gt_left {
+#fihavpwzpv .gt_left {
   text-align: left;
 }
 
-#nawjksqbrr .gt_center {
+#fihavpwzpv .gt_center {
   text-align: center;
 }
 
-#nawjksqbrr .gt_right {
+#fihavpwzpv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nawjksqbrr .gt_font_normal {
+#fihavpwzpv .gt_font_normal {
   font-weight: normal;
 }
 
-#nawjksqbrr .gt_font_bold {
+#fihavpwzpv .gt_font_bold {
   font-weight: bold;
 }
 
-#nawjksqbrr .gt_font_italic {
+#fihavpwzpv .gt_font_italic {
   font-style: italic;
 }
 
-#nawjksqbrr .gt_super {
+#fihavpwzpv .gt_super {
   font-size: 65%;
 }
 
-#nawjksqbrr .gt_footnote_marks {
+#fihavpwzpv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nawjksqbrr .gt_asterisk {
+#fihavpwzpv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nawjksqbrr .gt_indent_1 {
+#fihavpwzpv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nawjksqbrr .gt_indent_2 {
+#fihavpwzpv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nawjksqbrr .gt_indent_3 {
+#fihavpwzpv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nawjksqbrr .gt_indent_4 {
+#fihavpwzpv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nawjksqbrr .gt_indent_5 {
+#fihavpwzpv .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Uncensored Headcount Ratio</td>
+<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Uncensored Headcount Ratio</td>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Number of households">Number of households</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Class">Class</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Number of cases">Number of cases</th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Health">
         <span class="gt_column_spanner">Health</span>
       </th>
@@ -2417,40 +2463,57 @@ But unlike in <code>nutrition</code>, we do not need to provide the
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Assets">Assets</th>
     </tr>
 </thead>
-<tbody class="gt_table_body"><tr>
-<td headers="Number of households" class="gt_row gt_right">198</td>
-<td headers="Nutrition" class="gt_row gt_right">0.237</td>
-<td headers="Child mortality" class="gt_row gt_right">0.015</td>
-<td headers="Years of schooling" class="gt_row gt_right">0.813</td>
-<td headers="School attendance" class="gt_row gt_right">0.258</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0.293</td>
-<td headers="Sanitation" class="gt_row gt_right">0.091</td>
-<td headers="Drinking water" class="gt_row gt_right">0.020</td>
-<td headers="Electricity" class="gt_row gt_right">0.051</td>
-<td headers="Housing" class="gt_row gt_right">0.086</td>
-<td headers="Assets" class="gt_row gt_right">0.763</td>
-</tr></tbody>
+<tbody class="gt_table_body">
+<tr>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="number_of_cases" class="gt_row gt_right">98</td>
+<td headers="nutrition" class="gt_row gt_right">0.306</td>
+<td headers="child_mortality" class="gt_row gt_right">0.020</td>
+<td headers="year_schooling" class="gt_row gt_right">0.888</td>
+<td headers="school_attendance" class="gt_row gt_right">0.276</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0.582</td>
+<td headers="sanitation" class="gt_row gt_right">0.082</td>
+<td headers="drinking_water" class="gt_row gt_right">0.031</td>
+<td headers="electricity" class="gt_row gt_right">0.102</td>
+<td headers="housing" class="gt_row gt_right">0.163</td>
+<td headers="assets" class="gt_row gt_right">0.867</td>
+</tr>
+<tr>
+<td headers="class" class="gt_row gt_left">Urban</td>
+<td headers="number_of_cases" class="gt_row gt_right">100</td>
+<td headers="nutrition" class="gt_row gt_right">0.170</td>
+<td headers="child_mortality" class="gt_row gt_right">0.010</td>
+<td headers="year_schooling" class="gt_row gt_right">0.740</td>
+<td headers="school_attendance" class="gt_row gt_right">0.240</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0.010</td>
+<td headers="sanitation" class="gt_row gt_right">0.100</td>
+<td headers="drinking_water" class="gt_row gt_right">0.010</td>
+<td headers="electricity" class="gt_row gt_right">0.000</td>
+<td headers="housing" class="gt_row gt_right">0.010</td>
+<td headers="assets" class="gt_row gt_right">0.660</td>
+</tr>
+</tbody>
 </table>
 </div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">headcount_ratio</span><span class="op">$</span><span class="va">censored</span></span></code></pre></div>
-<div id="mvxlefukgb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mvxlefukgb table {
+<div id="mzvehanzak" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mzvehanzak table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mvxlefukgb thead, #mvxlefukgb tbody, #mvxlefukgb tfoot, #mvxlefukgb tr, #mvxlefukgb td, #mvxlefukgb th {
+#mzvehanzak thead, #mzvehanzak tbody, #mzvehanzak tfoot, #mzvehanzak tr, #mzvehanzak td, #mzvehanzak th {
   border-style: none;
 }
 
-#mvxlefukgb p {
+#mzvehanzak p {
   margin: 0;
   padding: 0;
 }
 
-#mvxlefukgb .gt_table {
+#mzvehanzak .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2476,12 +2539,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_caption {
+#mzvehanzak .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mvxlefukgb .gt_title {
+#mzvehanzak .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2493,7 +2556,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#mvxlefukgb .gt_subtitle {
+#mzvehanzak .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2505,7 +2568,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#mvxlefukgb .gt_heading {
+#mzvehanzak .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2517,13 +2580,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_bottom_border {
+#mzvehanzak .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_col_headings {
+#mzvehanzak .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2538,7 +2601,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_col_heading {
+#mzvehanzak .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2558,7 +2621,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#mvxlefukgb .gt_column_spanner_outer {
+#mzvehanzak .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2570,15 +2633,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#mvxlefukgb .gt_column_spanner_outer:first-child {
+#mzvehanzak .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mvxlefukgb .gt_column_spanner_outer:last-child {
+#mzvehanzak .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mvxlefukgb .gt_column_spanner {
+#mzvehanzak .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2590,11 +2653,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#mvxlefukgb .gt_spanner_row {
+#mzvehanzak .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mvxlefukgb .gt_group_heading {
+#mzvehanzak .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2620,7 +2683,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#mvxlefukgb .gt_empty_group_heading {
+#mzvehanzak .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2635,15 +2698,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#mvxlefukgb .gt_from_md > :first-child {
+#mzvehanzak .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mvxlefukgb .gt_from_md > :last-child {
+#mzvehanzak .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mvxlefukgb .gt_row {
+#mzvehanzak .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2662,7 +2725,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#mvxlefukgb .gt_stub {
+#mzvehanzak .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2675,7 +2738,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#mvxlefukgb .gt_stub_row_group {
+#mzvehanzak .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2689,15 +2752,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#mvxlefukgb .gt_row_group_first td {
+#mzvehanzak .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mvxlefukgb .gt_row_group_first th {
+#mzvehanzak .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mvxlefukgb .gt_summary_row {
+#mzvehanzak .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2707,16 +2770,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#mvxlefukgb .gt_first_summary_row {
+#mzvehanzak .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_first_summary_row.thick {
+#mzvehanzak .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mvxlefukgb .gt_last_summary_row {
+#mzvehanzak .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2726,7 +2789,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_grand_summary_row {
+#mzvehanzak .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2736,7 +2799,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#mvxlefukgb .gt_first_grand_summary_row {
+#mzvehanzak .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2746,7 +2809,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_last_grand_summary_row_top {
+#mzvehanzak .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2756,11 +2819,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_striped {
+#mzvehanzak .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mvxlefukgb .gt_table_body {
+#mzvehanzak .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2769,7 +2832,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_footnotes {
+#mzvehanzak .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2783,7 +2846,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_footnote {
+#mzvehanzak .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2792,7 +2855,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#mvxlefukgb .gt_sourcenotes {
+#mzvehanzak .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2806,7 +2869,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#mvxlefukgb .gt_sourcenote {
+#mzvehanzak .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2814,73 +2877,74 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#mvxlefukgb .gt_left {
+#mzvehanzak .gt_left {
   text-align: left;
 }
 
-#mvxlefukgb .gt_center {
+#mzvehanzak .gt_center {
   text-align: center;
 }
 
-#mvxlefukgb .gt_right {
+#mzvehanzak .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mvxlefukgb .gt_font_normal {
+#mzvehanzak .gt_font_normal {
   font-weight: normal;
 }
 
-#mvxlefukgb .gt_font_bold {
+#mzvehanzak .gt_font_bold {
   font-weight: bold;
 }
 
-#mvxlefukgb .gt_font_italic {
+#mzvehanzak .gt_font_italic {
   font-style: italic;
 }
 
-#mvxlefukgb .gt_super {
+#mzvehanzak .gt_super {
   font-size: 65%;
 }
 
-#mvxlefukgb .gt_footnote_marks {
+#mzvehanzak .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mvxlefukgb .gt_asterisk {
+#mzvehanzak .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mvxlefukgb .gt_indent_1 {
+#mzvehanzak .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mvxlefukgb .gt_indent_2 {
+#mzvehanzak .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mvxlefukgb .gt_indent_3 {
+#mzvehanzak .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mvxlefukgb .gt_indent_4 {
+#mzvehanzak .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mvxlefukgb .gt_indent_5 {
+#mzvehanzak .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Censored Headcount Ratio using 33% Poverty Cutoff</td>
+<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Censored Headcount Ratio using 33% Poverty Cutoff</td>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Number of households">Number of households</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Class">Class</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Number of cases">Number of cases</th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Health">
         <span class="gt_column_spanner">Health</span>
       </th>
@@ -2904,19 +2968,36 @@ But unlike in <code>nutrition</code>, we do not need to provide the
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Assets">Assets</th>
     </tr>
 </thead>
-<tbody class="gt_table_body"><tr>
-<td headers="Number of households" class="gt_row gt_right">198</td>
-<td headers="Nutrition" class="gt_row gt_right">0.227</td>
-<td headers="Child mortality" class="gt_row gt_right">0.015</td>
-<td headers="Years of schooling" class="gt_row gt_right">0.364</td>
-<td headers="School attendance" class="gt_row gt_right">0.217</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0.197</td>
-<td headers="Sanitation" class="gt_row gt_right">0.056</td>
-<td headers="Drinking water" class="gt_row gt_right">0.020</td>
-<td headers="Electricity" class="gt_row gt_right">0.045</td>
-<td headers="Housing" class="gt_row gt_right">0.086</td>
-<td headers="Assets" class="gt_row gt_right">0.348</td>
-</tr></tbody>
+<tbody class="gt_table_body">
+<tr>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="number_of_cases" class="gt_row gt_right">98</td>
+<td headers="nutrition" class="gt_row gt_right">0.306</td>
+<td headers="child_mortality" class="gt_row gt_right">0.020</td>
+<td headers="year_schooling" class="gt_row gt_right">0.480</td>
+<td headers="school_attendance" class="gt_row gt_right">0.265</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0.398</td>
+<td headers="sanitation" class="gt_row gt_right">0.061</td>
+<td headers="drinking_water" class="gt_row gt_right">0.031</td>
+<td headers="electricity" class="gt_row gt_right">0.092</td>
+<td headers="housing" class="gt_row gt_right">0.163</td>
+<td headers="assets" class="gt_row gt_right">0.469</td>
+</tr>
+<tr>
+<td headers="class" class="gt_row gt_left">Urban</td>
+<td headers="number_of_cases" class="gt_row gt_right">100</td>
+<td headers="nutrition" class="gt_row gt_right">0.150</td>
+<td headers="child_mortality" class="gt_row gt_right">0.010</td>
+<td headers="year_schooling" class="gt_row gt_right">0.250</td>
+<td headers="school_attendance" class="gt_row gt_right">0.170</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0.000</td>
+<td headers="sanitation" class="gt_row gt_right">0.050</td>
+<td headers="drinking_water" class="gt_row gt_right">0.010</td>
+<td headers="electricity" class="gt_row gt_right">0.000</td>
+<td headers="housing" class="gt_row gt_right">0.010</td>
+<td headers="assets" class="gt_row gt_right">0.230</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
@@ -2925,23 +3006,23 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 </h4>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">deprivation_matrix</span><span class="op">$</span><span class="va">uncensored</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="aaaqeevomh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aaaqeevomh table {
+<div id="zyzbqsygpn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zyzbqsygpn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aaaqeevomh thead, #aaaqeevomh tbody, #aaaqeevomh tfoot, #aaaqeevomh tr, #aaaqeevomh td, #aaaqeevomh th {
+#zyzbqsygpn thead, #zyzbqsygpn tbody, #zyzbqsygpn tfoot, #zyzbqsygpn tr, #zyzbqsygpn td, #zyzbqsygpn th {
   border-style: none;
 }
 
-#aaaqeevomh p {
+#zyzbqsygpn p {
   margin: 0;
   padding: 0;
 }
 
-#aaaqeevomh .gt_table {
+#zyzbqsygpn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2967,12 +3048,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_caption {
+#zyzbqsygpn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aaaqeevomh .gt_title {
+#zyzbqsygpn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2984,7 +3065,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#aaaqeevomh .gt_subtitle {
+#zyzbqsygpn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2996,7 +3077,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#aaaqeevomh .gt_heading {
+#zyzbqsygpn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3008,13 +3089,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_bottom_border {
+#zyzbqsygpn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_col_headings {
+#zyzbqsygpn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3029,7 +3110,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_col_heading {
+#zyzbqsygpn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3049,7 +3130,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#aaaqeevomh .gt_column_spanner_outer {
+#zyzbqsygpn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3061,15 +3142,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#aaaqeevomh .gt_column_spanner_outer:first-child {
+#zyzbqsygpn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aaaqeevomh .gt_column_spanner_outer:last-child {
+#zyzbqsygpn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aaaqeevomh .gt_column_spanner {
+#zyzbqsygpn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3081,11 +3162,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#aaaqeevomh .gt_spanner_row {
+#zyzbqsygpn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aaaqeevomh .gt_group_heading {
+#zyzbqsygpn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3111,7 +3192,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#aaaqeevomh .gt_empty_group_heading {
+#zyzbqsygpn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3126,15 +3207,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#aaaqeevomh .gt_from_md > :first-child {
+#zyzbqsygpn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aaaqeevomh .gt_from_md > :last-child {
+#zyzbqsygpn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aaaqeevomh .gt_row {
+#zyzbqsygpn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3153,7 +3234,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#aaaqeevomh .gt_stub {
+#zyzbqsygpn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3166,7 +3247,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aaaqeevomh .gt_stub_row_group {
+#zyzbqsygpn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3180,15 +3261,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#aaaqeevomh .gt_row_group_first td {
+#zyzbqsygpn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aaaqeevomh .gt_row_group_first th {
+#zyzbqsygpn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aaaqeevomh .gt_summary_row {
+#zyzbqsygpn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3198,16 +3279,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aaaqeevomh .gt_first_summary_row {
+#zyzbqsygpn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_first_summary_row.thick {
+#zyzbqsygpn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aaaqeevomh .gt_last_summary_row {
+#zyzbqsygpn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3217,7 +3298,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_grand_summary_row {
+#zyzbqsygpn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3227,7 +3308,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aaaqeevomh .gt_first_grand_summary_row {
+#zyzbqsygpn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3237,7 +3318,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_last_grand_summary_row_top {
+#zyzbqsygpn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3247,11 +3328,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_striped {
+#zyzbqsygpn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aaaqeevomh .gt_table_body {
+#zyzbqsygpn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3260,7 +3341,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_footnotes {
+#zyzbqsygpn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3274,7 +3355,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_footnote {
+#zyzbqsygpn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3283,7 +3364,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aaaqeevomh .gt_sourcenotes {
+#zyzbqsygpn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3297,7 +3378,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#aaaqeevomh .gt_sourcenote {
+#zyzbqsygpn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3305,73 +3386,75 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#aaaqeevomh .gt_left {
+#zyzbqsygpn .gt_left {
   text-align: left;
 }
 
-#aaaqeevomh .gt_center {
+#zyzbqsygpn .gt_center {
   text-align: center;
 }
 
-#aaaqeevomh .gt_right {
+#zyzbqsygpn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aaaqeevomh .gt_font_normal {
+#zyzbqsygpn .gt_font_normal {
   font-weight: normal;
 }
 
-#aaaqeevomh .gt_font_bold {
+#zyzbqsygpn .gt_font_bold {
   font-weight: bold;
 }
 
-#aaaqeevomh .gt_font_italic {
+#zyzbqsygpn .gt_font_italic {
   font-style: italic;
 }
 
-#aaaqeevomh .gt_super {
+#zyzbqsygpn .gt_super {
   font-size: 65%;
 }
 
-#aaaqeevomh .gt_footnote_marks {
+#zyzbqsygpn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aaaqeevomh .gt_asterisk {
+#zyzbqsygpn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aaaqeevomh .gt_indent_1 {
+#zyzbqsygpn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aaaqeevomh .gt_indent_2 {
+#zyzbqsygpn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aaaqeevomh .gt_indent_3 {
+#zyzbqsygpn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aaaqeevomh .gt_indent_4 {
+#zyzbqsygpn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aaaqeevomh .gt_indent_5 {
+#zyzbqsygpn .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Uncensored Deprivation Matrix </td>
+<td colspan="13" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Uncensored Deprivation Matrix </td>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="uuid">uuid</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="UUID">UUID</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Class">Class</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Deprivation score">Deprivation score</th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Health">
         <span class="gt_column_spanner">Health</span>
       </th>
@@ -3381,11 +3464,9 @@ But unlike in <code>nutrition</code>, we do not need to provide the
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Living Standards">
         <span class="gt_column_spanner">Living Standards</span>
       </th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Assets">Assets</th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Deprivation score">Deprivation score</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nutrition">Nutrition</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nutrition">Nutrition</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Child mortality">Child mortality</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Years of schooling">Years of schooling</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="School attendance">School attendance</th>
@@ -3394,115 +3475,122 @@ But unlike in <code>nutrition</code>, we do not need to provide the
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Drinking water">Drinking water</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Electricity">Electricity</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Housing">Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Assets">Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
 <td headers="uuid" class="gt_row gt_left">5dbec60a-ebda-47bd-ae18-3b017a221125</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.222</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">1</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">1</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.222</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">8b70c208-8642-408c-8a51-30bcaa106069</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.278</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">1</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">1</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">1</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.278</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">aa7cb64d-ba16-4842-8994-8772060f432d</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.111</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">0</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">1</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">1</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.111</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">df3e5c9b-7218-451d-9917-cd552cf4f40f</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.278</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">1</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">1</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">1</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.278</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">57babe6a-c163-4d8e-aa80-3a9bc9290d2d</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.278</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">1</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">1</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">1</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.278</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">ba3f75cd-102d-482d-a979-b9098e9e0e18</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.278</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">1</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">1</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">1</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.278</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">deprivation_matrix</span><span class="op">$</span><span class="va">censored</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div id="hcmheiaeam" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hcmheiaeam table {
+<div id="secbpqsiym" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#secbpqsiym table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hcmheiaeam thead, #hcmheiaeam tbody, #hcmheiaeam tfoot, #hcmheiaeam tr, #hcmheiaeam td, #hcmheiaeam th {
+#secbpqsiym thead, #secbpqsiym tbody, #secbpqsiym tfoot, #secbpqsiym tr, #secbpqsiym td, #secbpqsiym th {
   border-style: none;
 }
 
-#hcmheiaeam p {
+#secbpqsiym p {
   margin: 0;
   padding: 0;
 }
 
-#hcmheiaeam .gt_table {
+#secbpqsiym .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3528,12 +3616,12 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-left-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_caption {
+#secbpqsiym .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hcmheiaeam .gt_title {
+#secbpqsiym .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3545,7 +3633,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-width: 0;
 }
 
-#hcmheiaeam .gt_subtitle {
+#secbpqsiym .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3557,7 +3645,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-width: 0;
 }
 
-#hcmheiaeam .gt_heading {
+#secbpqsiym .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3569,13 +3657,13 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_bottom_border {
+#secbpqsiym .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_col_headings {
+#secbpqsiym .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3590,7 +3678,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_col_heading {
+#secbpqsiym .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3610,7 +3698,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#hcmheiaeam .gt_column_spanner_outer {
+#secbpqsiym .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3622,15 +3710,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 4px;
 }
 
-#hcmheiaeam .gt_column_spanner_outer:first-child {
+#secbpqsiym .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hcmheiaeam .gt_column_spanner_outer:last-child {
+#secbpqsiym .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hcmheiaeam .gt_column_spanner {
+#secbpqsiym .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3642,11 +3730,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   width: 100%;
 }
 
-#hcmheiaeam .gt_spanner_row {
+#secbpqsiym .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hcmheiaeam .gt_group_heading {
+#secbpqsiym .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3672,7 +3760,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   text-align: left;
 }
 
-#hcmheiaeam .gt_empty_group_heading {
+#secbpqsiym .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3687,15 +3775,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: middle;
 }
 
-#hcmheiaeam .gt_from_md > :first-child {
+#secbpqsiym .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hcmheiaeam .gt_from_md > :last-child {
+#secbpqsiym .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hcmheiaeam .gt_row {
+#secbpqsiym .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3714,7 +3802,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   overflow-x: hidden;
 }
 
-#hcmheiaeam .gt_stub {
+#secbpqsiym .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3727,7 +3815,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hcmheiaeam .gt_stub_row_group {
+#secbpqsiym .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3741,15 +3829,15 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   vertical-align: top;
 }
 
-#hcmheiaeam .gt_row_group_first td {
+#secbpqsiym .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hcmheiaeam .gt_row_group_first th {
+#secbpqsiym .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hcmheiaeam .gt_summary_row {
+#secbpqsiym .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3759,16 +3847,16 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hcmheiaeam .gt_first_summary_row {
+#secbpqsiym .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_first_summary_row.thick {
+#secbpqsiym .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hcmheiaeam .gt_last_summary_row {
+#secbpqsiym .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3778,7 +3866,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_grand_summary_row {
+#secbpqsiym .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3788,7 +3876,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hcmheiaeam .gt_first_grand_summary_row {
+#secbpqsiym .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3798,7 +3886,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-top-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_last_grand_summary_row_top {
+#secbpqsiym .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3808,11 +3896,11 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_striped {
+#secbpqsiym .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hcmheiaeam .gt_table_body {
+#secbpqsiym .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3821,7 +3909,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-bottom-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_footnotes {
+#secbpqsiym .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3835,7 +3923,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_footnote {
+#secbpqsiym .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3844,7 +3932,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hcmheiaeam .gt_sourcenotes {
+#secbpqsiym .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3858,7 +3946,7 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   border-right-color: #D3D3D3;
 }
 
-#hcmheiaeam .gt_sourcenote {
+#secbpqsiym .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3866,73 +3954,75 @@ But unlike in <code>nutrition</code>, we do not need to provide the
   padding-right: 5px;
 }
 
-#hcmheiaeam .gt_left {
+#secbpqsiym .gt_left {
   text-align: left;
 }
 
-#hcmheiaeam .gt_center {
+#secbpqsiym .gt_center {
   text-align: center;
 }
 
-#hcmheiaeam .gt_right {
+#secbpqsiym .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hcmheiaeam .gt_font_normal {
+#secbpqsiym .gt_font_normal {
   font-weight: normal;
 }
 
-#hcmheiaeam .gt_font_bold {
+#secbpqsiym .gt_font_bold {
   font-weight: bold;
 }
 
-#hcmheiaeam .gt_font_italic {
+#secbpqsiym .gt_font_italic {
   font-style: italic;
 }
 
-#hcmheiaeam .gt_super {
+#secbpqsiym .gt_super {
   font-size: 65%;
 }
 
-#hcmheiaeam .gt_footnote_marks {
+#secbpqsiym .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hcmheiaeam .gt_asterisk {
+#secbpqsiym .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hcmheiaeam .gt_indent_1 {
+#secbpqsiym .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hcmheiaeam .gt_indent_2 {
+#secbpqsiym .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hcmheiaeam .gt_indent_3 {
+#secbpqsiym .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hcmheiaeam .gt_indent_4 {
+#secbpqsiym .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hcmheiaeam .gt_indent_5 {
+#secbpqsiym .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Censored Deprivation Matrix using 33% Poverty Cutoff</td>
+<td colspan="13" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Censored Deprivation Matrix using 33% Poverty Cutoff</td>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="uuid">uuid</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="UUID">UUID</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Class">Class</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Deprivation score">Deprivation score</th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Health">
         <span class="gt_column_spanner">Health</span>
       </th>
@@ -3942,11 +4032,9 @@ But unlike in <code>nutrition</code>, we do not need to provide the
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Living Standards">
         <span class="gt_column_spanner">Living Standards</span>
       </th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="Assets">Assets</th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Deprivation score">Deprivation score</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nutrition">Nutrition</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Nutrition">Nutrition</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Child mortality">Child mortality</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Years of schooling">Years of schooling</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="School attendance">School attendance</th>
@@ -3955,115 +4043,133 @@ But unlike in <code>nutrition</code>, we do not need to provide the
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Drinking water">Drinking water</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Electricity">Electricity</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Housing">Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Assets">Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
 <td headers="uuid" class="gt_row gt_left">5dbec60a-ebda-47bd-ae18-3b017a221125</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.000</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">0</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">0</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.000</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">8b70c208-8642-408c-8a51-30bcaa106069</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.000</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">0</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">0</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.000</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">aa7cb64d-ba16-4842-8994-8772060f432d</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.000</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">0</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">0</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.000</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">df3e5c9b-7218-451d-9917-cd552cf4f40f</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.000</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">0</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">0</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.000</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">57babe6a-c163-4d8e-aa80-3a9bc9290d2d</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.000</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">0</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">0</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.000</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">ba3f75cd-102d-482d-a979-b9098e9e0e18</td>
-<td headers="Deprivation score" class="gt_row gt_right">0.000</td>
-<td headers="Nutrition" class="gt_row gt_right">0</td>
-<td headers="Child mortality" class="gt_row gt_right">0</td>
-<td headers="Years of schooling" class="gt_row gt_right">0</td>
-<td headers="School attendance" class="gt_row gt_right">0</td>
-<td headers="Cooking fuel" class="gt_row gt_right">0</td>
-<td headers="Sanitation" class="gt_row gt_right">0</td>
-<td headers="Drinking water" class="gt_row gt_right">0</td>
-<td headers="Electricity" class="gt_row gt_right">0</td>
-<td headers="Housing" class="gt_row gt_right">0</td>
-<td headers="Assets" class="gt_row gt_right">0</td>
+<td headers="class" class="gt_row gt_left">Rural</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.000</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>Note: Deprivation matrices are included by default when you run
+<code>compute_mpi</code>. If you want to exclude these in your output,
+set <code>.include_deprivation_matrix</code> equal to
+<code>FALSE</code>.</p>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="saving-output">6. Saving output<a class="anchor" aria-label="anchor" href="#saving-output"></a>
 </h2>
-<p>You may also save your output into an Excel file.</p>
+<p>You may also save your output into an Excel file. You may choose to
+format the output or retain its tidy format by setting the
+<code>formatted_output</code> parameter appropriately.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_mpi.html">save_mpi</a></span><span class="op">(</span><span class="va">mpi_result</span>, .filename <span class="op">=</span> <span class="st">'MPI Sample Output'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Formatted output</span></span>
+<span><span class="fu"><a href="../reference/save_mpi.html">save_mpi</a></span><span class="op">(</span><span class="va">mpi_result</span>, .filename <span class="op">=</span> <span class="st">'MPI Sample Output'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Not formatted</span></span>
+<span><span class="fu"><a href="../reference/save_mpi.html">save_mpi</a></span><span class="op">(</span><span class="va">mpi_result</span>, .filename <span class="op">=</span> <span class="st">'MPI Sample Output (no format)'</span>, .formatted_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="full-script">Full script<a class="anchor" aria-label="anchor" href="#full-script"></a>
 </h2>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ----------------------------------</span></span>
-<span><span class="co"># Load MPI specs from the built-in specs file</span></span>
-<span><span class="va">specs_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"global-mpi-specs.csv"</span>, package <span class="op">=</span> <span class="st">"mpindex"</span><span class="op">)</span></span>
-<span><span class="va">mpi_specs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_mpi_specs.html">define_mpi_specs</a></span><span class="op">(</span><span class="va">specs_file</span>, .uid <span class="op">=</span> <span class="st">'uuid'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span><span class="op">)</span></span>
+<span><span class="co"># Load MPI specs from the built-in specs file </span></span>
+<span><span class="fu"><a href="../reference/use_global_mpi_specs.html">use_global_mpi_specs</a></span><span class="op">(</span></span>
+<span>  .uid <span class="op">=</span> <span class="st">'uuid'</span>,</span>
+<span>  .aggregation <span class="op">=</span> <span class="st">'class'</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ----------------------------------</span></span>
 <span><span class="co"># Create an empty list to store deprivation profile for each indicator</span></span>
@@ -4159,7 +4265,17 @@ But unlike in <code>nutrition</code>, we do not need to provide the
 <span></span>
 <span><span class="co"># ----------------------------------</span></span>
 <span><span class="co"># You may also save your output into an Excel file</span></span>
-<span><span class="fu"><a href="../reference/save_mpi.html">save_mpi</a></span><span class="op">(</span><span class="va">mpi_result</span>, .filename <span class="op">=</span> <span class="st">'MPI Sample Output'</span><span class="op">)</span></span></code></pre></div>
+<span></span>
+<span><span class="co"># Formatted output</span></span>
+<span><span class="co"># save_mpi(mpi_result, .filename = 'MPI Sample Output', .include_specs = T)</span></span>
+<span></span>
+<span><span class="co"># Not formatted</span></span>
+<span><span class="fu"><a href="../reference/save_mpi.html">save_mpi</a></span><span class="op">(</span></span>
+<span>  <span class="va">mpi_result</span>, </span>
+<span>  .filename <span class="op">=</span> <span class="st">'MPI Sample Output (no format)'</span>, </span>
+<span>  .formatted_output <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  .include_specs <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
