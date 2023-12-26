@@ -10,7 +10,7 @@ define_deprivation(
   .cutoff,
   .mpi_specs = getOption("mpi_specs"),
   .collapse = FALSE,
-  .set_na_equal_to = NA,
+  .set_na_equal_to = 0,
   .collapse_condition = NULL
 )
 }
@@ -25,7 +25,7 @@ define_deprivation(
 
 \item{.collapse}{A boolean indicating whether to collapse the data frame or not. This is useful, for instance, if the original data where the \code{.cutoff} argument above applies to an individual person but your unit of analysis in household.}
 
-\item{.set_na_equal_to}{Coerce value from NA to either \code{0} (not deprived) or \code{1} (deprived). Default is \code{NA}.}
+\item{.set_na_equal_to}{Coerce value from NA to either \code{0} (not deprived) or \code{1} (deprived). Default is \code{0}.}
 
 \item{.collapse_condition}{NOT YET FULLY IMPLEMENTED. ONLY WORKS WITH DEFAULT. A condition when \code{.collapse} is set to \code{TRUE}. If \code{NULL}, \code{max()} will be used as default.}
 }
