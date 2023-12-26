@@ -30,7 +30,8 @@ compute_headcount_ratio <- function(.data, .aggregation = NULL, ...) {
           !!as.name(.aggregation), n,
           ...,
           dplyr::matches(pattern_str)
-        )
+        ) |>
+        dplyr::ungroup()
     }
   }
 

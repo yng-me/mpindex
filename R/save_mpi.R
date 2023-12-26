@@ -7,7 +7,7 @@
 #' @param .filename Output filename
 #' @param .formatted_output Whether formatting is to be applied to the output.
 #' @param .include_table_summary NOT YET IMPLEMENTED. Whether to include summary information in the generated output.
-#' @param .include_specs NOT YET IMPLEMENTED. Whether to include MPI specification in the generated output.
+#' @param .include_specs Whether to include MPI specification in the generated output.
 #'
 #' @return Returns the file location of the output generated.
 #' @export
@@ -33,6 +33,7 @@ save_mpi <- function(
   tb <- openxlsx::createWorkbook()
   openxlsx::modifyBaseFont(tb, fontName = "Arial", fontSize = 10)
 
+
   if(.formatted_output) {
 
     save_mpi_formatted(
@@ -48,6 +49,10 @@ save_mpi <- function(
       set_mpi_sheets(.mpi_output),
       nrow(.mpi_specs)
     )
+  }
+
+  if(.include_specs) {
+    save_mpi_specs(tb, .mpi_specs, .formatted_output)
   }
 
   if (is.null(.filename)) file <- "MPI Results.xlsx"
@@ -80,13 +85,10 @@ save_mpi_formatted <- function(.wb, .data, .indicator_count) {
       df_names <- names(df)
 
       for (j in seq_along(df_names)) {
+
         df_j <- df[[j]]
 
-        decimal_format <- set_decimal_format(
-          df_j,
-          tb_sheet,
-          .indicator_count
-        )
+        decimal_format <- set_decimal_format(df_j, tb_sheet, .indicator_count)
 
         df_name <- df_names[j]
         if (df_name == "uncensored" | df_name == "censored") {
@@ -98,8 +100,8 @@ save_mpi_formatted <- function(.wb, .data, .indicator_count) {
           )
         }
 
-        write_as_excel_here <- function(.df_j, ...) {
-          .df_j |>
+        write_as_excel_here <- function(.df, ...) {
+          .df |>
             write_as_excel(
               ...,
               wb = .wb,
@@ -121,6 +123,7 @@ save_mpi_formatted <- function(.wb, .data, .indicator_count) {
         restart_row <- tb_for_list$start_row
       }
     } else {
+
       decimal_format <- set_decimal_format(df, tb_sheet, .indicator_count)
 
       write_as_excel(
@@ -128,7 +131,6 @@ save_mpi_formatted <- function(.wb, .data, .indicator_count) {
         wb = .wb,
         sheet = tb_sheet,
         title = tb_sheet,
-        # .names_separator = spec_attr$names_separator,
         cols_with_decimal_format = decimal_format,
         format_precision = 3,
         start_col = start_col
@@ -155,10 +157,13 @@ save_mpi_unformatted <- function(.wb, .data, .indicator_count) {
         df_name <- df_names[j]
         df_list[[j]] <- df[[df_name]] |>
           dplyr::mutate(
-            cuttoff = paste0(stringr::str_remove(df_name, "^k_"), "%"),
+            cuttoff = dplyr::if_else(
+              to_lowercase(df_name) == 'uncensored' | to_lowercase(df_name) == 'censored',
+              to_title_case(df_name),
+              paste0(stringr::str_remove(df_name, "^k_"), "%")
+            ),
             .before = 1
           )
-
       }
 
       df <- do.call("rbind", df_list)
@@ -179,3 +184,42 @@ save_mpi_unformatted <- function(.wb, .data, .indicator_count) {
 
   }
 }
+
+save_mpi_specs <- function(.wb, .mpi_specs, .formatted_output) {
+
+  start_row <- 1
+  start_col <- 1
+
+  specs <- .mpi_specs |>
+    dplyr::select(dplyr::any_of(c("dimension", "indicator", "variable", "weight", "description")))
+
+  if(.formatted_output) {
+
+    start_row <- 2
+    start_col <- 2
+
+    specs <- specs |> rename_with(to_title_case)
+  }
+
+
+
+  facade <- list()
+  facade$col_width_all = rep(18, ncol(specs))
+  if("description" %in% to_lowercase(names(specs))) {
+    facade$col_width_last = 132
+  }
+
+  write_as_excel(
+    specs,
+    wb = .wb,
+    sheet = "MPI Specification",
+    title = "MPI Specification",
+    cols_with_decimal_format = which(to_lowercase(names(specs)) == "weight"),
+    format_precision = 3,
+    format_output = .formatted_output,
+    start_col = start_col,
+    start_row = start_row,
+    facade = facade
+  )
+}
+

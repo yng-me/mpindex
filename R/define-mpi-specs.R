@@ -5,7 +5,7 @@
 #' @param .mpi_specs_file Accepts \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV) file format. This file should contain the following columns/variables: \code{Dimension}, \code{Indicator}, \code{Variable}, \code{Weight}, and \code{Description} (optional). See example below.
 #' @param .indicators A data frame of MPI indicators. Useful if prefer define your indicators instead of using an external file.
 #' @param .poverty_cutoffs Accepts single value or a vector of poverty cutoffs. This parameter (usually denoted by \code{k}) reflects the minimum level of deprivations or deprivation score an individual or household must be suffering simultaneously to be considered poor. See example below.
-#' @param .unit_of_analysis e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{households}.
+#' @param .unit_of_analysis e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{NULL}.
 #' @param .aggregation Column name in the dataset that defines an aggregation level.
 #' @param .uid Column name containing unique ID of the dataset which defines the lowest level of disaggregation (usually unit of analysis).
 #' @param .source_of_data Source of data used in the computation. This will be used in the footnote of the table when generating an output.
@@ -32,7 +32,7 @@ define_mpi_specs <- function(
   .mpi_specs_file = NULL,
   .indicators = NULL,
   .poverty_cutoffs = 1 / 3,
-  .unit_of_analysis = "households",
+  .unit_of_analysis = NULL,
   .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
@@ -46,13 +46,15 @@ define_mpi_specs <- function(
   dimension <- NULL
 
 
-  if (typeof(.unit_of_analysis) != "character") {
-    stop(".unit_of_analysis argument only accepts string of characters.")
+  if(!is.null(.unit_of_analysis)) {
+    if (typeof(.unit_of_analysis) != "character") {
+      stop(".unit_of_analysis argument only accepts string of characters.")
+    }
+    if (length(.unit_of_analysis) != 1) {
+      stop(".unit_of_analysis argument cannot accept multiple values.")
+    }
   }
 
-  if (length(.unit_of_analysis) != 1) {
-    stop(".unit_of_analysis argument cannot accept multiple values.")
-  }
 
   if (!is.null(.uid)) {
     .uid <- stringr::str_trim(as.character(.uid))

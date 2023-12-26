@@ -4,6 +4,7 @@ compute_contribution <- function(
   .mpi_specs = getOption("mpi_specs")
 
 ) {
+
   validate_mpi_specs(.mpi_specs)
 
   n <- NULL
@@ -12,7 +13,7 @@ compute_contribution <- function(
   spec_attr <- attributes(.mpi_specs)
 
   df <- .data |>
-    dplyr::select(dplyr::any_of(attributes(spec_attr$aggregation)), n, ...)
+    dplyr::select(dplyr::any_of(spec_attr$aggregation), n, ...)
 
   w <- .mpi_specs$weight
   indicator <- .mpi_specs$variable_name

@@ -8,7 +8,7 @@ define_mpi_specs(
   .mpi_specs_file = NULL,
   .indicators = NULL,
   .poverty_cutoffs = 1/3,
-  .unit_of_analysis = "households",
+  .unit_of_analysis = NULL,
   .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
@@ -23,7 +23,7 @@ define_mpi_specs(
 
 \item{.poverty_cutoffs}{Accepts single value or a vector of poverty cutoffs. This parameter (usually denoted by \code{k}) reflects the minimum level of deprivations or deprivation score an individual or household must be suffering simultaneously to be considered poor. See example below.}
 
-\item{.unit_of_analysis}{e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{households}.}
+\item{.unit_of_analysis}{e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{NULL}.}
 
 \item{.aggregation}{Column name in the dataset that defines an aggregation level.}
 

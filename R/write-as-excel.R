@@ -10,7 +10,7 @@ write_as_excel <- function(
   source_note = NULL,
   start_col = 2,
   start_row = 2,
-  options = NULL,
+  facade = NULL,
   cols_with_decimal_format = NULL,
   format_precision = 2,
   overwrite = TRUE,
@@ -150,9 +150,15 @@ write_as_excel <- function(
       .start_col = start_col,
       .start_row = restart_row
     )
+
     row_depth <- max(merge_colnames$depth)
 
     if (row_depth == 1) {
+
+      if(format_output) {
+        colnames(.data) <- merge_colnames$value
+      }
+
       openxlsx::writeData(
         wb = wb,
         sheet = sheet,
@@ -362,7 +368,6 @@ write_as_excel <- function(
     )
   }
 
-
   set_export_facade(
     wb = wb,
     sheet = sheet,
@@ -372,10 +377,11 @@ write_as_excel <- function(
     start_col = start_col,
     end_row = row_length,
     end_col = col_length,
+    format_output = format_output,
     start_row_note = start_row_note,
     decimal_format_cols = cols_with_decimal_format,
     format_precision = format_precision,
-    options = options
+    facade = facade
   )
 
   return(list(start_row = start_row_note - 1))

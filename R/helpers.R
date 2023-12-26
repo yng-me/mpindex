@@ -22,15 +22,22 @@ rename_indicators <- function(.data, .mpi_specs = getOption("mpi_specs")) {
     dplyr::left_join(.mpi_specs, by = "variable_name") |>
     dplyr::mutate(label = dplyr::if_else(
       is.na(label),
-      value,
-      paste0(indicator, " (", dimension, ")")
+      to_title_case(value),
+      indicator
+      # paste0(indicator, " (", dimension, ")")
     ))
 
   for(i in seq_along(mpi_colnames$value)) {
     mpi_col <- mpi_colnames$value[i]
     attr(.data[[mpi_col]], "label") <- mpi_colnames$label[i]
-    attr(.data[[mpi_col]], "dimension") <- mpi_colnames$dimension[i]
-    attr(.data[[mpi_col]], "indicator") <- mpi_colnames$indicator[i]
+
+    if(!is.na(mpi_colnames$dimension[i])) {
+      attr(.data[[mpi_col]], "dimension") <- mpi_colnames$dimension[i]
+    }
+
+    if(!is.na(mpi_colnames$indicator[i])) {
+      attr(.data[[mpi_col]], "indicator") <- mpi_colnames$indicator[i]
+    }
   }
 
   if ("n" %in% names(.data)) {
@@ -57,6 +64,9 @@ rename_n <- function(.data, .label) {
 
   `:=` <- NULL
   n <- NULL
+
+  if(is.null(.label)) .label <- "cases"
+
   mpi_colname <- paste0("number_of_", to_lowercase(.label))
 
   .data <- .data |>
@@ -116,25 +126,43 @@ set_export_facade <- function(
   end_row,
   end_col,
   start_row_note,
+  format_output = FALSE,
   decimal_format_cols = NULL,
   format_precision = 2,
-  options = NULL
+  facade = NULL
 ) {
 
-  options_default <- list()
+  facade_default <- list()
 
-  options_default$col_width_first <- 35
-  options_default$col_width_all <- 18
-  options_default$row_height <- 20
-  options_default$row_height_header <- 30
+  if(format_output) {
+    if(header_depth > 1) {
+      facade_default$col_width_all <- 10
+    } else {
+      facade_default$col_width_all <- 18
+    }
+  } else {
+    facade_default$col_width_all <- 15
+  }
 
-  options_default$style_indent <- openxlsx::createStyle(
+  facade_default$row_height <- 20
+  facade_default$col_width_first <- 36
+
+  if(header_depth > 1) {
+
+    facade_default$row_height_header <- c(20, 36)
+
+  } else {
+
+    facade_default$row_height_header <- 32
+  }
+
+  facade_default$style_indent <- openxlsx::createStyle(
     indent = 1,
     numFmt = "#,##0",
     valign = "center"
   )
 
-  options_default$style_header <- openxlsx::createStyle(
+  facade_default$style_header <- openxlsx::createStyle(
     wrapText = TRUE,
     valign = "center",
     fgFill = "#f5f5f5",
@@ -143,37 +171,41 @@ set_export_facade <- function(
     borderColour = "gray"
   )
 
-  options_default$border_right_outer <- openxlsx::createStyle(
+  facade_default$center_align <- openxlsx::createStyle(
+    halign = "center"
+  )
+
+  facade_default$border_right_outer <- openxlsx::createStyle(
     border = "right",
     borderColour = "#757575",
     borderStyle = "medium"
   )
 
-  options_default$border_left_outer <- openxlsx::createStyle(
+  facade_default$border_left_outer <- openxlsx::createStyle(
     border = "left",
     borderColour = "#757575",
     borderStyle = "medium"
   )
 
-  options_default$border_top_outer <- openxlsx::createStyle(
+  facade_default$border_top_outer <- openxlsx::createStyle(
     border = "top",
     borderColour = "#757575",
     borderStyle = "medium"
   )
 
-  options_default$border_bottom_outer <- openxlsx::createStyle(
+  facade_default$border_bottom_outer <- openxlsx::createStyle(
     border = "bottom",
     borderColour = "#757575",
     borderStyle = "medium"
   )
 
-  options_default$border_header <- openxlsx::createStyle(
+  facade_default$border_header <- openxlsx::createStyle(
     border = "bottom",
     borderColour = "#757575",
     borderStyle = "double"
   )
 
-  options <- c(options, options_default)
+  facade <- c(facade, facade_default)
 
   # Default width of the first column
   start_col_width <- start_col - 1
@@ -188,15 +220,15 @@ set_export_facade <- function(
   openxlsx::setColWidths(
     ...,
     cols = start_col,
-    widths = options$col_width_first
+    widths = facade$col_width_first
   )
 
   # Middle cols
-  if (length(options$col_width_all) > length(start_col_plus:end_col)) {
+  if (length(facade$col_width_all) > length(start_col_plus:end_col)) {
     len_to_fit_width <- length(start_col_plus:end_col)
-    col_width_all_fit <- options$col_width_all[1:len_to_fit_width]
+    col_width_all_fit <- facade$col_width_all[1:len_to_fit_width]
   } else {
-    col_width_all_fit <- options$col_width_all
+    col_width_all_fit <- facade$col_width_all
   }
   openxlsx::setColWidths(
     ...,
@@ -205,10 +237,10 @@ set_export_facade <- function(
   )
 
   # End col
-  col_with_last <- isTRUE(!is.null(options$col_width_last))
-  col_width_last <- isTRUE(length(is.na(options$col_width_last)) > 0)
-  if (col_with_last || col_width_last) {
-    openxlsx::setColWidths(..., cols = end_col, widths = options$col_width_last)
+  col_with_last <- isTRUE(!is.null(facade$col_width_last))
+  col_width_last <- isTRUE(length(is.na(facade$col_width_last)) > 0)
+  if (col_with_last | col_width_last) {
+    openxlsx::setColWidths(..., cols = end_col, widths = facade$col_width_last)
   }
 
   end_row_header <- header_depth + start_row - 1
@@ -216,28 +248,28 @@ set_export_facade <- function(
 
 
   openxlsx::setRowHeights(..., rows = 1, heights = 15)
+
   openxlsx::setRowHeights(
     ...,
     rows = start_row:end_row_header,
-    heights = options$row_height_header
+    heights = facade$row_height_header
   )
 
   openxlsx::setRowHeights(
     ...,
     rows = start_row_tb:end_row,
-    heights = options$row_height
+    heights = facade$row_height
   )
 
-  # if(!is.null())
   openxlsx::setRowHeights(
     ...,
     rows = start_row_tb:end_row,
-    heights = options$row_height
+    heights = facade$row_height
   )
 
   openxlsx::addStyle(
     ...,
-    style = options$style_header,
+    style = facade$style_header,
     rows = start_row:end_row_header,
     cols = start_col:end_col,
     gridExpand = TRUE,
@@ -246,7 +278,16 @@ set_export_facade <- function(
 
   openxlsx::addStyle(
     ...,
-    style = options$style_indent,
+    style = facade$center_align,
+    rows = start_row:end_row_header,
+    cols = (start_col + 1):end_col,
+    gridExpand = TRUE,
+    stack = TRUE
+  )
+
+  openxlsx::addStyle(
+    ...,
+    style = facade$style_indent,
     rows = start_row:end_row,
     cols = start_col:end_col,
     gridExpand = TRUE,
@@ -255,7 +296,7 @@ set_export_facade <- function(
 
   openxlsx::addStyle(
     ...,
-    style = options$border_right_outer,
+    style = facade$border_right_outer,
     rows = start_row:end_row,
     cols = end_col,
     gridExpand = TRUE,
@@ -264,7 +305,7 @@ set_export_facade <- function(
 
   openxlsx::addStyle(
     ...,
-    style = options$border_left_outer,
+    style = facade$border_left_outer,
     rows = start_row:end_row,
     cols = start_col,
     gridExpand = TRUE,
@@ -273,7 +314,7 @@ set_export_facade <- function(
 
   openxlsx::addStyle(
     ...,
-    style = options$border_top_outer,
+    style = facade$border_top_outer,
     rows = start_row,
     cols = start_col:end_col,
     gridExpand = TRUE,
@@ -282,7 +323,7 @@ set_export_facade <- function(
 
   openxlsx::addStyle(
     ...,
-    style = options$border_bottom_outer,
+    style = facade$border_bottom_outer,
     rows = end_row,
     cols = start_col:end_col,
     gridExpand = TRUE,
@@ -291,25 +332,27 @@ set_export_facade <- function(
 
   openxlsx::addStyle(
     ...,
-    style = options$border_header,
+    style = facade$border_header,
     rows = end_row_header,
     cols = start_col:end_col,
     gridExpand = TRUE,
     stack = TRUE
   )
 
-  openxlsx::addStyle(
-    ...,
-    style = openxlsx::createStyle(
-      textDecoration = NULL,
-      fontColour = "#07403b",
-      fontSize = 9
-    ),
-    rows = 1,
-    cols = start_col,
-    gridExpand = TRUE,
-    stack = TRUE
-  )
+  if(format_output) {
+    openxlsx::addStyle(
+      ...,
+      style = openxlsx::createStyle(
+        textDecoration = NULL,
+        fontColour = "#07403b",
+        fontSize = 9
+      ),
+      rows = 1,
+      cols = start_col,
+      gridExpand = TRUE,
+      stack = TRUE
+    )
+  }
 
   # Decimal
   if (length(decimal_format_cols) > 0) {
@@ -358,17 +401,19 @@ extract_column_names <- function(
 
   headers <- NULL
   df_names <- names(.data)
+
   for(i in seq_along(df_names)) {
-    attr_name <- attributes(.data[[i]])
+    df_name <- df_names[i]
+    attr_name <- attributes(.data[[df_name]])
     label <- attr_name$label
-    if(is.null(label)) label <- df_names[i]
+    if(is.null(label)) label <- to_title_case(df_name)
     dimension <- attr_name$dimension
     indicator <- attr_name$indicator
 
     if(!is.null(dimension) & !is.null(indicator)) {
-      if(!is.na(dimension) & !is.na(indicator)) {
-        label <- paste0(dimension, ">", indicator)
-      }
+      # if(!is.na(dimension) & !is.na(indicator)) {
+      label <- paste0(dimension, .names_separator, indicator)
+      # }
     }
     headers <- c(headers, label)
   }
@@ -428,17 +473,13 @@ set_mpi_sheets <- function(.mpi_output) {
   return(mpi_list)
 }
 
-set_mpi_sheets_unformatted <- function(.mpi_output) {
 
-}
-
-
-set_decimal_format <- function(.data, .sheet, .n, .offset = 0) {
+set_decimal_format <- function(.data, .sheet, .n) {
   if (.sheet == "MPI") {
-    mpi_s <- ncol(.data) - (2 + .offset)
+    mpi_s <- ncol(.data) - 2
     decimal_format <- mpi_s:ncol(.data)
   } else if (.sheet %in% c("Contribution by dimension", "Headcount ratio")) {
-    mpi_d <- ncol(.data) - (.n + 1 + .offset)
+    mpi_d <- ncol(.data) - .n + 1
     decimal_format <- mpi_d:ncol(.data)
   } else if (grepl("deprivation matrix", .sheet, ignore.case = TRUE)) {
     decimal_format <- which(names(.data) == "Deprivation score" | names(.data) == "deprivation_score")
