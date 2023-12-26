@@ -12,13 +12,6 @@ test_that("dimension is returned correctly", {
 })
 
 
-# test_that("error if specs file is not defined", {
-#   expect_error(
-#     define_deprivation(df_household, drinking_water, drinking_water == 2),
-#     "MPI specifications must be defined first."
-#   )
-# })
-
 test_that("collapsing is correctly implemented", {
   dp <- df_household_roster |>
     define_deprivation(
