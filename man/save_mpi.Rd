@@ -24,7 +24,7 @@ save_mpi(
 
 \item{.include_table_summary}{NOT YET IMPLEMENTED. Whether to include summary information in the generated output.}
 
-\item{.include_specs}{NOT YET IMPLEMENTED. Whether to include MPI specification in the generated output.}
+\item{.include_specs}{Whether to include MPI specification in the generated output.}
 }
 \value{
 Returns the file location of the output generated.

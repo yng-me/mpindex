@@ -198,7 +198,7 @@ save_mpi_specs <- function(.wb, .mpi_specs, .formatted_output) {
     start_row <- 2
     start_col <- 2
 
-    specs <- specs |> rename_with(to_title_case)
+    specs <- specs |> dplyr::rename_with(to_title_case)
   }
 
 
