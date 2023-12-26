@@ -9,6 +9,7 @@
 #' @param .cutoff A conditional logic that defines the poverty line to determine whether deprived or not.
 #' @param .mpi_specs MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.
 #' @param .collapse A boolean indicating whether to collapse the data frame or not. This is useful, for instance, if the original data where the \code{.cutoff} argument above applies to an individual person but your unit of analysis in household.
+#' @param .set_na_equal_to Coerce value from NA to either \code{0} (not deprived) or \code{1} (deprived). Default is \code{NA}.
 #' @param .collapse_condition NOT YET FULLY IMPLEMENTED. ONLY WORKS WITH DEFAULT. A condition when \code{.collapse} is set to \code{TRUE}. If \code{NULL}, \code{max()} will be used as default.
 #'
 #' @return A data frame of deprivation value for the indicator (\code{.*_unweighted}): \code{0} for "not deprived", \code{1} for deprived, and \code{NA} for missing and non-response; and product of \code{.*_unweighted} and its corresponding weight (\code{.*_weighted}).
@@ -46,6 +47,7 @@ define_deprivation <- function(
   .cutoff,
   .mpi_specs = getOption('mpi_specs'),
   .collapse = FALSE,
+  .set_na_equal_to = NA,
   .collapse_condition = NULL
 ) {
 
@@ -84,10 +86,12 @@ define_deprivation <- function(
     .data <- .data |> tibble::rownames_to_column(var = uid_name)
   }
 
+  if(!.set_na_equal_to %in% c(1, 0, NA)) .set_na_equal_to <- NA
+
   .data <- .data |>
     dplyr::transmute(
       !!as.name(uid_name) := uid,
-      !!as.name(v[1]) := dplyr::if_else({{.cutoff}}, 1L, 0L, NA_integer_)
+      !!as.name(v[1]) := dplyr::if_else({{.cutoff}}, 1L, 0L, as.integer(.set_na_equal_to))
     )
 
   if(.collapse & with_uid) {
