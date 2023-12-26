@@ -12,7 +12,7 @@ compute_mpi(
   .include_deprivation_matrix = TRUE,
   .generate_output = FALSE,
   .formatted_output = TRUE,
-  .output_filename = NULL,
+  .mpi_output_filename = NULL,
   .include_table_summary = TRUE,
   .include_specs = FALSE
 )
@@ -32,7 +32,7 @@ compute_mpi(
 
 \item{.formatted_output}{NOT YET IMPLEMENTED. Whether formatting is to be applied to the output.}
 
-\item{.output_filename}{Output filename.}
+\item{.mpi_output_filename}{Output filename.}
 
 \item{.include_table_summary}{NOT YET IMPLEMENTED. Whether to include summary information in the generated output.}
 
@@ -49,7 +49,6 @@ This function uses the Alkire-Foster (AF) counting method developed by Sabina Al
 # Load MPI specs from the built-in specs file
 specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
 mpi_specs <- define_mpi_specs(specs_file, .uid = 'uuid')
-options(mpi_specs = mpi_specs)
 
 # ----------------------------------
 # Create an empty list to store deprivation profile for each indicator

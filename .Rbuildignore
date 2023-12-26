@@ -9,3 +9,5 @@
 ^index.md
 playground
 playground/*
+
+vignettes/*\.xlsx$

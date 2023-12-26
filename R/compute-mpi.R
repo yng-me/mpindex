@@ -8,7 +8,7 @@
 #' @param .mpi_specs MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.
 #' @param .include_deprivation_matrix Whether to include deprivation matrix in the output.
 #' @param .generate_output Whether to generate an output (Excel file) as side effect.
-#' @param .output_filename Output filename.
+#' @param .mpi_output_filename Output filename.
 #' @param .formatted_output NOT YET IMPLEMENTED. Whether formatting is to be applied to the output.
 #' @param .include_table_summary NOT YET IMPLEMENTED. Whether to include summary information in the generated output.
 #' @param .include_specs NOT YET IMPLEMENTED. Whether to include MPI specification in the generated output.
@@ -25,7 +25,6 @@
 #' # Load MPI specs from the built-in specs file
 #' specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
 #' mpi_specs <- define_mpi_specs(specs_file, .uid = 'uuid')
-#' options(mpi_specs = mpi_specs)
 #'
 #' # ----------------------------------
 #' # Create an empty list to store deprivation profile for each indicator
@@ -119,48 +118,46 @@ compute_mpi <- function(
   .include_deprivation_matrix = TRUE,
   .generate_output = FALSE,
   .formatted_output = TRUE,
-  .output_filename = NULL,
+  .mpi_output_filename = NULL,
   .include_table_summary = TRUE,
   .include_specs = FALSE
 ) {
 
+  validate_mpi_specs(.mpi_specs)
+
   n <- NULL
-  H <- NULL
-  A <- NULL
-  MPI <- NULL
+  mpi <- NULL
   is_deprived <- NULL
   deprivation_score <- NULL
 
-  .cutoffs <- .mpi_specs$poverty_cutoffs
-  .p_cutoffs <- set_k_label(.cutoffs)
+  spec_attr <- attributes(.mpi_specs)
+  cutoffs <- spec_attr$poverty_cutoffs
+  p_cutoffs <- set_k_label(cutoffs)
 
-  .headcount_ratio_list <- list()
-  .mpi_computed_list <- list()
-  .contribution_list <- list()
+  headcount_ratio_list <- list()
+  mpi_computed_list <- list()
+  contribution_list <- list()
 
-  if(is.null(.mpi_specs)) {
-    stop('MPI specifications must be defined first.')
-  }
 
-  if(!is.null(.mpi_specs$aggregation)) {
-    if(!(.mpi_specs$aggregation %in% names(.data))) {
+  if(!is.null(spec_attr$aggregation)) {
+    if(!(spec_attr$aggregation %in% names(.data))) {
       stop('aggregation column defined in specification file does not exist in the dataset.')
     }
   }
 
 
-  if('mpi_dep_matrix' %in% class(.data)) {
+  if('mpi_deprivation_matrix' %in% class(.data)) {
 
     .deprivation_profile <- NULL
-    .deprivation_matrix <- .data
+    deprivation_matrix <- .data
 
   } else {
 
-    if(!(identical(sort(.mpi_specs$indicators$variable), sort(names(.deprivation_profile))))) {
+    if(!(identical(sort(.mpi_specs$variable), sort(names(.deprivation_profile))))) {
       stop('Deprivation profile is incomplete.')
     }
 
-    .deprivation_matrix <- .data |>
+    deprivation_matrix <- .data |>
       create_deprivation_matrix(
         ...,
         .deprivation_profile,
@@ -170,87 +167,88 @@ compute_mpi <- function(
   }
 
   # Incidence of Poverty -------------------------------------------------------
-  .headcount_ratio_list[['uncensored']] <- .deprivation_matrix$uncensored |>
-    compute_headcount_ratio(.aggregation = .mpi_specs$aggregation, ...) |>
+  headcount_ratio_list[['uncensored']] <- deprivation_matrix$uncensored |>
+    compute_headcount_ratio(.aggregation = spec_attr$aggregation, ...) |>
     rename_indicators(.mpi_specs = .mpi_specs)
 
-  for(i in seq_along(.p_cutoffs)) {
+  for(i in seq_along(p_cutoffs)) {
 
-    .dep_label <- set_dep_label(.p_cutoffs, i)
-    .dm_temp <- .deprivation_matrix[[.dep_label]]
+    dep_label <- set_dep_label(p_cutoffs, i)
+    dm_temp <- deprivation_matrix[[dep_label]]
 
-    .incidence_temp <- .dm_temp |>
-      compute_headcount_ratio(.aggregation = .mpi_specs$aggregation, ...)
+    incidence_temp <- dm_temp |>
+      compute_headcount_ratio(
+        .aggregation = spec_attr$aggregation,
+        ...
+      )
 
-    .headcount_ratio_list[[.dep_label]] <- .incidence_temp |>
+    headcount_ratio_list[[dep_label]] <- incidence_temp |>
       rename_indicators(.mpi_specs = .mpi_specs)
 
-    .mpi_computed_temp <- .dm_temp |>
-      compute_headcount_ratio_adj(.aggregation = .mpi_specs$aggregation, ...)
+    mpi_computed_temp <- dm_temp |>
+      compute_headcount_ratio_adjusted(
+        .aggregation = spec_attr$aggregation,
+        ...
+      )
 
-    .mpi_computed_list[[.dep_label]] <- .mpi_computed_temp |>
-      dplyr::rename(
-        'Headcount Ratio (H)' = H,
-        'Intensity of Deprivation Among the Poor (A)' = A,
-        'MPI (H x A)' = MPI
-      ) |>
-      rename_n(.mpi_specs$unit_of_analysis)
+    mpi_computed_list[[dep_label]] <- mpi_computed_temp |>
+      rename_n(spec_attr$unit_of_analysis)
 
-    .contribution_list[[.dep_label]] <- .mpi_computed_temp |>
-      dplyr::select(MPI) |>
-      dplyr::bind_cols(.incidence_temp) |>
+    contribution_list[[dep_label]] <- mpi_computed_temp |>
+      dplyr::select(mpi) |>
+      dplyr::bind_cols(incidence_temp) |>
       compute_contribution(..., .mpi_specs = .mpi_specs)
   }
 
 
-  if(length(.p_cutoffs) == 1) {
-    .mpi_computed_list <- .mpi_computed_list[[1]]
-    .contribution_list <- .contribution_list[[1]]
+  if(length(p_cutoffs) == 1) {
+    mpi_computed_list <- mpi_computed_list[[1]]
+    contribution_list <- contribution_list[[1]]
   }
 
-  .output <- list(
-    index = .mpi_computed_list,
-    contribution = .contribution_list,
-    headcount_ratio = .headcount_ratio_list
+  mpi_output <- list(
+    index = mpi_computed_list,
+    contribution = contribution_list,
+    headcount_ratio = headcount_ratio_list
   )
 
   if(.include_deprivation_matrix) {
-    .dm_n <- names(.deprivation_matrix)
+    dm_n <- names(deprivation_matrix)
 
-    if(!is.null(.mpi_specs$uid)) {
-      join_by <- .mpi_specs$uid
+    if(!is.null(spec_attr$uid)) {
+      join_by <- spec_attr$uid
     } else {
       join_by <- 'uid'
     }
 
-    .output[['deprivation_matrix']] <- stats::setNames(
-      lapply(.dm_n, function(x) {
-        .deprivation_matrix[[x]] |>
+    mpi_output[['deprivation_matrix']] <- stats::setNames(
+      lapply(dm_n, function(x) {
+        deprivation_matrix[[x]] |>
           dplyr::select(
             !!as.name(join_by),
-            dplyr::any_of(.mpi_specs$aggregation),
+            dplyr::any_of(spec_attr$aggregation),
             ...,
             dplyr::any_of('deprivation_score'),
             dplyr::matches('^d\\d{2}_i\\d{2}.*')
           ) |>
           rename_indicators(.mpi_specs = .mpi_specs)
       }),
-    .dm_n
+    dm_n
     )
   }
 
   if(.generate_output) {
     save_mpi(
-      .output,
+      mpi_output,
       .mpi_specs = .mpi_specs,
       .formatted_output = .formatted_output,
-      .filename = .output_filename,
+      .filename = .mpi_output_filename,
       .include_table_summary = .include_table_summary,
       .include_specs = .include_specs
     )
   }
 
-  return(.output)
+  return(mpi_output)
 }
 
 

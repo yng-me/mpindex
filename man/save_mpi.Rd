@@ -2,7 +2,7 @@
 % Please edit documentation in R/save_mpi.R
 \name{save_mpi}
 \alias{save_mpi}
-\title{Save MPI Output}
+\title{Save MPI output}
 \usage{
 save_mpi(
   .mpi_output,
@@ -24,17 +24,18 @@ save_mpi(
 
 \item{.include_table_summary}{NOT YET IMPLEMENTED. Whether to include summary information in the generated output.}
 
-\item{.include_specs}{NOT YET IMPLEMENTED. Whether to include MPI specification in the generated output.}
+\item{.include_specs}{Whether to include MPI specification in the generated output.}
 }
 \value{
 Returns the file location of the output generated.
 }
 \description{
-Save the MPI ouput into an Excel file format.
+Save the MPI output into an Excel file format.
 }
 \examples{
 \dontrun{
 # It requires an MPI output (list type) in the first argument
-save_mpi(mpi_result, .filename = 'MPI Sample Output')
+save_mpi(mpi_result, .filename = "MPI Sample Output")
 }
+
 }

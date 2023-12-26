@@ -1,33 +1,39 @@
 compute_contribution <- function(
   .data,
   ...,
-  .mpi_specs = getOption('mpi_specs')
+  .mpi_specs = getOption("mpi_specs")
+
 ) {
 
+  validate_mpi_specs(.mpi_specs)
+
   n <- NULL
-  MPI <- NULL
+  mpi <- NULL
   `:=` <- NULL
+  spec_attr <- attributes(.mpi_specs)
 
-  .df_contrib <- .data |> dplyr::select(dplyr::any_of(.mpi_specs$aggregation), n, ...)
+  df <- .data |>
+    dplyr::select(dplyr::any_of(spec_attr$aggregation), n, ...)
 
-  .w <- .mpi_specs$indicators$weight
-  .ind <- .mpi_specs$indicators$variable_name
+  w <- .mpi_specs$weight
+  indicator <- .mpi_specs$variable_name
 
-  for(i in seq_along(.ind)) {
-
-    .contrib <- .data |>
-      dplyr::select(MPI, !!as.name(.ind[i])) |>
+  for (i in seq_along(indicator)) {
+    contrib <- .data |>
+      dplyr::select(mpi, !!as.name(indicator[i])) |>
       dplyr::transmute(
-        !!as.name(.ind[i]) := dplyr::if_else(
-          MPI == 0,
+        !!as.name(indicator[i]) := dplyr::if_else(
+          mpi == 0,
           0,
-          (100 * (.w[i] * !!as.name(.ind[i]))) / MPI
+          (100 * (w[i] * !!as.name(indicator[i]))) / mpi
         )
       )
 
-    .df_contrib <- .df_contrib |>
-      dplyr::bind_cols(.contrib)
+    df <- df |>
+      dplyr::bind_cols(contrib)
   }
 
-  return(.df_contrib |> rename_indicators(.mpi_specs = .mpi_specs))
+  class(df) <- c("mpi_contribution", class(df))
+
+  return(df |> rename_indicators(.mpi_specs = .mpi_specs))
 }

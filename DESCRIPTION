@@ -17,19 +17,21 @@ Description: A set of easy-to-use functions for computing the Multidimensional P
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports:
+    dplyr,
+    tidyr,
+    stringr,
+    jsonlite,
+    purrr,
+    tibble,
+    openxlsx
 Suggests: 
-  rlang,
-  dplyr,
-  tidyr,
-  tibble,
-  stringr,
-  jsonlite,
-  openxlsx,
-  testthat (>= 3.0.0),
-  knitr,
-  purrr,
-  rmarkdown,
-  gt
+    rlang,
+    testthat (>= 3.0.0),
+    lifecycle,
+    knitr,
+    rmarkdown,
+    gt
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 BugReports: https://github.com/yng-me/mpindex/issues

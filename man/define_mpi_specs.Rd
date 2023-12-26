@@ -5,32 +5,38 @@
 \title{Define MPI specifications: dimensions, indicators, and weights}
 \usage{
 define_mpi_specs(
-  .mpi_specs_file,
+  .mpi_specs_file = NULL,
+  .indicators = NULL,
   .poverty_cutoffs = 1/3,
-  .unit_of_analysis = "households",
+  .unit_of_analysis = NULL,
   .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
-  .names_separator = ">"
+  .names_separator = ">",
+  .save_as_global_options = TRUE
 )
 }
 \arguments{
 \item{.mpi_specs_file}{Accepts \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV) file format. This file should contain the following columns/variables: \code{Dimension}, \code{Indicator}, \code{Variable}, \code{Weight}, and \code{Description} (optional). See example below.}
 
+\item{.indicators}{A data frame of MPI indicators. Useful if prefer define your indicators instead of using an external file.}
+
 \item{.poverty_cutoffs}{Accepts single value or a vector of poverty cutoffs. This parameter (usually denoted by \code{k}) reflects the minimum level of deprivations or deprivation score an individual or household must be suffering simultaneously to be considered poor. See example below.}
 
-\item{.unit_of_analysis}{e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{households}.}
+\item{.unit_of_analysis}{e.g. \code{individuals}, \code{families}, \code{households}, or \code{communities}. Default value is \code{NULL}.}
 
 \item{.aggregation}{Column name in the dataset that defines an aggregation level.}
 
-\item{.uid}{Column name containing unique ID of the observation which defines the lowest level of disaggregation (usually unit of analysis).}
+\item{.uid}{Column name containing unique ID of the dataset which defines the lowest level of disaggregation (usually unit of analysis).}
 
 \item{.source_of_data}{Source of data used in the computation. This will be used in the footnote of the table when generating an output.}
 
-\item{.names_separator}{Column separator that defines the hierarchy of the column header.}
+\item{.names_separator}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Column separator that defines the hierarchy of the column header.}
+
+\item{.save_as_global_options}{Whether to save the specs globally. Equivalent to invoking \code{options()}.}
 }
 \value{
-A list of objects containing MPI specifications needed by \link[mpindex]{compute_mpi} function.
+MPI specifications data frame required in \link[mpindex]{compute_mpi} function. As as side effect, a global option named `mpi_specs` will be saved for efficiency. See `getOption('mpi_specs')`.
 }
 \description{
 Use to define MPI dimensions, indicators and its corresponding weights using any of the accessible file types: \code{.xlsx} (Excel), \code{.json}, \code{.csv}, or \code{.txt} (TSV). You can also set the poverty cutoff or list of poverty cutoffs (to achieve gradient list of MPIs) that will be used in the computation of MPI.
@@ -38,21 +44,13 @@ Use to define MPI dimensions, indicators and its corresponding weights using any
 \examples{
 # Use sample specs file included in the package
 specs_file <- system.file(
- "extdata",
- "global-mpi-specs.csv",
- package = "mpindex"
+  "extdata",
+  "global-mpi-specs.csv",
+  package = "mpindex"
 )
 # To see other sample specs file (with different supported file format)
 system.file("extdata", package = "mpindex") |>
   list.files()
-
-# OPTIONS:
-# 1. Pass this `specs` object to `compute_mpi` function
-#
-specs <- define_mpi_specs(specs_file)
-
-# 2. Make it available globally (recommended approach)
-options(mpi_specs = specs)
 
 }
 \seealso{

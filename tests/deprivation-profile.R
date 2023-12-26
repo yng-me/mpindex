@@ -1,7 +1,7 @@
 library(mpindex)
 
-specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
-mpi_specs <- define_mpi_specs(specs_file, .uid = 'uuid')
+mpi_specs <- use_global_mpi_specs(.uid = "uuid")
+attr_spec <- attributes(mpi_specs)
 deprivation_profile <- list()
 
 deprivation_profile$nutrition <- df_household_roster |>
@@ -72,7 +72,10 @@ deprivation_profile$housing <- df_household |>
 
 
 deprivation_profile$assets <- df_household |>
-  dplyr::mutate_at(dplyr::vars(dplyr::starts_with('asset_')), ~ dplyr::if_else(. > 0, 1L, 0L)) |>
+  dplyr::mutate_at(
+    dplyr::vars(dplyr::starts_with("asset_")),
+    ~ dplyr::if_else(. > 0, 1L, 0L)
+  ) |>
   dplyr::mutate(
     asset_phone = dplyr::if_else(
       (asset_telephone + asset_mobile_phone) > 0,
@@ -81,10 +84,9 @@ deprivation_profile$assets <- df_household |>
     )
   ) |>
   dplyr::mutate(
-    with_hh_conveniences = (
-      asset_tv + asset_phone + asset_computer +
-        asset_animal_cart + asset_bicycle +
-        asset_motorcycle + asset_refrigerator) > 1,
+    with_hh_conveniences = (asset_tv + asset_phone + asset_computer +
+      asset_animal_cart + asset_bicycle +
+      asset_motorcycle + asset_refrigerator) > 1,
     with_mobility_assets = (asset_car + asset_truck) > 0
   ) |>
   define_deprivation(
@@ -92,4 +94,3 @@ deprivation_profile$assets <- df_household |>
     .cutoff = !(with_hh_conveniences & with_mobility_assets),
     .mpi_specs = mpi_specs
   )
-
