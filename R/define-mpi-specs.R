@@ -36,15 +36,9 @@ define_mpi_specs <- function(
   .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
-  .names_separator = ">",
+  .names_separator = "__",
   .save_as_global_options = TRUE
 ) {
-  n <- NULL
-  m <- NULL
-  variable <- NULL
-  indicator <- NULL
-  dimension <- NULL
-
 
   if(!is.null(.unit_of_analysis)) {
     if (typeof(.unit_of_analysis) != "character") {
@@ -55,27 +49,22 @@ define_mpi_specs <- function(
     }
   }
 
-
   if (!is.null(.uid)) {
     .uid <- stringr::str_trim(as.character(.uid))
-    if (length(.uid) != 1) {
-      stop(".uid argument cannot accept multiple values.")
-    }
+    # if (length(.uid) != 1) {
+    #   stop(".uid argument cannot accept multiple values.")
+    # }
   }
 
   if (length(.names_separator) != 1) {
     stop(".names_separator argument cannot accept multiple values.")
   }
 
-  if (!(.names_separator %in% c(">", "<", "|", ".", "_", "-"))) {
-    stop(".names_separator only accept the following characters: '>' (greater than), '<' (less than), '|' (pipe), '_' (underscore), '-' (dash), '.' (period).")
-  }
-
   # accepts JSON, CSV, XLSX (Excel), TXT (TSV)
   if (!is.null(.mpi_specs_file)) {
     if (grepl("\\.xlsx$", .mpi_specs_file, ignore.case = T)) {
       df <- openxlsx::read.xlsx(.mpi_specs_file, skipEmptyRows = T, skipEmptyCols = T) |>
-        dplyr::mutate(dplyr::across(dplyr::where(is.character), trim_whitespace))
+        dplyr::mutate(dplyr::across(dplyr::where(is.character), trimws))
     } else if (grepl("\\.csv$", .mpi_specs_file, ignore.case = T)) {
       df <- utils::read.csv(.mpi_specs_file, strip.white = T)
     } else if (grepl("\\.json$", .mpi_specs_file, ignore.case = T)) {
@@ -89,7 +78,7 @@ define_mpi_specs <- function(
     if (!is.null(.indicators)) {
       df <- .indicators
     } else {
-      stop("Indictors must be defined.")
+      stop("Indicators must be defined.")
     }
   }
 
@@ -112,7 +101,7 @@ define_mpi_specs <- function(
   }
 
   valid_colnames <- c("dimension", "indicator", "variable", "weight")
-  def_colnames <- to_lowercase(sort(names(df)))
+  def_colnames <- tolower(sort(names(df)))
 
   is_colnames_identical <- identical(def_colnames, valid_colnames) |
     identical(def_colnames, c("description", valid_colnames))
@@ -135,12 +124,11 @@ define_mpi_specs <- function(
         "_i",
         stringr::str_pad(n, width = 2, pad = "0"),
         "_",
-        to_lowercase(variable)
+        tolower(variable)
       ),
       label = paste0(dimension, .names_separator, indicator)
     ) |>
     dplyr::select(-c(n, m))
-
 
   attr(df, "poverty_cutoffs") <- .poverty_cutoffs
   attr(df, "unit_of_analysis") <- .unit_of_analysis
@@ -182,6 +170,7 @@ validate_mpi_specs <- function(.mpi_specs) {
 #' @examples
 #'
 #' use_global_mpi_specs()
+#' 
 use_global_mpi_specs <- function(...) {
   specs_file <- system.file(
     "extdata",

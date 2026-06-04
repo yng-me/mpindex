@@ -155,7 +155,6 @@ use_global_mpi_specs(
 
 The user of `mpindex` is assumed to have basic familiarity with the concept of tidy data as well as able to perform data wrangling and transformation using the `tidyverse` ecosystem. Under the hood, `mpindex` uses `dplyr` verbs to perform data manipulation.
 
-
 We also assume that your dataset is already tidy and ready for analysis. See [R for Data Science](https://r4ds.had.co.nz/tidy-data.html) by Hadley Wickham and Garrett Grolemund if you need a refresher.
 
 ### Dataset
@@ -179,13 +178,13 @@ glimpse(df_household_roster)
 
 ### Using `define_deprivation`
 
-First, we need to create an empty list, and name it `deprivation_profile` (but feel free to name it whatever you like). 
+First, we need to create an empty list, and name it `dp` (but feel free to name it whatever you like). 
 
 ```{r}
-deprivation_profile <- list()
+dp <- list()
 ```
 
-To create a deprivation profile for each indicator, we use the `define_deprivation` function (see `?define_deprivation`) and add to the `deprivation_profile` list we created above. Make sure that the deprivation profile for each indicator matches the variable name declared in the specification file.
+To create a deprivation profile for each indicator, we use the `define_deprivation` function (see `?define_deprivation`) and add to the `dp` list we created above. Make sure that the deprivation profile for each indicator matches the variable name declared in the specification file.
 
 ### 1. Heath dimension
 
@@ -194,7 +193,7 @@ To create a deprivation profile for each indicator, we use the `define_deprivati
 For this indicator, we use the `df_household_roster` dataset. By default, `define_deprivation` sets the `.collapse = FALSE`. Since we need to collapse it to the household level, we need to set `.collapse = TRUE`.
 
 ```{r}
-deprivation_profile$nutrition <- df_household_roster |> 
+dp$nutrition <- df_household_roster |> 
   define_deprivation(
     .indicator = nutrition,
     .cutoff = undernourished == 1 & age < 70,
@@ -207,7 +206,7 @@ deprivation_profile$nutrition <- df_household_roster |>
 For child mortality, we use the `df_household` dataset. But unlike in `nutrition`, we do not need to provide the `.collapse` argument since it is not applicable here.
 
 ```{r}
-deprivation_profile$child_mortality <- df_household |> 
+dp$child_mortality <- df_household |> 
   define_deprivation(
     .indicator = child_mortality,
     .cutoff = with_child_died == 1
@@ -220,7 +219,7 @@ deprivation_profile$child_mortality <- df_household |>
 #### 2.1. Years of schooling
 
 ```{r}
-deprivation_profile$year_schooling <- df_household_roster |> 
+dp$year_schooling <- df_household_roster |> 
   define_deprivation(
     .indicator = year_schooling,
     .cutoff = completed_6yrs_schooling == 2,
@@ -231,7 +230,7 @@ deprivation_profile$year_schooling <- df_household_roster |>
 #### 2.2. School attendance
 
 ```{r}
-deprivation_profile$school_attendance <- df_household_roster |> 
+dp$school_attendance <- df_household_roster |> 
   define_deprivation(
     .indicator = school_attendance,
     .cutoff = attending_school == 2 & age %in% c(5:24),
@@ -244,7 +243,7 @@ deprivation_profile$school_attendance <- df_household_roster |>
 #### 3.1. Cooking fuel
 
 ```{r}
-deprivation_profile$cooking_fuel <- df_household |> 
+dp$cooking_fuel <- df_household |> 
   define_deprivation(
     .indicator = cooking_fuel,
     .cutoff = cooking_fuel %in% c(4:6, 9)
@@ -255,7 +254,7 @@ deprivation_profile$cooking_fuel <- df_household |>
 #### 3.2. Sanitation
 
 ```{r}
-deprivation_profile$sanitation <- df_household |> 
+dp$sanitation <- df_household |> 
   define_deprivation(
     .indicator = sanitation,
     .cutoff = toilet > 1
@@ -266,7 +265,7 @@ deprivation_profile$sanitation <- df_household |>
 #### 3.3. Drinking water
 
 ```{r}
-deprivation_profile$drinking_water <- df_household |> 
+dp$drinking_water <- df_household |> 
   define_deprivation(
     .indicator = drinking_water,
     .cutoff = drinking_water == 2
@@ -276,7 +275,7 @@ deprivation_profile$drinking_water <- df_household |>
 #### 3.4. Electricity
 
 ```{r}
-deprivation_profile$electricity <- df_household |> 
+dp$electricity <- df_household |> 
   define_deprivation(
     .indicator = electricity,
     .cutoff = electricity == 2
@@ -286,7 +285,7 @@ deprivation_profile$electricity <- df_household |>
 #### 3.5. Housing
 
 ```{r}
-deprivation_profile$housing <- df_household |> 
+dp$housing <- df_household |> 
   define_deprivation(
     .indicator = housing,
     .cutoff = roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
@@ -299,7 +298,7 @@ deprivation_profile$housing <- df_household |>
 For this indicator, we need additional transformation.
 
 ```{r}
-deprivation_profile$assets <- df_household |> 
+dp$assets <- df_household |> 
   mutate_at(vars(starts_with('asset_')), ~ if_else(. > 0, 1L, 0L)) |> 
   mutate(
     asset_phone = if_else(
@@ -325,11 +324,11 @@ deprivation_profile$assets <- df_household |>
 
 ### Using `compute_mpi`
 
-After completing the deprivation profile, use the `compute_mpi` function and pass the `deprivation_profile` list as the first argument.
+After completing the deprivation profile, use the `compute_mpi` function and pass the `dp` list as the first argument.
 
 ```{r}
 mpi_result <- df_household |>
-  compute_mpi(deprivation_profile)
+  compute_mpi(dp)
 
 names(mpi_result)
 ```
@@ -507,60 +506,60 @@ use_global_mpi_specs(
 
 # ----------------------------------
 # Create an empty list to store deprivation profile for each indicator
-deprivation_profile <- list()
+dp <- list()
 
-deprivation_profile$nutrition <- df_household_roster |>
+dp$nutrition <- df_household_roster |>
   define_deprivation(
    .indicator = nutrition,
    .cutoff = undernourished == 1 & age < 70,
    .collapse = TRUE
   )
 
-deprivation_profile$child_mortality <- df_household |>
+dp$child_mortality <- df_household |>
   define_deprivation(
    .indicator = child_mortality,
    .cutoff = with_child_died == 1
   )
 
-deprivation_profile$year_schooling <- df_household_roster |>
+dp$year_schooling <- df_household_roster |>
   define_deprivation(
    .indicator = year_schooling,
    .cutoff = completed_6yrs_schooling == 2,
    .collapse = TRUE
   )
 
-deprivation_profile$school_attendance <- df_household_roster |>
+dp$school_attendance <- df_household_roster |>
   define_deprivation(
    .indicator = school_attendance,
    .cutoff = attending_school == 2 & age %in% c(5:24),
    .collapse = TRUE
   )
 
-deprivation_profile$cooking_fuel <- df_household |>
+dp$cooking_fuel <- df_household |>
   define_deprivation(
    .indicator = cooking_fuel,
    .cutoff = cooking_fuel %in% c(4:6, 9)
   )
 
-deprivation_profile$sanitation <- df_household |>
+dp$sanitation <- df_household |>
   define_deprivation(
    .indicator = sanitation,
    .cutoff = toilet > 1
   )
 
-deprivation_profile$drinking_water <- df_household |>
+dp$drinking_water <- df_household |>
   define_deprivation(
    .indicator = drinking_water,
    .cutoff = drinking_water == 2
   )
 
-deprivation_profile$electricity <- df_household |>
+dp$electricity <- df_household |>
   define_deprivation(
    .indicator = electricity,
    .cutoff = electricity == 2
   )
 
-deprivation_profile$housing <- df_household |>
+dp$housing <- df_household |>
   define_deprivation(
    .indicator = housing,
    .cutoff = roof %in% c(5, 7, 9) | 
@@ -568,7 +567,7 @@ deprivation_profile$housing <- df_household |>
      floor %in% c(5, 6, 9)
   )
 
-deprivation_profile$assets <- df_household |>
+dp$assets <- df_household |>
   dplyr::mutate_at(
     dplyr::vars(dplyr::starts_with('asset_')), 
     ~ dplyr::if_else(. > 0, 1L, 0L)
@@ -594,8 +593,7 @@ deprivation_profile$assets <- df_household |>
 
 # ----------------------------------
 # Compute the MPI
-mpi_result <- df_household |>
-  compute_mpi(deprivation_profile)
+mpi_result <- compute_mpi(df_household, dp)
 
 # ----------------------------------
 # You may also save your output into an Excel file

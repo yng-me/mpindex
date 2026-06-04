@@ -1,3 +1,5 @@
+mpi_specs <- use_global_mpi_specs(.uid = "uuid")
+
 list_name <- c(
   "indicators",
   "poverty_cutoffs",
@@ -8,6 +10,37 @@ list_name <- c(
   "names_separator"
 )
 colname <- c("dimension", "indicator", "variable", "weight")
+
+test_that("define_mpi_specs sets attributes correctly", {
+  file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+  specs <- define_mpi_specs(
+    file,
+    .uid = "uuid",
+    .unit_of_analysis = "household",
+    .aggregation = "class",
+    .poverty_cutoffs = c(1 / 3, 1 / 2)
+  )
+
+  attrs <- attributes(specs)
+  expect_equal(attrs$uid, "uuid")
+  expect_equal(attrs$unit_of_analysis, "household")
+  expect_equal(attrs$aggregation, "class")
+  expect_equal(attrs$poverty_cutoffs, c(1 / 3, 1 / 2))
+})
+
+test_that("define_mpi_specs stores the mpi_specs_df class", {
+  file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+  specs <- define_mpi_specs(file)
+  expect_s3_class(specs, "mpi_specs_df")
+})
+
+test_that("define_mpi_specs with inline .indicators data frame", {
+  specs <- define_mpi_specs(.indicators = indicators_simple)
+  expect_s3_class(specs, "mpi_specs_df")
+  expect_equal(nrow(specs), 4)
+})
+
+
 
 get_file <- function(file_type) {
   system.file(
@@ -81,7 +114,7 @@ test_that("variable_name column concatenates correctly", {
 test_that("[csv] sample specs file loads correctly", {
   file <- get_file("csv")
   specs <- read.csv(file) |> clean_colnames()
-  specs_name <- to_lowercase(sort(names(specs)))
+  specs_name <- tolower(sort(names(specs)))
   mpi_specs <- define_mpi_specs(file)
 
   expect_contains(specs_name, colname)
@@ -98,7 +131,7 @@ test_that("[csv] sample specs file loads correctly", {
 test_that("[xlsx] sample specs file loads correctly", {
   file <- get_file("xlsx")
   specs <- openxlsx::read.xlsx(file, sheet = 1) |> clean_colnames()
-  specs_name <- to_lowercase(sort(names(specs)))
+  specs_name <- tolower(sort(names(specs)))
   mpi_specs <- define_mpi_specs(file)
 
   expect_contains(specs_name, colname)
@@ -115,7 +148,7 @@ test_that("[xlsx] sample specs file loads correctly", {
 test_that("[txt] sample specs file loads correctly", {
   file <- get_file("txt")
   specs <- read.delim(file) |> clean_colnames()
-  specs_name <- to_lowercase(sort(names(specs)))
+  specs_name <- tolower(sort(names(specs)))
   mpi_specs <- define_mpi_specs(file)
 
   expect_contains(specs_name, colname)
@@ -132,7 +165,7 @@ test_that("[txt] sample specs file loads correctly", {
 test_that("[json] sample specs file loads correctly", {
   file <- get_file("json")
   specs <- jsonlite::read_json(file, simplifyVector = T) |> clean_colnames()
-  specs_name <- to_lowercase(sort(names(specs)))
+  specs_name <- tolower(sort(names(specs)))
   mpi_specs <- define_mpi_specs(file)
 
   expect_contains(specs_name, colname)

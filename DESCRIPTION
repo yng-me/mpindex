@@ -19,13 +19,13 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
-    tidyr,
     stringr,
     jsonlite,
-    purrr,
     tibble,
-    openxlsx
+    openxlsx,
+    tsg
 Suggests: 
+    tidyr,
     rlang,
     testthat (>= 3.0.0),
     lifecycle,
@@ -33,9 +33,9 @@ Suggests:
     rmarkdown,
     gt
 Config/testthat/edition: 3
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 BugReports: https://github.com/yng-me/mpindex/issues
-URL: https://github.com/yng-me/mpindex, https://mpindex.r-lib.org, https://yng-me.github.io/mpindex/
+URL: https://github.com/yng-me/mpindex, https://yng-me.github.io/mpindex/
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1.0)

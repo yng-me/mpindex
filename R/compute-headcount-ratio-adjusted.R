@@ -1,18 +1,15 @@
 compute_headcount_ratio_adjusted <- function(.data, .aggregation = NULL, ...) {
-  n <- NULL
-  mpi <- NULL
-  headcount_ratio <- NULL
-  intensity <- NULL
-  is_deprived <- NULL
-  deprivation_score <- NULL
 
-  df <- .data |>
-    dplyr::group_by(...)
+  if (!"is_deprived" %in% names(.data)) {
+    .data <- .data |>
+      dplyr::mutate(is_deprived = as.integer(deprivation_score > 0))
+  }
+
+  df <- dplyr::group_by(.data, ...)
 
   if (!is.null(.aggregation)) {
     if (.aggregation %in% names(.data)) {
-      df <- .data |>
-        dplyr::group_by(!!as.name(.aggregation), ...)
+      df <- dplyr::group_by(.data, !!as.name(.aggregation), .add = TRUE)
     }
   }
 
@@ -26,12 +23,12 @@ compute_headcount_ratio_adjusted <- function(.data, .aggregation = NULL, ...) {
       ),
       mpi = headcount_ratio * intensity, # OR, MPI = (1 / n) * sum(censored_score, na.rm = T),
       .groups = "drop"
+    ) |>
+    tsg::rename_label(
+      headcount_ratio = "Headcount Ratio (H)",
+      intensity = "Intensity of Deprivation Among the Poor (A)",
+      mpi = "MPI (H x A)"
     )
-
-
-  attr(df$headcount_ratio, "label") <- "Headcount Ratio (H)"
-  attr(df$intensity, "label") <- "Intensity of Deprivation Among the Poor (A)"
-  attr(df$mpi, "label") <- "MPI (H x A)"
 
   class(df) <- c("mpi_df", class(df))
 

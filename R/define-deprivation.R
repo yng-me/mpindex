@@ -25,6 +25,7 @@
 #'  "global-mpi-specs.csv",
 #'  package = "mpindex"
 #' )
+#' 
 #' specs <- define_mpi_specs(specs_file, .uid = 'uuid')
 #'
 #' # Using built-in dataset
@@ -52,14 +53,6 @@ define_deprivation <- function(
 ) {
 
   validate_mpi_specs(.mpi_specs)
-
-  variable <- NULL
-  indicator <- NULL
-  variable_name <- NULL
-  weight <- NULL
-  `:=` <- NULL
-  uid <- NULL
-
   spec_attr <- attributes(.mpi_specs)
 
   selected_indicator <- .mpi_specs |>
@@ -80,10 +73,10 @@ define_deprivation <- function(
 
   if(with_uid) {
     uid_name <- as.character(spec_attr$uid)
-    .data <- .data |> dplyr::rename(uid = !!as.name(uid_name))
+    .data <- dplyr::rename(.data, uid = !!as.name(uid_name))
   } else {
     uid_name <- 'uid'
-    .data <- .data |> tibble::rownames_to_column(var = uid_name)
+    .data <- tibble::rownames_to_column(.data, var = uid_name)
   }
 
   if(!.set_na_equal_to %in% c(1, 0, NA)) .set_na_equal_to <- NA
@@ -95,8 +88,7 @@ define_deprivation <- function(
     )
 
   if(.collapse & with_uid) {
-    .data <- .data |>
-      dplyr::group_by(!!as.name(uid_name))
+    .data <- dplyr::group_by(.data, !!as.name(uid_name))
 
     if(to_enquo_str({{.collapse_condition}}) != 'NULL') {
       .data <- .data |>
@@ -116,7 +108,7 @@ define_deprivation <- function(
     }
   }
 
-  class(.data) <- c("mpi_deprivation_matrix", class(.data))
+  class(.data) <- c("mpi_dm", class(.data))
 
   .data |>
     dplyr::mutate(!!as.name(weighted) := w[1] * !!as.name(v[1])) |>

@@ -1,5 +1,5 @@
 compute_headcount_ratio <- function(.data, .aggregation = NULL, ...) {
-  n <- NULL
+
   pattern_str <- "^d\\d{2}_i\\d{2}.*"
 
   df <- .data |>
@@ -7,10 +7,9 @@ compute_headcount_ratio <- function(.data, .aggregation = NULL, ...) {
     dplyr::add_count() |>
     dplyr::ungroup() |>
     dplyr::group_by(n, ...) |>
-    dplyr::summarise_at(
-      dplyr::vars(dplyr::matches(pattern_str)),
-      mean,
-      na.rm = TRUE
+    dplyr::summarise(
+      dplyr::across(dplyr::matches(pattern_str), \(x) mean(x, na.rm = TRUE)),
+      .groups = "drop"
     ) |>
     dplyr::select(n, ..., dplyr::matches(pattern_str))
 
@@ -21,17 +20,15 @@ compute_headcount_ratio <- function(.data, .aggregation = NULL, ...) {
         dplyr::group_by(!!as.name(.aggregation), ...) |>
         dplyr::add_count() |>
         dplyr::group_by(!!as.name(.aggregation), n, ...) |>
-        dplyr::summarise_at(
-          dplyr::vars(dplyr::matches(pattern_str)),
-          mean,
-          na.rm = TRUE
+        dplyr::summarise(
+          dplyr::across(dplyr::matches(pattern_str), \(x) mean(x, na.rm = TRUE)),
+          .groups = "drop"
         ) |>
         dplyr::select(
           !!as.name(.aggregation), n,
           ...,
           dplyr::matches(pattern_str)
-        ) |>
-        dplyr::ungroup()
+        )
     }
   }
 

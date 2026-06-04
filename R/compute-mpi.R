@@ -79,7 +79,7 @@
 #'    .cutoff = roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
 #'  )
 #' deprivation_profile$assets <- df_household |>
-#'  dplyr::mutate_at(dplyr::vars(dplyr::starts_with('asset_')), ~ dplyr::if_else(. > 0, 1L, 0L)) |>
+#'  dplyr::mutate(dplyr::across(dplyr::starts_with('asset_'), ~ dplyr::if_else(. > 0, 1L, 0L))) |>
 #'  dplyr::mutate(
 #'    asset_phone = dplyr::if_else(
 #'      (asset_telephone + asset_mobile_phone) > 0,
@@ -125,11 +125,6 @@ compute_mpi <- function(
 
   validate_mpi_specs(.mpi_specs)
 
-  n <- NULL
-  mpi <- NULL
-  is_deprived <- NULL
-  deprivation_score <- NULL
-
   spec_attr <- attributes(.mpi_specs)
   cutoffs <- spec_attr$poverty_cutoffs
   p_cutoffs <- set_k_label(cutoffs)
@@ -145,8 +140,7 @@ compute_mpi <- function(
     }
   }
 
-
-  if('mpi_deprivation_matrix' %in% class(.data)) {
+  if('mpi_dm' %in% class(.data)) {
 
     .deprivation_profile <- NULL
     deprivation_matrix <- .data
@@ -157,12 +151,12 @@ compute_mpi <- function(
       stop('Deprivation profile is incomplete.')
     }
 
-    deprivation_matrix <- .data |>
-      create_deprivation_matrix(
-        ...,
-        .deprivation_profile,
-        .mpi_specs = .mpi_specs
-      )
+    deprivation_matrix <- create_deprivation_matrix(
+      .data,
+      .deprivation_profile,
+      .mpi_specs = .mpi_specs,
+      ...
+    )
 
   }
 
@@ -176,23 +170,20 @@ compute_mpi <- function(
     dep_label <- set_dep_label(p_cutoffs, i)
     dm_temp <- deprivation_matrix[[dep_label]]
 
-    incidence_temp <- dm_temp |>
-      compute_headcount_ratio(
-        .aggregation = spec_attr$aggregation,
-        ...
-      )
+    incidence_temp <- compute_headcount_ratio(
+      dm_temp,
+      .aggregation = spec_attr$aggregation,
+      ...
+    )
 
-    headcount_ratio_list[[dep_label]] <- incidence_temp |>
-      rename_indicators(.mpi_specs = .mpi_specs)
+    headcount_ratio_list[[dep_label]] <- rename_indicators(incidence_temp, .mpi_specs = .mpi_specs)
+    mpi_computed_temp <- compute_headcount_ratio_adjusted(
+      dm_temp,
+      .aggregation = spec_attr$aggregation,
+      ...
+    )
 
-    mpi_computed_temp <- dm_temp |>
-      compute_headcount_ratio_adjusted(
-        .aggregation = spec_attr$aggregation,
-        ...
-      )
-
-    mpi_computed_list[[dep_label]] <- mpi_computed_temp |>
-      rename_n(spec_attr$unit_of_analysis)
+    mpi_computed_list[[dep_label]] <- rename_n(mpi_computed_temp, spec_attr$unit_of_analysis)
 
     contribution_list[[dep_label]] <- mpi_computed_temp |>
       dplyr::select(mpi) |>
@@ -241,13 +232,12 @@ compute_mpi <- function(
     save_mpi(
       mpi_output,
       .mpi_specs = .mpi_specs,
-      .formatted_output = .formatted_output,
       .filename = .mpi_output_filename,
-      .include_table_summary = .include_table_summary,
       .include_specs = .include_specs
     )
   }
 
+  class(mpi_output) <- c("mpi_output", class(mpi_output))
   return(mpi_output)
 }
 

@@ -1,225 +1,121 @@
 #' Save MPI output
 #'
-#' @description Save the MPI output into an Excel file format.
+#' @description Save the MPI output to an Excel file using the
+#' \href{https://cran.r-project.org/package=tsg}{tsg} package for
+#' publication-ready table formatting.
 #'
 #' @param .mpi_output An object derived from \link[mpindex]{compute_mpi}.
-#' @param .mpi_specs MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.
-#' @param .filename Output filename
-#' @param .formatted_output Whether formatting is to be applied to the output.
-#' @param .include_table_summary NOT YET IMPLEMENTED. Whether to include summary information in the generated output.
-#' @param .include_specs Whether to include MPI specification in the generated output.
+#' @param .mpi_specs MPI specifications defined in
+#'   \code{\link[mpindex]{define_mpi_specs}}.
+#' @param .filename Output filename. The \code{.xlsx} extension is added
+#'   automatically when missing. Defaults to \code{"MPI Results.xlsx"} in the
+#'   current working directory.
+#' @param .include_deprivation_matrix Whether to include deprivation matrices
+#'   as separate sheets. Defaults to \code{TRUE}.
+#' @param .include_specs Whether to include MPI specification as a separate
+#'   sheet. Defaults to \code{FALSE}.
 #'
-#' @return Returns the file location of the output generated.
+#' @return Returns the normalised file path of the generated Excel file.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' # It requires an MPI output (list type) in the first argument
+#' mpi_result <- df_household |>
+#'   compute_mpi(deprivation_profile)
 #' save_mpi(mpi_result, .filename = "MPI Sample Output")
 #' }
 #'
 save_mpi <- function(
   .mpi_output,
-  .mpi_specs = getOption("mpi_specs"),
   .filename = NULL,
-  .formatted_output = TRUE,
-  .include_table_summary = TRUE,
+  .mpi_specs = getOption("mpi_specs"),
+  .include_deprivation_matrix = TRUE,
   .include_specs = FALSE
 ) {
 
   validate_mpi_specs(.mpi_specs)
-  spec_attr <- attributes(.mpi_specs)
 
-  tb <- openxlsx::createWorkbook()
-  openxlsx::modifyBaseFont(tb, fontName = "Arial", fontSize = 10)
-
-
-  if(.formatted_output) {
-
-    save_mpi_formatted(
-      tb,
-      set_mpi_sheets(.mpi_output),
-      nrow(.mpi_specs)
-    )
-
+  # ── Resolve output path ─────────────────────────────────────────────────────
+  if (is.null(.filename)) {
+    file <- file.path(getwd(), "MPI Results.xlsx")
   } else {
-
-    save_mpi_unformatted(
-      tb,
-      set_mpi_sheets(.mpi_output),
-      nrow(.mpi_specs)
-    )
+    file <- .filename
+    if (!grepl("\\.xlsx$", file)) {
+      file <- paste0(file, ".xlsx")
+    }
   }
 
-  if(.include_specs) {
-    save_mpi_specs(tb, .mpi_specs, .formatted_output)
-  }
+  # ── Build flat named sheet list ──────────────────────────────────────────────
+  sheets <- list()
 
-  if (is.null(.filename)) file <- "MPI Results.xlsx"
-  else file <- .filename
+  sheets[["MPI"]] <- .mpi_output$index
+  sheets[["Contribution by dimension"]] <- .mpi_output$contribution
+  sheets[["Headcount ratio"]] <- .mpi_output$headcount_ratio
 
-  if (!grepl("\\.xlsx$", .filename)) {
-    file <- paste0(.filename, ".xlsx")
-  }
+  if (.include_deprivation_matrix && "deprivation_matrix" %in% names(.mpi_output)) {
+    dm <- .mpi_output$deprivation_matrix
+    dm_names <- names(dm)
+    sheets[["Uncensored deprivation matrix"]] <- dm$uncensored
 
-  openxlsx::saveWorkbook(tb, file, overwrite = TRUE)
-
-  return(paste0(getwd(), "/", file))
-}
-
-
-save_mpi_formatted <- function(.wb, .data, .indicator_count) {
-
-  tb_sheets <- names(.data)
-
-  start_row <- 2
-  start_col <- 2
-
-  for (i in seq_along(tb_sheets)) {
-
-    tb_sheet <- tb_sheets[i]
-    df <- .data[[tb_sheet]]
-
-    if (inherits(df, "list")) {
-      restart_row <- start_row
-      df_names <- names(df)
-
-      for (j in seq_along(df_names)) {
-
-        df_j <- df[[j]]
-
-        decimal_format <- set_decimal_format(df_j, tb_sheet, .indicator_count)
-
-        df_name <- df_names[j]
-        if (df_name == "uncensored" | df_name == "censored") {
-          df_name <- to_title_case(df_name)
-        } else if (grepl("^k_", df_name)) {
-          df_name <- paste0(
-            stringr::str_replace(df_name, "^k_", ""),
-            "% poverty cutoff"
-          )
-        }
-
-        write_as_excel_here <- function(.df, ...) {
-          .df |>
-            write_as_excel(
-              ...,
-              wb = .wb,
-              sheet = tb_sheet,
-              subtitle = df_name,
-              format_precision = 3,
-              # .names_separator = spec_attr$names_separator,
-              cols_with_decimal_format = decimal_format,
-              start_row = restart_row
-            )
-        }
-
-        if (j == 1) {
-          tb_for_list <- df_j |> write_as_excel_here(title = tb_sheet)
-        } else {
-          tb_for_list <- df_j |> write_as_excel_here(append_to_existing_sheet = T)
-        }
-
-        restart_row <- tb_for_list$start_row
+    if (length(dm_names) > 2) {
+      dm_censored <- dm_names[-1]
+      for (k in dm_censored) {
+        label <- paste0(
+          "Dep. matrix (k = ",
+          stringr::str_remove(k, "^k_"),
+          "%)"
+        )
+        sheets[[label]] <- dm[[k]]
       }
     } else {
-
-      decimal_format <- set_decimal_format(df, tb_sheet, .indicator_count)
-
-      write_as_excel(
-        df,
-        wb = .wb,
-        sheet = tb_sheet,
-        title = tb_sheet,
-        cols_with_decimal_format = decimal_format,
-        format_precision = 3,
-        start_col = start_col
-      )
+      sheets[["Censored deprivation matrix"]] <- dm$censored
     }
   }
+
+  if (.include_specs) {
+    sheets[["MPI Specification"]] <- .mpi_specs |>
+      dplyr::select(
+        dplyr::any_of(c("dimension", "indicator", "variable", "weight", "description"))
+      ) |>
+      dplyr::rename_with(to_title_case)
+  }
+
+  # ── Flatten any nested list entries (multi-cutoff) ───────────────────────────
+  sheets <- flatten_mpi_sheet_list(sheets)
+
+  # ── Write via tsg ─────────────────────────────────────────────────────────
+  tsg::write_xlsx(sheets, path = file)
+
+  return(normalizePath(file, mustWork = FALSE))
 }
 
-save_mpi_unformatted <- function(.wb, .data, .indicator_count) {
 
-  tb_sheets <- names(.data)
-
-  for (i in seq_along(tb_sheets)) {
-
-    tb_sheet <- tb_sheets[i]
-    df <- .data[[tb_sheet]]
-
-    if (inherits(df, "list") && !grepl("[Dd]eprivation matrix", tb_sheet)) {
-
-      df_list <- list()
-      df_names <- names(df)
-
-      for (j in seq_along(df_names)) {
-        df_name <- df_names[j]
-        df_list[[j]] <- df[[df_name]] |>
-          dplyr::mutate(
-            cuttoff = dplyr::if_else(
-              to_lowercase(df_name) == 'uncensored' | to_lowercase(df_name) == 'censored',
-              to_title_case(df_name),
-              paste0(stringr::str_remove(df_name, "^k_"), "%")
-            ),
-            .before = 1
-          )
+#' Flatten nested MPI sheet list for Excel export
+#'
+#' Converts any list-valued entries (multi-cutoff) to individual named entries.
+#' Sheet names are truncated to the 31-character Excel limit.
+#'
+#' @param sheets Named list of data frames or named lists of data frames.
+#' @return A flat named list of data frames.
+#' @keywords internal
+#'
+flatten_mpi_sheet_list <- function(sheets) {
+  out <- list()
+  for (nm in names(sheets)) {
+    val <- sheets[[nm]]
+    if (is.data.frame(val)) {
+      out[[substr(nm, 1, 31)]] <- val
+    } else if (is.list(val)) {
+      for (sub_nm in names(val)) {
+        label <- if (grepl("^k_", sub_nm)) {
+          paste0(nm, " (", stringr::str_remove(sub_nm, "^k_"), "%)")
+        } else {
+          paste0(nm, " (", sub_nm, ")")
+        }
+        out[[substr(label, 1, 31)]] <- val[[sub_nm]]
       }
-
-      df <- do.call("rbind", df_list)
     }
-
-    decimal_format <- set_decimal_format(df, tb_sheet, .indicator_count)
-
-    write_as_excel(
-      df,
-      wb = .wb,
-      sheet = tb_sheet,
-      cols_with_decimal_format = decimal_format,
-      format_precision = 3,
-      start_row = 1,
-      start_col = 1,
-      format_output = FALSE
-    )
-
   }
-}
-
-save_mpi_specs <- function(.wb, .mpi_specs, .formatted_output) {
-
-  start_row <- 1
-  start_col <- 1
-
-  specs <- .mpi_specs |>
-    dplyr::select(dplyr::any_of(c("dimension", "indicator", "variable", "weight", "description")))
-
-  if(.formatted_output) {
-
-    start_row <- 2
-    start_col <- 2
-
-    specs <- specs |> dplyr::rename_with(to_title_case)
-  }
-
-
-
-  facade <- list()
-  facade$col_width_all = rep(18, ncol(specs))
-  if("description" %in% to_lowercase(names(specs))) {
-    facade$col_width_last = 132
-  }
-
-  write_as_excel(
-    specs,
-    wb = .wb,
-    sheet = "MPI Specification",
-    title = "MPI Specification",
-    cols_with_decimal_format = which(to_lowercase(names(specs)) == "weight"),
-    format_precision = 3,
-    format_output = .formatted_output,
-    start_col = start_col,
-    start_row = start_row,
-    facade = facade
-  )
+  out
 }
 

@@ -18,4 +18,5 @@ Use built-in specification file for Global MPI.
 \examples{
 
 use_global_mpi_specs()
+
 }

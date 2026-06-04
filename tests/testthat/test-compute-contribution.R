@@ -1,5 +1,3 @@
-source("../deprivation-profile.R")
-
 test_that("contribution by dimension works correctly", {
   dm <- df_household |>
     create_deprivation_matrix(deprivation_profile, .mpi_specs = mpi_specs)

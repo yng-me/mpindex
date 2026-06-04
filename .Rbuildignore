@@ -11,3 +11,5 @@ playground
 playground/*
 
 vignettes/*\.xlsx$
+^\.positai$
+^\.claude$

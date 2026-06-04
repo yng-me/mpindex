@@ -44,6 +44,7 @@ specs_file <- system.file(
  "global-mpi-specs.csv",
  package = "mpindex"
 )
+
 specs <- define_mpi_specs(specs_file, .uid = 'uuid')
 
 # Using built-in dataset

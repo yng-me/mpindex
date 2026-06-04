@@ -1,12 +1,3 @@
-source("../deprivation-profile.R")
-
-# test_that("error if specs file is not defined", {
-#   expect_error(
-#     create_deprivation_matrix(df_household, deprivation_profile),
-#     "MPI specifications must be defined first."
-#   )
-# })
-
 test_that("deprivation profile is incomplete.", {
   deprivation_profile$year_schooling <- NULL
   expect_error(

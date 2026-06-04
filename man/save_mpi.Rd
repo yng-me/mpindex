@@ -6,35 +6,40 @@
 \usage{
 save_mpi(
   .mpi_output,
-  .mpi_specs = getOption("mpi_specs"),
   .filename = NULL,
-  .formatted_output = TRUE,
-  .include_table_summary = TRUE,
+  .mpi_specs = getOption("mpi_specs"),
+  .include_deprivation_matrix = TRUE,
   .include_specs = FALSE
 )
 }
 \arguments{
 \item{.mpi_output}{An object derived from \link[mpindex]{compute_mpi}.}
 
-\item{.mpi_specs}{MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.}
+\item{.filename}{Output filename. The \code{.xlsx} extension is added
+automatically when missing. Defaults to \code{"MPI Results.xlsx"} in the
+current working directory.}
 
-\item{.filename}{Output filename}
+\item{.mpi_specs}{MPI specifications defined in
+\code{\link[mpindex]{define_mpi_specs}}.}
 
-\item{.formatted_output}{Whether formatting is to be applied to the output.}
+\item{.include_deprivation_matrix}{Whether to include deprivation matrices
+as separate sheets. Defaults to \code{TRUE}.}
 
-\item{.include_table_summary}{NOT YET IMPLEMENTED. Whether to include summary information in the generated output.}
-
-\item{.include_specs}{Whether to include MPI specification in the generated output.}
+\item{.include_specs}{Whether to include MPI specification as a separate
+sheet. Defaults to \code{FALSE}.}
 }
 \value{
-Returns the file location of the output generated.
+Returns the normalised file path of the generated Excel file.
 }
 \description{
-Save the MPI output into an Excel file format.
+Save the MPI output to an Excel file using the
+\href{https://cran.r-project.org/package=tsg}{tsg} package for
+publication-ready table formatting.
 }
 \examples{
 \dontrun{
-# It requires an MPI output (list type) in the first argument
+mpi_result <- df_household |>
+  compute_mpi(deprivation_profile)
 save_mpi(mpi_result, .filename = "MPI Sample Output")
 }
 

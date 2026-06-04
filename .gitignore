@@ -7,3 +7,6 @@ inst/doc
 docs
 playground
 vignettes/.xlsx$
+.github/copilot-instructions.md
+.github/skills
+.positai

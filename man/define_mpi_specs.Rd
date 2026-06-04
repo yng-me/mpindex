@@ -12,7 +12,7 @@ define_mpi_specs(
   .aggregation = NULL,
   .uid = NULL,
   .source_of_data = NULL,
-  .names_separator = ">",
+  .names_separator = "__",
   .save_as_global_options = TRUE
 )
 }
