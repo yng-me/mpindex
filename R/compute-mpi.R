@@ -1,245 +1,195 @@
 #' Compute Multidimensional Poverty Index (MPI)
 #'
-#' @description This function uses the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster. It requires a deprivation profile created using the (\code{\link[mpindex]{define_deprivation}}) fuction containing all indicators defined in the specification files.
+#' @description The primary single-call API for computing the MPI using the
+#' Alkire-Foster (AF) counting method. Deprivation cutoffs are specified inline
+#' using the \code{\link[mpindex]{deprived}} helper, making the workflow
+#' self-contained and readable.
 #'
-#' @param .data A tidy data frame where each observation is the unit of analysis defined in \code{\link[mpindex]{define_mpi_specs}}.
-#' @param .deprivation_profile list of deprivation profile created using \code{\link[mpindex]{define_deprivation}}.
-#' @param ... Grouping columns (supports tidyselect), e.g. area (country, urbanity, region, province), sex, ethnic group, etc.
-#' @param .mpi_specs MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.
-#' @param .include_deprivation_matrix Whether to include deprivation matrix in the output.
-#' @param .generate_output Whether to generate an output (Excel file) as side effect.
-#' @param .mpi_output_filename Output filename.
-#' @param .formatted_output NOT YET IMPLEMENTED. Whether formatting is to be applied to the output.
-#' @param .include_table_summary NOT YET IMPLEMENTED. Whether to include summary information in the generated output.
-#' @param .include_specs NOT YET IMPLEMENTED. Whether to include MPI specification in the generated output.
+#' For a step-by-step workflow using a pre-assembled deprivation profile, see
+#' \code{\link[mpindex]{compute_mpi_from_profile}}.
 #'
-#' @return Returns list of objects: \code{index} (the MPI), \code{contribution} (contribution by dimension), \code{headcount_ratio} (censored and uncensored), and \code{deprivation_matrix} (censored and uncensored). If \code{poverty_cutoffs} defined in \code{\link[mpindex]{define_mpi_specs}} contain more than one (1) value, \code{index} and \code{contribution} object will output each cutoff in a separate table.
+#' @param .data A data frame where each row is the unit of analysis.
+#' @param mpi_specs MPI specifications from \code{\link[mpindex]{define_mpi_specs}}.
+#' @param deprivations A named list of \code{\link[mpindex]{deprived}} calls. Each
+#'   name must exactly match a \code{variable} in \code{mpi_specs}.
+#' @param by \emph{(Optional)} Columns to group results by, passed as a
+#'   tidyselect expression, e.g. \code{c(region, sex)}.
+#' @param include_deprivation_matrix Whether to include deprivation matrices.
+#'   Default \code{TRUE}.
+#' @param generate_output Whether to write an Excel file as a side effect.
+#'   Default \code{FALSE}.
+#' @param mpi_output_filename Output filename when \code{generate_output = TRUE}.
+#' @param include_specs Whether to include MPI specification sheet in Excel output.
+#' @param weight Name of the sampling-weight column in \code{.data}. When
+#'   supplied, all estimates are survey-weighted. Requires the \pkg{survey}
+#'   package.
+#' @param strata Name of the stratum column in \code{.data}.
+#' @param cluster Name of the cluster / PSU column in \code{.data}.
+#' @param fpc Name of the finite-population correction column in \code{.data}.
+#' @param survey_design A pre-built \code{survey::svydesign()} object.
+#'   Provide either \code{weight} / \code{strata} / \code{cluster} /
+#'   \code{fpc} \emph{or} \code{survey_design}, not both.
+#' @param inference Logical. When \code{TRUE} (and a survey design is
+#'   supplied), standard errors and confidence intervals are appended as
+#'   \code{*_se}, \code{*_ci_low}, \code{*_ci_high} columns. Default
+#'   \code{FALSE}.
+#' @param ci_level Confidence level for intervals. Default \code{0.95}.
+#' @param ... Grouping columns (tidyselect) or reserved for old-name detection.
+#'
+#' @return A named list of class \code{mpi_output} with components:
+#'   \describe{
+#'     \item{\code{$index}}{Named list keyed by \code{k_*}: MPI, H, A, n.}
+#'     \item{\code{$contribution}}{Named list keyed by \code{k_*}: contribution by indicator/dimension.}
+#'     \item{\code{$headcount_ratio}}{Named list with \code{uncensored} and per-\code{k_*} censored ratios.}
+#'     \item{\code{$deprivation_matrix}}{Named list with \code{uncensored} and per-\code{k_*} matrices.}
+#'   }
 #'
 #' @export
 #'
 #' @references \href{https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/}{Alkire-Foster Method} \cr
 #' \href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
-#' @seealso \link[mpindex]{define_mpi_specs}, \link[mpindex]{define_deprivation}, \link[mpindex]{save_mpi}
+#' @seealso \link[mpindex]{define_mpi_specs}, \link[mpindex]{deprived},
+#'   \link[mpindex]{compute_mpi_from_profile}, \link[mpindex]{save_mpi}
+#'
 #' @examples
-#' # ----------------------------------
-#' # Load MPI specs from the built-in specs file
-#' specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
-#' mpi_specs <- define_mpi_specs(specs_file, .uid = 'uuid')
+#' specs <- define_mpi_specs(
+#'   system.file("extdata", "global-mpi-specs.csv", package = "mpindex"),
+#'   uid = "uuid"
+#' )
 #'
-#' # ----------------------------------
-#' # Create an empty list to store deprivation profile for each indicator
-#' deprivation_profile <- list()
-#'
-#' deprivation_profile$nutrition <- df_household_roster |>
-#'  define_deprivation(
-#'    .indicator = nutrition,
-#'    .cutoff = undernourished == 1 & age < 70,
-#'    .collapse = TRUE
-#'  )
-#' deprivation_profile$child_mortality <- df_household |>
-#'  define_deprivation(
-#'    .indicator = child_mortality,
-#'    .cutoff = with_child_died == 1
-#'  )
-#' deprivation_profile$year_schooling <- df_household_roster |>
-#'  define_deprivation(
-#'    .indicator = year_schooling,
-#'    .cutoff = completed_6yrs_schooling == 2,
-#'    .collapse = TRUE
-#'  )
-#' deprivation_profile$school_attendance <- df_household_roster |>
-#'  define_deprivation(
-#'    .indicator = school_attendance,
-#'    .cutoff = attending_school == 2 & age %in% c(5:24),
-#'    .collapse = TRUE
-#'  )
-#' deprivation_profile$cooking_fuel <- df_household |>
-#'  define_deprivation(
-#'    .indicator = cooking_fuel,
-#'    .cutoff = cooking_fuel %in% c(4:6, 9)
-#'  )
-#' deprivation_profile$sanitation <- df_household |>
-#'  define_deprivation(
-#'    .indicator = sanitation,
-#'    .cutoff = toilet > 1
-#'  )
-#' deprivation_profile$drinking_water <- df_household |>
-#'  define_deprivation(
-#'    .indicator = drinking_water,
-#'    .cutoff = drinking_water == 2
-#'  )
-#' deprivation_profile$electricity <- df_household |>
-#'  define_deprivation(
-#'    .indicator = electricity,
-#'    .cutoff = electricity == 2
-#'  )
-#' deprivation_profile$housing <- df_household |>
-#'  define_deprivation(
-#'    .indicator = housing,
-#'    .cutoff = roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
-#'  )
-#' deprivation_profile$assets <- df_household |>
-#'  dplyr::mutate(dplyr::across(dplyr::starts_with('asset_'), ~ dplyr::if_else(. > 0, 1L, 0L))) |>
-#'  dplyr::mutate(
-#'    asset_phone = dplyr::if_else(
-#'      (asset_telephone + asset_mobile_phone) > 0,
-#'      1L,
-#'      0L
-#'    )
-#'  ) |>
-#'  dplyr::mutate(
-#'    with_hh_conveniences = (
-#'      asset_tv + asset_phone + asset_computer +
-#'        asset_animal_cart + asset_bicycle +
-#'        asset_motorcycle + asset_refrigerator) > 1,
-#'    with_mobility_assets = (asset_car + asset_truck) > 0
-#'  ) |>
-#'  define_deprivation(
-#'    .indicator = assets,
-#'    .cutoff = !(with_hh_conveniences & with_mobility_assets)
-#'  )
-#'
-#' # ----------------------------------
-#' # Compute the MPI
-#' mpi_result <- df_household |>
-#'   compute_mpi(deprivation_profile)
-#'
-#' # ----------------------------------
-#' # You may also save your output into an Excel file
 #' \dontrun{
-#' save_mpi(mpi_result, .filename = 'MPI Sample Output')
+#' mpi_result <- compute_mpi(
+#'   df_household,
+#'   mpi_specs = specs,
+#'   deprivations = list(
+#'     nutrition = deprived(
+#'       undernourished == 1 & age < 70,
+#'       .data = df_household_roster,
+#'       collapse_fn = max
+#'     ),
+#'     child_mortality = deprived(with_child_died == 1),
+#'     year_schooling = deprived(
+#'       completed_6yrs_schooling == 2,
+#'       .data = df_household_roster,
+#'       collapse_fn = max
+#'     ),
+#'     school_attendance = deprived(
+#'       attending_school == 2 & age %in% c(5:24),
+#'       .data = df_household_roster,
+#'       collapse_fn = max
+#'     ),
+#'     cooking_fuel   = deprived(cooking_fuel %in% c(4:6, 9)),
+#'     sanitation     = deprived(toilet > 1),
+#'     drinking_water = deprived(drinking_water == 2),
+#'     electricity    = deprived(electricity == 2),
+#'     housing        = deprived(
+#'       roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
+#'     ),
+#'     assets = deprived(!(
+#'       (asset_tv + asset_telephone + asset_mobile_phone + asset_computer +
+#'          asset_animal_cart + asset_bicycle + asset_motorcycle +
+#'          asset_refrigerator) > 1 &
+#'         (asset_car + asset_truck) > 0
+#'     ))
+#'   )
+#' )
 #' }
-
+#'
 compute_mpi <- function(
   .data,
-  .deprivation_profile,
+  mpi_specs,
+  deprivations,
   ...,
-  .mpi_specs = getOption('mpi_specs'),
-  .include_deprivation_matrix = TRUE,
-  .generate_output = FALSE,
-  .formatted_output = TRUE,
-  .mpi_output_filename = NULL,
-  .include_table_summary = TRUE,
-  .include_specs = FALSE
+  by                         = NULL,
+  include_deprivation_matrix = TRUE,
+  generate_output            = FALSE,
+  mpi_output_filename        = NULL,
+  include_specs              = FALSE,
+  weight                     = NULL,
+  strata                     = NULL,
+  cluster                    = NULL,
+  fpc                        = NULL,
+  survey_design              = NULL,
+  inference                  = FALSE,
+  ci_level                   = 0.95
 ) {
 
-  validate_mpi_specs(.mpi_specs)
-
-  spec_attr <- attributes(.mpi_specs)
-  cutoffs <- spec_attr$poverty_cutoffs
-  p_cutoffs <- set_k_label(cutoffs)
-
-  headcount_ratio_list <- list()
-  mpi_computed_list <- list()
-  contribution_list <- list()
-
-
-  if(!is.null(spec_attr$aggregation)) {
-    if(!(spec_attr$aggregation %in% names(.data))) {
-      stop('aggregation column defined in specification file does not exist in the dataset.')
-    }
-  }
-
-  if('mpi_dm' %in% class(.data)) {
-
-    .deprivation_profile <- NULL
-    deprivation_matrix <- .data
-
-  } else {
-
-    if(!(identical(sort(.mpi_specs$variable), sort(names(.deprivation_profile))))) {
-      stop('Deprivation profile is incomplete.')
-    }
-
-    deprivation_matrix <- create_deprivation_matrix(
-      .data,
-      .deprivation_profile,
-      .mpi_specs = .mpi_specs,
-      ...
-    )
-
-  }
-
-  # Incidence of Poverty -------------------------------------------------------
-  headcount_ratio_list[['uncensored']] <- deprivation_matrix$uncensored |>
-    compute_headcount_ratio(.aggregation = spec_attr$aggregation, ...) |>
-    rename_indicators(.mpi_specs = .mpi_specs)
-
-  for(i in seq_along(p_cutoffs)) {
-
-    dep_label <- set_dep_label(p_cutoffs, i)
-    dm_temp <- deprivation_matrix[[dep_label]]
-
-    incidence_temp <- compute_headcount_ratio(
-      dm_temp,
-      .aggregation = spec_attr$aggregation,
-      ...
-    )
-
-    headcount_ratio_list[[dep_label]] <- rename_indicators(incidence_temp, .mpi_specs = .mpi_specs)
-    mpi_computed_temp <- compute_headcount_ratio_adjusted(
-      dm_temp,
-      .aggregation = spec_attr$aggregation,
-      ...
-    )
-
-    mpi_computed_list[[dep_label]] <- rename_n(mpi_computed_temp, spec_attr$unit_of_analysis)
-
-    contribution_list[[dep_label]] <- mpi_computed_temp |>
-      dplyr::select(mpi) |>
-      dplyr::bind_cols(incidence_temp) |>
-      compute_contribution(..., .mpi_specs = .mpi_specs)
-  }
-
-
-  if(length(p_cutoffs) == 1) {
-    mpi_computed_list <- mpi_computed_list[[1]]
-    contribution_list <- contribution_list[[1]]
-  }
-
-  mpi_output <- list(
-    index = mpi_computed_list,
-    contribution = contribution_list,
-    headcount_ratio = headcount_ratio_list
+  check_old_dotted_args(
+    "compute_mpi",
+    c(".mpi_specs", ".deprivations", ".by", ".include_deprivation_matrix",
+      ".generate_output", ".mpi_output_filename", ".include_specs",
+      ".weight", ".strata", ".cluster", ".fpc", ".survey_design",
+      ".inference", ".ci_level"),
+    ...
   )
 
-  if(.include_deprivation_matrix) {
-    dm_n <- names(deprivation_matrix)
+  validate_mpi_specs(mpi_specs)
 
-    if(!is.null(spec_attr$uid)) {
-      join_by <- spec_attr$uid
+  # Resolve `by` into a character vector of column names
+  by_cols <- names(dplyr::select(.data, {{by}}))
+
+  # Validate deprivations names
+  dep_names <- names(deprivations)
+  if (is.null(dep_names) || any(dep_names == "")) {
+    stop("All elements of `deprivations` must be named.")
+  }
+  if (any(duplicated(dep_names))) {
+    stop("`deprivations` contains duplicate names.")
+  }
+  extra <- setdiff(dep_names, mpi_specs$variable)
+  if (length(extra) > 0) {
+    stop(paste0(
+      "Names in `deprivations` not found in specs: ",
+      paste(extra, collapse = ", ")
+    ))
+  }
+
+  # Build deprivation profile
+  deprivation_profile <- vector("list", length(dep_names))
+  names(deprivation_profile) <- dep_names
+
+  for (ind in dep_names) {
+    entry <- deprivations[[ind]]
+
+    if (inherits(entry, "mpi_deprivation_spec")) {
+      data_for_ind <- if (!is.null(entry$data)) entry$data else .data
+
+      deprivation_profile[[ind]] <- rlang::inject(
+        define_deprivation(
+          .data           = data_for_ind,
+          indicator       = !!rlang::sym(ind),
+          cutoff          = !!entry$cutoff,
+          mpi_specs       = mpi_specs,
+          collapse_fn     = entry$collapse_fn,
+          set_na_equal_to = entry$set_na_equal_to
+        )
+      )
+    } else if (is.data.frame(entry)) {
+      deprivation_profile[[ind]] <- entry
     } else {
-      join_by <- 'uid'
+      stop(paste0("Element '", ind, "' must be a deprived() spec or a data frame."))
     }
-
-    mpi_output[['deprivation_matrix']] <- stats::setNames(
-      lapply(dm_n, function(x) {
-        deprivation_matrix[[x]] |>
-          dplyr::select(
-            !!as.name(join_by),
-            dplyr::any_of(spec_attr$aggregation),
-            ...,
-            dplyr::any_of('deprivation_score'),
-            dplyr::matches('^d\\d{2}_i\\d{2}.*')
-          ) |>
-          rename_indicators(.mpi_specs = .mpi_specs)
-      }),
-    dm_n
-    )
   }
 
-  if(.generate_output) {
-    save_mpi(
-      mpi_output,
-      .mpi_specs = .mpi_specs,
-      .filename = .mpi_output_filename,
-      .include_specs = .include_specs
+  # Delegate to compute_mpi_from_profile, injecting `by` columns as ...
+  rlang::inject(
+    compute_mpi_from_profile(
+      .data,
+      deprivation_profile,
+      ...,
+      !!!rlang::syms(by_cols),
+      mpi_specs                  = mpi_specs,
+      include_deprivation_matrix = include_deprivation_matrix,
+      generate_output            = generate_output,
+      mpi_output_filename        = mpi_output_filename,
+      include_specs              = include_specs,
+      weight                     = weight,
+      strata                     = strata,
+      cluster                    = cluster,
+      fpc                        = fpc,
+      survey_design              = survey_design,
+      inference                  = inference,
+      ci_level                   = ci_level
     )
-  }
-
-  class(mpi_output) <- c("mpi_output", class(mpi_output))
-  return(mpi_output)
+  )
 }
-
-
-

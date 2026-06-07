@@ -1,15 +1,14 @@
 compute_contribution <- function(
   .data,
   ...,
-  .mpi_specs = getOption("mpi_specs")
-
+  mpi_specs = NULL
 ) {
 
-  validate_mpi_specs(.mpi_specs)
-  spec_attr <- attributes(.mpi_specs)
+  validate_mpi_specs(mpi_specs)
+  spec_attr <- attributes(mpi_specs)
 
-  w <- stats::setNames(.mpi_specs$weight, .mpi_specs$variable_name)
-  indicators <- .mpi_specs$variable_name
+  w          <- stats::setNames(mpi_specs$weight, mpi_specs$variable_name)
+  indicators <- mpi_specs$variable_name
 
   contrib <- .data |>
     dplyr::select(mpi, dplyr::all_of(indicators)) |>
@@ -26,5 +25,5 @@ compute_contribution <- function(
 
   class(df) <- c("mpi_contribution", class(df))
 
-  rename_indicators(df, .mpi_specs = .mpi_specs)
+  rename_indicators(df, mpi_specs = mpi_specs)
 }

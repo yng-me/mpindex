@@ -1,3 +1,22 @@
+# Check `...` for old dotted argument names and abort with an actionable message.
+# `fn`       — string: the calling function name shown in the error.
+# `old_names` — character vector of known old dotted arg names (without value).
+check_old_dotted_args <- function(fn, old_names, ...) {
+  dots <- rlang::enquos(...)
+  bad  <- intersect(names(dots), old_names)
+  if (length(bad) > 0) {
+    renamed <- sub("^\\.", "", bad)
+    pairs   <- paste0("`", bad, "` -> `", renamed, "`", collapse = ", ")
+    rlang::abort(
+      paste0(
+        "Argument(s) renamed in 0.3.0 in `", fn, "()`: ", pairs, ". ",
+        "Please update your call."
+      ),
+      call = rlang::caller_env()
+    )
+  }
+}
+
 to_title_case <- function(.x, .words_to_preserve = NULL) {
   if (!is.vector(.x)) {
     stop("Only accepts vector")

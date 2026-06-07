@@ -1,18 +1,14 @@
 create_deprivation_matrix <- function(
   .data,
-  .deprivation_profile,
+  deprivation_profile,
   ...,
-  .mpi_specs = getOption("mpi_specs")
+  mpi_specs = NULL
 ) {
 
-  validate_mpi_specs(.mpi_specs)
-  spec_attr <- attributes(.mpi_specs)
+  validate_mpi_specs(mpi_specs)
+  spec_attr <- attributes(mpi_specs)
 
-  if (!(identical(
-    sort(.mpi_specs$variable),
-    sort(names(.deprivation_profile))
-  )
-  )) {
+  if (!identical(sort(mpi_specs$variable), sort(names(deprivation_profile)))) {
     stop("Deprivation profile is incomplete.")
   }
 
@@ -32,12 +28,8 @@ create_deprivation_matrix <- function(
   dep_matrix <- list()
 
   dep_matrix_ref <- .data |>
-    dplyr::select(
-      !!as.name(join_by),
-      dplyr::any_of(spec_attr$aggregation),
-      ...
-    ) |>
-    bind_list(.deprivation_profile, join_by) |>
+    dplyr::select(!!as.name(join_by), dplyr::any_of(spec_attr$aggregation), ...) |>
+    bind_list(deprivation_profile, join_by) |>
     dplyr::mutate(
       deprivation_score = rowSums(
         dplyr::across(dplyr::ends_with("_weighted")),
@@ -55,8 +47,7 @@ create_deprivation_matrix <- function(
     ) |>
     dplyr::rename_with(~ stringr::str_remove(., "_unweighted$"))
 
-
-  cutoffs <- spec_attr$poverty_cutoffs
+  cutoffs   <- spec_attr$poverty_cutoffs
   p_cutoffs <- set_k_label(cutoffs)
 
   for (k in seq_along(cutoffs)) {
@@ -64,15 +55,11 @@ create_deprivation_matrix <- function(
 
     dep_matrix[[dep_label]] <- dep_matrix_ref |>
       dplyr::mutate(
-        cutoff = cutoffs[k],
+        cutoff      = cutoffs[k],
         is_deprived = dplyr::if_else(deprivation_score >= cutoff, 1, 0)
       ) |>
       dplyr::mutate(
-        deprivation_score = dplyr::if_else(
-          is_deprived == 1,
-          deprivation_score,
-          0
-        )
+        deprivation_score = dplyr::if_else(is_deprived == 1, deprivation_score, 0)
       ) |>
       dplyr::mutate(dplyr::across(
         dplyr::ends_with("_unweighted"),
@@ -90,7 +77,6 @@ create_deprivation_matrix <- function(
       dplyr::rename_with(~ stringr::str_remove(., "_unweighted_censored$"))
   }
 
-  class(dep_matrix) <- c("mpi_deprivation_matrix", class(dep_matrix))
-
+  class(dep_matrix) <- c("mpi_dm", class(dep_matrix))
   return(dep_matrix)
 }
