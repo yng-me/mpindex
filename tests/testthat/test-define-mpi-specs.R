@@ -1,4 +1,4 @@
-mpi_specs <- use_global_mpi_specs(.uid = "uuid")
+mpi_specs <- global_mpi_specs(uid = "uuid")
 
 list_name <- c(
   "indicators",
@@ -15,10 +15,10 @@ test_that("define_mpi_specs sets attributes correctly", {
   file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
   specs <- define_mpi_specs(
     file,
-    .uid = "uuid",
-    .unit_of_analysis = "household",
-    .aggregation = "class",
-    .poverty_cutoffs = c(1 / 3, 1 / 2)
+    uid = "uuid",
+    unit_of_analysis = "household",
+    aggregation = "class",
+    poverty_cutoffs = c(1 / 3, 1 / 2)
   )
 
   attrs <- attributes(specs)
@@ -35,7 +35,7 @@ test_that("define_mpi_specs stores the mpi_specs_df class", {
 })
 
 test_that("define_mpi_specs with inline .indicators data frame", {
-  specs <- define_mpi_specs(.indicators = indicators_simple)
+  specs <- define_mpi_specs(indicators = indicators_simple)
   expect_s3_class(specs, "mpi_specs_df")
   expect_equal(nrow(specs), 4)
 })
@@ -53,52 +53,52 @@ get_file <- function(file_type) {
 test_that("cannot accept poverty cutoff greather than 1", {
   file <- get_file("csv")
   expect_error(
-    define_mpi_specs(file, .poverty_cutoffs = 1.001),
-    ".poverty_cutoffs cannot contain values greater than 1."
+    define_mpi_specs(file, poverty_cutoffs = 1.001),
+    "poverty_cutoffs cannot contain values greater than 1."
   )
   expect_error(
-    define_mpi_specs(file, .poverty_cutoffs = c(1 / 3, 1.5)),
-    ".poverty_cutoffs cannot contain values greater than 1."
+    define_mpi_specs(file, poverty_cutoffs = c(1 / 3, 1.5)),
+    "poverty_cutoffs cannot contain values greater than 1."
   )
 })
 
 test_that("cannot accept poverty cutoff less than 1 divided by the total number of indicators", {
   file <- get_file("csv")
   expect_error(
-    define_mpi_specs(file, .poverty_cutoffs = 0.001),
-    ".poverty_cutoffs cannot contain values less than 1 divided by the total number of indicators."
+    define_mpi_specs(file, poverty_cutoffs = 0.001),
+    "poverty_cutoffs cannot contain values less than 1 divided by the total number of indicators."
   )
   expect_error(
-    define_mpi_specs(file, .poverty_cutoffs = c(-1, 1 / 3)),
-    ".poverty_cutoffs cannot contain values less than 1 divided by the total number of indicators."
+    define_mpi_specs(file, poverty_cutoffs = c(-1, 1 / 3)),
+    "poverty_cutoffs cannot contain values less than 1 divided by the total number of indicators."
   )
 })
 
 test_that("`.unit_of_analysis` argument only accepts a string of characters with length of 1", {
   file <- get_file("csv")
   expect_error(
-    define_mpi_specs(file, .unit_of_analysis = 1),
-    ".unit_of_analysis argument only accepts string of characters."
+    define_mpi_specs(file, unit_of_analysis = 1),
+    "unit_of_analysis argument only accepts string of characters."
   )
   expect_error(
-    define_mpi_specs(file, .unit_of_analysis = c("households", "families")),
-    ".unit_of_analysis argument cannot accept multiple values."
+    define_mpi_specs(file, unit_of_analysis = c("households", "families")),
+    "unit_of_analysis argument cannot accept multiple values."
   )
 })
 
 test_that("`.uid` argument only accepts a string of characters with length of 1", {
   file <- get_file("csv")
   expect_error(
-    define_mpi_specs(file, .uid = c("uuid", "case_id")),
-    ".uid argument cannot accept multiple values."
+    define_mpi_specs(file, uid = c("uuid", "case_id")),
+    "uid argument cannot accept multiple values."
   )
 })
 
 test_that("`.names_separator` only accepts limited characters", {
   file <- get_file("csv")
   expect_error(
-    define_mpi_specs(file, .names_separator = c(">", "<", "_")),
-    ".names_separator argument cannot accept multiple values."
+    define_mpi_specs(file, names_separator = c(">", "<", "_")),
+    "names_separator argument cannot accept multiple values."
   )
 })
 

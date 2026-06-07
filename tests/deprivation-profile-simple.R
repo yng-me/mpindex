@@ -8,8 +8,8 @@ indicators <- data.frame(
 )
 
 specs_simple <- define_mpi_specs(
-  .poverty_cutoffs = 1 / 2,
-  .indicators = indicators
+  poverty_cutoffs = 1 / 2,
+  indicators = indicators
 )
 
 df_simple <- data.frame(
@@ -21,11 +21,11 @@ df_simple <- data.frame(
 
 dp_simple <- list()
 dp_simple$a1 <- df_simple |>
-  define_deprivation(a1, a1 == 1, .mpi_specs = specs_simple)
+  define_deprivation(a1, a1 == 1, mpi_specs = specs_simple)
 dp_simple$a2 <- df_simple |>
-  define_deprivation(a2, a2 == 1, .mpi_specs = specs_simple)
+  define_deprivation(a2, a2 == 1, mpi_specs = specs_simple)
 dp_simple$b1 <- df_simple |>
-  define_deprivation(b1, b1 == 1, .mpi_specs = specs_simple)
+  define_deprivation(b1, b1 == 1, mpi_specs = specs_simple)
 dp_simple$b2 <- df_simple |>
-  define_deprivation(b2, b2 == 1, .mpi_specs = specs_simple)
+  define_deprivation(b2, b2 == 1, mpi_specs = specs_simple)
 
