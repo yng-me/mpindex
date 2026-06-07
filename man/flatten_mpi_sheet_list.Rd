@@ -13,7 +13,6 @@ flatten_mpi_sheet_list(sheets)
 A flat named list of data frames.
 }
 \description{
-Converts any list-valued entries (multi-cutoff) to individual named entries.
-Sheet names are truncated to the 31-character Excel limit.
+Flatten nested MPI sheet list for Excel export
 }
 \keyword{internal}

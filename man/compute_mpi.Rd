@@ -6,138 +6,135 @@
 \usage{
 compute_mpi(
   .data,
-  .deprivation_profile,
+  mpi_specs,
+  deprivations,
   ...,
-  .mpi_specs = getOption("mpi_specs"),
-  .include_deprivation_matrix = TRUE,
-  .generate_output = FALSE,
-  .formatted_output = TRUE,
-  .mpi_output_filename = NULL,
-  .include_table_summary = TRUE,
-  .include_specs = FALSE
+  by = NULL,
+  include_deprivation_matrix = TRUE,
+  generate_output = FALSE,
+  mpi_output_filename = NULL,
+  include_specs = FALSE,
+  weight = NULL,
+  strata = NULL,
+  cluster = NULL,
+  fpc = NULL,
+  survey_design = NULL,
+  inference = FALSE,
+  ci_level = 0.95
 )
 }
 \arguments{
-\item{.data}{A tidy data frame where each observation is the unit of analysis defined in \code{\link[mpindex]{define_mpi_specs}}.}
+\item{.data}{A data frame where each row is the unit of analysis.}
 
-\item{.deprivation_profile}{list of deprivation profile created using \code{\link[mpindex]{define_deprivation}}.}
+\item{mpi_specs}{MPI specifications from \code{\link[mpindex]{define_mpi_specs}}.}
 
-\item{...}{Grouping columns (supports tidyselect), e.g. area (country, urbanity, region, province), sex, ethnic group, etc.}
+\item{deprivations}{A named list of \code{\link[mpindex]{deprived}} calls. Each
+name must exactly match a \code{variable} in \code{mpi_specs}.}
 
-\item{.mpi_specs}{MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.}
+\item{...}{Grouping columns (tidyselect) or reserved for old-name detection.}
 
-\item{.include_deprivation_matrix}{Whether to include deprivation matrix in the output.}
+\item{by}{\emph{(Optional)} Columns to group results by, passed as a
+tidyselect expression, e.g. \code{c(region, sex)}.}
 
-\item{.generate_output}{Whether to generate an output (Excel file) as side effect.}
+\item{include_deprivation_matrix}{Whether to include deprivation matrices.
+Default \code{TRUE}.}
 
-\item{.formatted_output}{NOT YET IMPLEMENTED. Whether formatting is to be applied to the output.}
+\item{generate_output}{Whether to write an Excel file as a side effect.
+Default \code{FALSE}.}
 
-\item{.mpi_output_filename}{Output filename.}
+\item{mpi_output_filename}{Output filename when \code{generate_output = TRUE}.}
 
-\item{.include_table_summary}{NOT YET IMPLEMENTED. Whether to include summary information in the generated output.}
+\item{include_specs}{Whether to include MPI specification sheet in Excel output.}
 
-\item{.include_specs}{NOT YET IMPLEMENTED. Whether to include MPI specification in the generated output.}
+\item{weight}{Name of the sampling-weight column in \code{.data}. When
+supplied, all estimates are survey-weighted. Requires the \pkg{survey}
+package.}
+
+\item{strata}{Name of the stratum column in \code{.data}.}
+
+\item{cluster}{Name of the cluster / PSU column in \code{.data}.}
+
+\item{fpc}{Name of the finite-population correction column in \code{.data}.}
+
+\item{survey_design}{A pre-built \code{survey::svydesign()} object.
+Provide either \code{weight} / \code{strata} / \code{cluster} /
+\code{fpc} \emph{or} \code{survey_design}, not both.}
+
+\item{inference}{Logical. When \code{TRUE} (and a survey design is
+supplied), standard errors and confidence intervals are appended as
+\code{*_se}, \code{*_ci_low}, \code{*_ci_high} columns. Default
+\code{FALSE}.}
+
+\item{ci_level}{Confidence level for intervals. Default \code{0.95}.}
 }
 \value{
-Returns list of objects: \code{index} (the MPI), \code{contribution} (contribution by dimension), \code{headcount_ratio} (censored and uncensored), and \code{deprivation_matrix} (censored and uncensored). If \code{poverty_cutoffs} defined in \code{\link[mpindex]{define_mpi_specs}} contain more than one (1) value, \code{index} and \code{contribution} object will output each cutoff in a separate table.
+A named list of class \code{mpi_output} with components:
+  \describe{
+    \item{\code{$index}}{Named list keyed by \code{k_*}: MPI, H, A, n.}
+    \item{\code{$contribution}}{Named list keyed by \code{k_*}: contribution by indicator/dimension.}
+    \item{\code{$headcount_ratio}}{Named list with \code{uncensored} and per-\code{k_*} censored ratios.}
+    \item{\code{$deprivation_matrix}}{Named list with \code{uncensored} and per-\code{k_*} matrices.}
+  }
 }
 \description{
-This function uses the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster. It requires a deprivation profile created using the (\code{\link[mpindex]{define_deprivation}}) fuction containing all indicators defined in the specification files.
+The primary single-call API for computing the MPI using the
+Alkire-Foster (AF) counting method. Deprivation cutoffs are specified inline
+using the \code{\link[mpindex]{deprived}} helper, making the workflow
+self-contained and readable.
+
+For a step-by-step workflow using a pre-assembled deprivation profile, see
+\code{\link[mpindex]{compute_mpi_from_profile}}.
 }
 \examples{
-# ----------------------------------
-# Load MPI specs from the built-in specs file
-specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
-mpi_specs <- define_mpi_specs(specs_file, .uid = 'uuid')
+specs <- define_mpi_specs(
+  system.file("extdata", "global-mpi-specs.csv", package = "mpindex"),
+  uid = "uuid"
+)
 
-# ----------------------------------
-# Create an empty list to store deprivation profile for each indicator
-deprivation_profile <- list()
-
-deprivation_profile$nutrition <- df_household_roster |>
- define_deprivation(
-   .indicator = nutrition,
-   .cutoff = undernourished == 1 & age < 70,
-   .collapse = TRUE
- )
-deprivation_profile$child_mortality <- df_household |>
- define_deprivation(
-   .indicator = child_mortality,
-   .cutoff = with_child_died == 1
- )
-deprivation_profile$year_schooling <- df_household_roster |>
- define_deprivation(
-   .indicator = year_schooling,
-   .cutoff = completed_6yrs_schooling == 2,
-   .collapse = TRUE
- )
-deprivation_profile$school_attendance <- df_household_roster |>
- define_deprivation(
-   .indicator = school_attendance,
-   .cutoff = attending_school == 2 & age \%in\% c(5:24),
-   .collapse = TRUE
- )
-deprivation_profile$cooking_fuel <- df_household |>
- define_deprivation(
-   .indicator = cooking_fuel,
-   .cutoff = cooking_fuel \%in\% c(4:6, 9)
- )
-deprivation_profile$sanitation <- df_household |>
- define_deprivation(
-   .indicator = sanitation,
-   .cutoff = toilet > 1
- )
-deprivation_profile$drinking_water <- df_household |>
- define_deprivation(
-   .indicator = drinking_water,
-   .cutoff = drinking_water == 2
- )
-deprivation_profile$electricity <- df_household |>
- define_deprivation(
-   .indicator = electricity,
-   .cutoff = electricity == 2
- )
-deprivation_profile$housing <- df_household |>
- define_deprivation(
-   .indicator = housing,
-   .cutoff = roof \%in\% c(5, 7, 9) | walls \%in\% c(5, 8, 9, 99) == 2 | floor \%in\% c(5, 6, 9)
- )
-deprivation_profile$assets <- df_household |>
- dplyr::mutate(dplyr::across(dplyr::starts_with('asset_'), ~ dplyr::if_else(. > 0, 1L, 0L))) |>
- dplyr::mutate(
-   asset_phone = dplyr::if_else(
-     (asset_telephone + asset_mobile_phone) > 0,
-     1L,
-     0L
-   )
- ) |>
- dplyr::mutate(
-   with_hh_conveniences = (
-     asset_tv + asset_phone + asset_computer +
-       asset_animal_cart + asset_bicycle +
-       asset_motorcycle + asset_refrigerator) > 1,
-   with_mobility_assets = (asset_car + asset_truck) > 0
- ) |>
- define_deprivation(
-   .indicator = assets,
-   .cutoff = !(with_hh_conveniences & with_mobility_assets)
- )
-
-# ----------------------------------
-# Compute the MPI
-mpi_result <- df_household |>
-  compute_mpi(deprivation_profile)
-
-# ----------------------------------
-# You may also save your output into an Excel file
 \dontrun{
-save_mpi(mpi_result, .filename = 'MPI Sample Output')
+mpi_result <- compute_mpi(
+  df_household,
+  mpi_specs = specs,
+  deprivations = list(
+    nutrition = deprived(
+      undernourished == 1 & age < 70,
+      .data = df_household_roster,
+      collapse_fn = max
+    ),
+    child_mortality = deprived(with_child_died == 1),
+    year_schooling = deprived(
+      completed_6yrs_schooling == 2,
+      .data = df_household_roster,
+      collapse_fn = max
+    ),
+    school_attendance = deprived(
+      attending_school == 2 & age \%in\% c(5:24),
+      .data = df_household_roster,
+      collapse_fn = max
+    ),
+    cooking_fuel   = deprived(cooking_fuel \%in\% c(4:6, 9)),
+    sanitation     = deprived(toilet > 1),
+    drinking_water = deprived(drinking_water == 2),
+    electricity    = deprived(electricity == 2),
+    housing        = deprived(
+      roof \%in\% c(5, 7, 9) | walls \%in\% c(5, 8, 9, 99) == 2 | floor \%in\% c(5, 6, 9)
+    ),
+    assets = deprived(!(
+      (asset_tv + asset_telephone + asset_mobile_phone + asset_computer +
+         asset_animal_cart + asset_bicycle + asset_motorcycle +
+         asset_refrigerator) > 1 &
+        (asset_car + asset_truck) > 0
+    ))
+  )
+)
 }
+
 }
 \references{
 \href{https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/}{Alkire-Foster Method} \cr
 \href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
 }
 \seealso{
-\link[mpindex]{define_mpi_specs}, \link[mpindex]{define_deprivation}, \link[mpindex]{save_mpi}
+\link[mpindex]{define_mpi_specs}, \link[mpindex]{deprived},
+  \link[mpindex]{compute_mpi_from_profile}, \link[mpindex]{save_mpi}
 }

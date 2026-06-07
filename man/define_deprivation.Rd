@@ -6,59 +6,65 @@
 \usage{
 define_deprivation(
   .data,
-  .indicator,
-  .cutoff,
-  .mpi_specs = getOption("mpi_specs"),
-  .collapse = FALSE,
-  .set_na_equal_to = 0,
-  .collapse_condition = NULL
+  indicator,
+  cutoff,
+  mpi_specs = NULL,
+  collapse_fn = NULL,
+  set_na_equal_to = 0,
+  ...
 )
 }
 \arguments{
-\item{.data}{A data frame or tibble}
+\item{.data}{A data frame or tibble.}
 
-\item{.indicator}{Name of indicator defined in MPI specs (must exactly match the specs).}
+\item{indicator}{Name of the indicator as defined in the MPI Specs (must
+exactly match the \code{variable} column).}
 
-\item{.cutoff}{A conditional logic that defines the poverty line to determine whether deprived or not.}
+\item{cutoff}{A logical expression that evaluates to \code{TRUE} for
+deprived units.}
 
-\item{.mpi_specs}{MPI specifications defined in \code{\link[mpindex]{define_mpi_specs}}.}
+\item{mpi_specs}{MPI specifications from \code{\link{define_mpi_specs}}.}
 
-\item{.collapse}{A boolean indicating whether to collapse the data frame or not. This is useful, for instance, if the original data where the \code{.cutoff} argument above applies to an individual person but your unit of analysis in household.}
+\item{collapse_fn}{An optional function to collapse roster-level data to
+the unit-of-analysis level (e.g. \code{max}). \code{NULL} (default)
+means no collapsing.}
 
-\item{.set_na_equal_to}{Coerce value from NA to either \code{0} (not deprived) or \code{1} (deprived). Default is \code{0}.}
+\item{set_na_equal_to}{Coerce \code{NA} values to \code{0} (not deprived,
+default) or \code{1} (deprived).}
 
-\item{.collapse_condition}{NOT YET FULLY IMPLEMENTED. ONLY WORKS WITH DEFAULT. A condition when \code{.collapse} is set to \code{TRUE}. If \code{NULL}, \code{max()} will be used as default.}
+\item{...}{Reserved; passing old dotted names triggers a helpful error.}
 }
 \value{
-A data frame of deprivation value for the indicator (\code{.*_unweighted}): \code{0} for "not deprived", \code{1} for deprived, and \code{NA} for missing and non-response; and product of \code{.*_unweighted} and its corresponding weight (\code{.*_weighted}).
+A data frame with columns \code{*_unweighted} and \code{*_weighted}.
 }
 \description{
-A deprivation cutoff must be set for each indicator defined in the MPI specifications. This step establishes the first cutoff in the methodology where every person/household (defined as the unit of analysis) can be identified as deprived or non-deprived with respect to each indicator. \cr
-
-For each indicator, \code{0} will be used to indicate "not deprived", \code{1} if deprived, and \code{NA} if missing or non-response. Additional column containing the product of the value of the indicator obtained and its corresponding weight will also be computed for convenience.
+Sets a deprivation cutoff for a single indicator. For each
+  unit of analysis, the result is \code{0} (not deprived), \code{1}
+  (deprived), or \code{NA} (missing). An additional weighted column
+  (indicator value × weight) is also computed.
 }
 \examples{
-# Use sample specs file included in the package
 specs_file <- system.file(
  "extdata",
  "global-mpi-specs.csv",
  package = "mpindex"
 )
 
-specs <- define_mpi_specs(specs_file, .uid = 'uuid')
+specs <- define_mpi_specs(specs_file, uid = "uuid")
 
-# Using built-in dataset
 df_household |>
   define_deprivation(
-    .indicator = drinking_water,
-    .cutoff = drinking_water == 2
+    indicator  = drinking_water,
+    cutoff     = drinking_water == 2,
+    mpi_specs  = specs
   )
 
 df_household_roster |>
   define_deprivation(
-    .indicator = school_attendance,
-    .cutoff = attending_school == 2,
-    .collapse = TRUE
+    indicator   = school_attendance,
+    cutoff      = attending_school == 2,
+    mpi_specs   = specs,
+    collapse_fn = max
   )
 
 }

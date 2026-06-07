@@ -7,16 +7,19 @@
 use_global_mpi_specs(...)
 }
 \arguments{
-\item{...}{Accepts all arguments in \code{define_mpi_specs}}
+\item{...}{Passed to \code{\link{global_mpi_specs}}.}
 }
 \value{
-Global MPI specs
+An \code{mpi_specs_df} object.
 }
 \description{
-Use built-in specification file for Global MPI.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+  Please use \code{\link{global_mpi_specs}} instead.
 }
 \examples{
-
-use_global_mpi_specs()
+\dontrun{
+# Deprecated — use global_mpi_specs() instead
+mpi_specs <- use_global_mpi_specs(uid = "uuid")
+}
 
 }
