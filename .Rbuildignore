@@ -7,9 +7,15 @@
 ^pkgdown$
 ^\.github$
 ^index.md
-playground
-playground/*
 
 vignettes/*\.xlsx$
 ^\.positai$
 ^\.claude$
+CONTEXT\.md
+^\.agents$
+^CLAUDE\.md$
+^skills-lock\.json$
+^docs$
+^doc$
+^Meta$
+^codecov\.yml$
