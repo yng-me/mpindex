@@ -1,8 +1,8 @@
 ---
-title: "Introduction to mpindex"
+title: "Getting Started with mpindex"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to mpindex}
+  %\VignetteIndexEntry{Getting Started with mpindex}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,162 +10,136 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment  = "#>"
 )
 ```
 
-This guide presents an illustration of a simple application of `mpindex` package for computing Multidimensional Poverty Index (MPI) using the Alkire-Foster (AF) counting method developed by Sabina Alkire and James Foster.
+## What is the MPI?
 
-## 1. Installation
+The **Multidimensional Poverty Index (MPI)** measures poverty not just by income, but by whether people are deprived across multiple areas of their lives — health, education, and living standards. A person or household is considered poor only if they fall short on *enough* of these areas at the same time.
 
-To install the `mpindex` package from CRAN:
+The approach used here is the **Alkire-Foster (AF) method**, developed by Sabina Alkire and James Foster at the Oxford Poverty and Human Development Initiative (OPHI). It is the basis of the [Global MPI](https://ophi.org.uk/multidimensional-poverty-index/) published annually by OPHI and the UNDP.
 
-```{r, eval=F}
-install.packages('mpindex')
+The `mpindex` package makes it straightforward to compute the MPI from survey data in R.
+
+---
+
+## Installation
+
+Install the released version from CRAN:
+
+```{r, eval = FALSE}
+install.packages("mpindex")
 ```
 
-If you want to get the latest development version of `mpindex`, install it from [GitHub](https://github.com/yng-me/mpindex). Note that you may need to install `devtools`.
+Or install the development version from GitHub:
 
-```{r, eval=F}
+```{r, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github('yng-me/mpindex')
+devtools::install_github("yng-me/mpindex")
 ```
 
-Load the package once you have successfully completed the installation.
+Then load the package:
 
 ```{r setup}
 library(mpindex)
 ```
 
-## 2. MPI specifications
+---
 
-The initial step is to prepare an MPI specification file which will serve as references in the computation as well as generation of output in the later part of the process. This file should contain information about MPI dimensions, indicators and their corresponding weights.
+## The workflow at a glance
 
-This file should also be easy to create using the most common and accessible file types such as `.xlsx` (Excel), `.json`, `.csv`, or `.txt` (TSV). 
+Computing the MPI with `mpindex` follows three steps:
 
-### Built-in specification files
+1. **Define your indicators** — load a specification file that describes the dimensions, indicators, and weights.
+2. **Specify deprivation cutoffs** — tell the package when a household is considered deprived on each indicator.
+3. **Compute and explore the results** — run `compute_mpi()` to get the index, headcount ratio, intensity, and indicator contributions.
 
-For convenience, `mpindex` has included built-in specification files (in different formats). Each file contains dimensions, indicators, weight, and other relevant information of the Global MPI. 
+The sections below walk through each step using a built-in dataset.
 
-To see the list of files available:
+---
+
+## Step 1: Define your MPI specifications
+
+### What goes in a specification file?
+
+The specification file tells `mpindex` how your indicators are organized. It must contain these columns (column names are not case-sensitive):
+
+| Column        | What it means |
+|---------------|---------------|
+| `Dimension`   | The broad domain (e.g. Health, Education) |
+| `Indicator`   | The specific measure within that dimension |
+| `Variable`    | The column name in your dataset that holds this measure |
+| `Weight`      | How much this indicator contributes to the overall score |
+| `Description` | *(optional)* A plain-language description of the indicator |
+
+The package accepts `.csv`, `.xlsx`, `.json`, and `.txt` (tab-separated) files.
+
+### Using the built-in Global MPI specification
+
+`mpindex` ships with the Global MPI specification as an example. The `global_mpi_specs()` (formerly `global_mpi_specs()` which is now deprecated) shortcut loads it in one line:
 
 ```{r}
-system.file("extdata", package = "mpindex") |> list.files()
+mpi_specs <- global_mpi_specs(uid = "uuid", unit_of_analysis = 'households')
 ```
 
-To use a built-in specification file, say the `.csv` file, use below script to first get the full path of the file.
+The `uid` argument names the column in your dataset that uniquely identifies each household (the unit of analysis). In the built-in dataset, it is `"uuid"` (yours might be different).
 
-```{r}
+Behind the scenes this is equivalent to:
+
+```{r, eval = FALSE}
 specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+mpi_specs  <- define_mpi_specs(specs_file, uid = "uuid", unit_of_analysis = 'households')
 ```
 
-```{r, echo=F}
-read.csv(specs_file) |> 
-  gt::gt() |> 
+The Global MPI covers 10 indicators across three dimensions, each weighted equally within its dimension:
+
+```{r, echo = FALSE}
+specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+read.csv(specs_file) |>
+  gt::gt() |>
   gt::tab_header(
-    title = 'Global MPI – Dimensions, Indicators, Deprivation Cutoffs, and Weights'
-  ) |> 
-  gt::tab_options(
-    table.width = '100%',
-    table.font.size = 12,
-  ) |> 
-  gt::tab_footnote('Source: Alkire, S., Kanagaratnam, U. and Suppa, N. (2020). ‘The global Multidimensional Poverty Index (MPI): 2020 revision’, OPHI MPI Methodological Note 49, Oxford Poverty and Human Development Initiative, University of Oxford.') |> 
-  gt::fmt_number(
-    columns = 4,
-    decimals = 3
-  )
+    title    = "Global MPI — Dimensions, Indicators, and Weights",
+    subtitle = "Source: OPHI MPI Methodological Note 49 (2020)"
+  ) |>
+  gt::tab_options(table.width = "100%", table.font.size = 12) |>
+  gt::fmt_number(columns = 4, decimals = 3)
 ```
 
-### User-defined specification file
+### Using your own specification file
 
-You can also define and create your own specification file if you prefer to or if you happen to use different sets of dimensions and indicators. At the minimum, however, this file should contain the following columns/variables: 
+If you are computing a custom MPI, with different sets of dimensions and indicators, create a CSV (or Excel) file that follows the same column structure and load it the same way:
 
-- `Dimension`, 
-- `Indicator`, 
-- `Variable`, 
-- `Weight`,
-- `Description` (optional). 
-
-Note that the order in which you put these columns does not matter and also the names are not case sensitive, but make sure to spell the column names correctly.
-
-You may download the template here if you do not want to start from scratch: [MPI specification file sample](https://github.com/yng-me/mpindex/blob/main/inst/extdata/global-mpi-specs.csv).
-
-
-### Using `define_mpi_specs`
-
-Once you have prepared the specification file, load it using the `define_mpi_specs` function (type `?define_mpi_specs` for a help text).
-
-For demonstration purposes, we will use the built-in specification file, discussed above.
-
-```{r}
-specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
-define_mpi_specs(specs_file)
-```
-
-`define_mpi_specs` requires a specification file as its first argument. The default poverty cutoff is set to `1/3` (based on Global MPI). You can also define a list of poverty cutoffs by specifying in the `.poverty_cutoffs` argument to achieve gradient MPIs.
-
-```{r, eval=F}
-define_mpi_specs(
-  .mpi_specs_file = specs_file, 
-  .poverty_cutoffs = c(1/3, 0.2, 0.8)
+```{r, eval = FALSE}
+mpi_specs <- define_mpi_specs(
+  mpi_specs_file = "path/to/my-specs.csv",
+  uid = "household_id",
+  poverty_cutoffs = 1/3 # default: a household needs >= 33% weighted deprivation score to be MPI poor
 )
 ```
 
-If your dataset contains unique ID, like `uuid`, it is recommended to define it here using the `.uid` argument. 
+You can pass multiple cutoffs if you want to compare results across different poverty thresholds:
 
-```{r, eval=F}
-define_mpi_specs(
-  .mpi_specs_file = specs_file, 
-  .uid = 'uuid'
+```{r, eval = FALSE}
+mpi_specs <- define_mpi_specs(
+  "path/to/my-specs.csv",
+  uid = "household_id",
+  poverty_cutoffs = c(0.20, 1/3, 0.50)   # 20%, 33%, 50%
 )
 ```
 
-You can also set the aggregation level. Make sure it corresponds to the column name present in your dataset (see `?df_househod` and more below).
+---
 
-```{r, eval=F}
-define_mpi_specs(
-  .mpi_specs_file = specs_file, 
-  .poverty_cutoffs = c(1/3, 0.2, 0.8),
-  .uid = 'uuid',
-  .aggregation = 'class'
-)
-```
+## Step 2: Prepare your data
 
-`.unit_of_analysis`, `.source_of_data`, and `.names_separator` are merely used for auto labels when generating the output later.
+### The two built-in datasets
 
-Note: `define_mpi_specs` returns a data frame of MPI specs defined in the specs file. By default, it saves a global option named `mpi_specs` which can be accessed using `getOption('mpi_specs')`.
+The package includes synthetic household survey data modelled on the Global MPI:
 
-For our demonstration, we will use the `use_global_mpi_specs()` wrapper function, which yields the same result as calling `define_mpi_specs` and passing the built-in specs file.
+- **`df_household`** — one row per household, containing household-level variables.
+- **`df_household_roster`** — one row per household member, containing individual-level variables (e.g. nutrition, school attendance).
 
-```{r, echo=F, include=F}
-use_global_mpi_specs(
-  .uid = 'uuid',
-  .aggregation = 'class'
-)
-```
-
-```{r, eval=F}
-use_global_mpi_specs(
-  .uid = 'uuid',
-  .aggregation = 'class'
-)
-```
-
-## 3. Data preparation
-
-The user of `mpindex` is assumed to have basic familiarity with the concept of tidy data as well as able to perform data wrangling and transformation using the `tidyverse` ecosystem. Under the hood, `mpindex` uses `dplyr` verbs to perform data manipulation.
-
-
-We also assume that your dataset is already tidy and ready for analysis. See [R for Data Science](https://r4ds.had.co.nz/tidy-data.html) by Hadley Wickham and Garrett Grolemund if you need a refresher.
-
-### Dataset
-
-For this demonstration, we will use two (2) synthetic datasets available within the package:
-
-- `df_household` household-level data (type `?df_household` for more info)
-- `df_household_roster` individual-level data (type `?df_household_roster` for more info)
-
-```{r, warning=F, message=F}
+```{r, message = FALSE, warning = FALSE}
 library(dplyr)
 
 glimpse(df_household)
@@ -175,441 +149,305 @@ glimpse(df_household)
 glimpse(df_household_roster)
 ```
 
-## 4. Creating deprivation profile
+> **Why two tables?** Some indicators (e.g. whether *any* child in the household is not attending school) come from individual-level data and must be collapsed to the household level. `mpindex` handles this automatically — you just tell it which table to use and how to collapse it.
 
-### Using `define_deprivation`
+---
 
-First, we need to create an empty list, and name it `deprivation_profile` (but feel free to name it whatever you like). 
+## Step 3: Compute the MPI
 
-```{r}
-deprivation_profile <- list()
-```
+### The main function: `compute_mpi()`
 
-To create a deprivation profile for each indicator, we use the `define_deprivation` function (see `?define_deprivation`) and add to the `deprivation_profile` list we created above. Make sure that the deprivation profile for each indicator matches the variable name declared in the specification file.
-
-### 1. Heath dimension
-
-#### 1.1. Nutrition
-
-For this indicator, we use the `df_household_roster` dataset. By default, `define_deprivation` sets the `.collapse = FALSE`. Since we need to collapse it to the household level, we need to set `.collapse = TRUE`.
+`compute_mpi()` takes your household data, your specifications, and a list of **deprivation cutoffs** — one per indicator. Each cutoff is a logical expression wrapped in `deprived()` that evaluates to `TRUE` when a household is deprived.
 
 ```{r}
-deprivation_profile$nutrition <- df_household_roster |> 
-  define_deprivation(
-    .indicator = nutrition,
-    .cutoff = undernourished == 1 & age < 70,
-    .collapse = TRUE
+mpi_result <- compute_mpi(
+  df_household,
+  mpi_specs = mpi_specs,
+  deprivations = list(
+
+    # --- Health ---
+    nutrition = deprived(
+      undernourished == 1 & age < 70,   # deprived if any member under 70 is undernourished
+      .data        = df_household_roster,
+      collapse_fn = max                 # household is deprived if any member is deprived
+    ),
+    child_mortality = deprived(with_child_died == 1),
+
+    # --- Education ---
+    year_schooling = deprived(
+      completed_6yrs_schooling == 2,
+      .data        = df_household_roster,
+      collapse_fn = max
+    ),
+    school_attendance = deprived(
+      attending_school == 2 & age %in% 5:24,
+      .data        = df_household_roster,
+      collapse_fn = max
+    ),
+
+    # --- Living Standards ---
+    cooking_fuel   = deprived(cooking_fuel %in% c(4:6, 9)),
+    sanitation     = deprived(toilet > 1),
+    drinking_water = deprived(drinking_water == 2),
+    electricity    = deprived(electricity == 2),
+    housing        = deprived(
+      roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
+    ),
+    assets = deprived(!(
+      (asset_tv + asset_telephone + asset_mobile_phone + asset_computer +
+         asset_animal_cart + asset_bicycle + asset_motorcycle +
+         asset_refrigerator) > 1 &
+        (asset_car + asset_truck) > 0
+    ))
   )
+)
 ```
 
-#### 1.2. Child mortality
-
-For child mortality, we use the `df_household` dataset. But unlike in `nutrition`, we do not need to provide the `.collapse` argument since it is not applicable here.
+The result is a named list:
 
 ```{r}
-deprivation_profile$child_mortality <- df_household |> 
-  define_deprivation(
-    .indicator = child_mortality,
-    .cutoff = with_child_died == 1
-  )
-```
-
-### 2. Education dimension
-
-
-#### 2.1. Years of schooling
-
-```{r}
-deprivation_profile$year_schooling <- df_household_roster |> 
-  define_deprivation(
-    .indicator = year_schooling,
-    .cutoff = completed_6yrs_schooling == 2,
-    .collapse = TRUE
-  )
-```
-
-#### 2.2. School attendance
-
-```{r}
-deprivation_profile$school_attendance <- df_household_roster |> 
-  define_deprivation(
-    .indicator = school_attendance,
-    .cutoff = attending_school == 2 & age %in% c(5:24),
-    .collapse = TRUE
-  )
-```
-
-### 3. Living standards dimension
-
-#### 3.1. Cooking fuel
-
-```{r}
-deprivation_profile$cooking_fuel <- df_household |> 
-  define_deprivation(
-    .indicator = cooking_fuel,
-    .cutoff = cooking_fuel %in% c(4:6, 9)
-  )
-```
-
-
-#### 3.2. Sanitation
-
-```{r}
-deprivation_profile$sanitation <- df_household |> 
-  define_deprivation(
-    .indicator = sanitation,
-    .cutoff = toilet > 1
-  )
-```
-
-
-#### 3.3. Drinking water
-
-```{r}
-deprivation_profile$drinking_water <- df_household |> 
-  define_deprivation(
-    .indicator = drinking_water,
-    .cutoff = drinking_water == 2
-  )
-```
-
-#### 3.4. Electricity
-
-```{r}
-deprivation_profile$electricity <- df_household |> 
-  define_deprivation(
-    .indicator = electricity,
-    .cutoff = electricity == 2
-  )
-```
-
-#### 3.5. Housing
-
-```{r}
-deprivation_profile$housing <- df_household |> 
-  define_deprivation(
-    .indicator = housing,
-    .cutoff = roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
-  )
-```
-
-
-#### 3.6. Assets
-
-For this indicator, we need additional transformation.
-
-```{r}
-deprivation_profile$assets <- df_household |> 
-  mutate_at(vars(starts_with('asset_')), ~ if_else(. > 0, 1L, 0L)) |> 
-  mutate(
-    asset_phone = if_else(
-      (asset_telephone + asset_mobile_phone) > 0, 
-      1L, 
-      0L
-    )
-  ) |> 
-  mutate(
-    with_hh_conveniences = (
-      asset_tv + asset_phone + asset_computer + 
-        asset_animal_cart + asset_bicycle + 
-        asset_motorcycle + asset_refrigerator) > 1,
-    with_mobility_assets = (asset_car + asset_truck) > 0
-  ) |> 
-  define_deprivation(
-    .indicator = assets,
-    .cutoff = !(with_hh_conveniences & with_mobility_assets)
-  )
-```
-
-## 5. Computing the MPI
-
-### Using `compute_mpi`
-
-After completing the deprivation profile, use the `compute_mpi` function and pass the `deprivation_profile` list as the first argument.
-
-```{r}
-mpi_result <- df_household |>
-  compute_mpi(deprivation_profile)
-
 names(mpi_result)
 ```
 
+### Disaggregating by a subgroup
 
+Pass `by` to break results down by a grouping variable (e.g. urban vs. rural):
 
-### Outputs
-
-#### 1. The MPI
-
-```{r, eval=F}
-mpi_result$index
+```{r, eval = FALSE}
+compute_mpi(
+  df_household,
+  mpi_specs = mpi_specs,
+  deprivations = list(...),
+  by = class        # column in df_household
+)
 ```
 
+### The step-by-step alternative
 
-```{r, echo=F}
-mpi_result$index |>
-  rename(Class = 1) |> 
-  gt::gt() |> 
-  gt::tab_header(
-    title = 'MPI Results using 33% Poverty Cutoff'
-  ) |> 
-  gt::fmt_number(
-    columns = 3:5,
-    decimals = 3
-  ) |> 
-  gt::tab_options(
-    table.width = '100%',
-    table.font.size = 12,
+If you prefer to build and inspect each deprivation indicator before combining them, use `define_deprivation()` to create each one separately, then pass them all to `compute_mpi_from_profile()`:
+
+```{r, eval = FALSE}
+dp <- list()
+
+dp$nutrition <- df_household_roster |>
+  define_deprivation(
+    indicator = nutrition,
+    cutoff = undernourished == 1 & age < 70,
+    collapse_fn = max,
+    mpi_specs = mpi_specs
   )
+
+dp$drinking_water <- df_household |>
+  define_deprivation(
+    indicator = drinking_water,
+    cutoff = drinking_water == 2,
+    mpi_specs = mpi_specs
+  )
+
+# ... define all remaining indicators, then:
+mpi_result <- compute_mpi_from_profile(df_household, dp, mpi_specs = mpi_specs)
 ```
 
-#### 2. Contribution by dimension
+This is useful when your data preparation for some indicators is complex and you want to examine intermediate results.
 
-```{r, eval=F}
-mpi_result$contribution
+---
+
+## Step 4: Explore the results
+
+### Understanding the output
+
+`mpi_result` is a named list with four components. Each component is itself a named list keyed by the poverty cutoff used — e.g. `k_33` for the 33% cutoff.
+
+| Component | What it contains |
+|-----------|-----------------|
+| `$index` | The headline MPI value, headcount ratio (H), intensity (A), and sample size (n) |
+| `$contribution` | Each indicator's percentage contribution to the overall MPI |
+| `$headcount_ratio` | The share of households deprived on each indicator (uncensored and censored) |
+| `$deprivation_matrix` | Row-level deprivation scores and indicator flags for every household |
+
+### The headline MPI
+
+The three key numbers are:
+
+- **H (headcount ratio)** — what share of the population is multidimensionally poor.
+- **A (intensity)** — among the poor, what fraction of the weighted indicators are they deprived in on average.
+- **MPI** — the product H × A, capturing both *how many* people are poor and *how poor* they are.
+
+```{r, eval = FALSE}
+mpi_result$index$k_33
 ```
 
+```{r, echo = FALSE}
+mpi_result$index$k_33 |>
+  gt::gt() |>
+  gt::tab_header(title = "MPI — 33% Poverty Cutoff") |>
+  gt::fmt_number(columns = 2:4, decimals = 3) |>
+  gt::tab_options(table.width = "100%", table.font.size = 12)
+```
 
-```{r, echo=F}
+### Indicator contributions
 
+How much does each indicator drive the overall MPI? The contribution table answers this — values sum to 100% across all indicators.
+
+```{r, eval = FALSE}
+mpi_result$contribution$k_33
+```
+
+```{r, echo = FALSE}
 gtx <- function(.gt, .decimals = 1, .offset = 0) {
-  d01_cp <- 3:4 + .offset
-  d02_cp <- 5:6 + .offset
-  d03_cp <- 7:12 + .offset
-  
-  .gt |> 
-    gt::tab_spanner(
-      label = "Health",
-      columns = d01_cp
-    ) |> 
-    gt::tab_spanner(
-      label = "Education",
-      columns = d02_cp
-    ) |> 
-    gt::tab_spanner(
-      label = "Living Standards",
-      columns = d03_cp
-    ) |> 
-    gt::fmt_number(
-      columns = c(d01_cp, d02_cp, d03_cp),
-      decimals = .decimals
-    ) |> 
-    gt::tab_options(
-      table.font.size = 12,
-    )
+  d01_cp <- 2:3  + .offset
+  d02_cp <- 4:5  + .offset
+  d03_cp <- 6:11 + .offset
+  .gt |>
+    gt::tab_spanner(label = "Health",           columns = d01_cp) |>
+    gt::tab_spanner(label = "Education",        columns = d02_cp) |>
+    gt::tab_spanner(label = "Living Standards", columns = d03_cp) |>
+    gt::fmt_number(columns = c(d01_cp, d02_cp, d03_cp), decimals = .decimals) |>
+    gt::tab_options(table.font.size = 12)
 }
 
-mpi_result$contribution |> 
-  gt::gt() |> 
-  gt::tab_header(
-    title = 'Contribution by Dimenstion and Indicator to MPI using 33% Poverty Cutoff'
-  ) |> 
+mpi_result$contribution$k_33 |>
+  gt::gt() |>
+  gt::tab_header(title = "Contribution to MPI by Indicator — 33% Poverty Cutoff") |>
   gtx()
 ```
 
-#### 3. Headcount ratio
+### Headcount ratios
 
-```{r, eval=F}
-mpi_result$headcount_ratio$uncensored
+The **uncensored** headcount ratio shows the raw deprivation rate on each indicator, regardless of whether a household crosses the poverty line. The **censored** version counts only those households also identified as multidimensionally poor.
+
+```{r, eval = FALSE}
+mpi_result$headcount_ratio$uncensored   # deprivation rate — all households
+mpi_result$headcount_ratio$k_33         # deprivation rate — poor households only
 ```
 
-```{r, echo=F}
-mpi_result$headcount_ratio$uncensored |> 
-  ungroup() |> 
-  gt::gt() |> 
-  gt::tab_header(
-    title = 'Uncensored Headcount Ratio'
-  ) |> 
+```{r, echo = FALSE}
+mpi_result$headcount_ratio$uncensored |>
+  dplyr::ungroup() |>
+  gt::gt() |>
+  gt::tab_header(title = "Uncensored Headcount Ratio (all households)") |>
   gtx(.decimals = 3)
 ```
 
-
-```{r, eval=F}
-mpi_result$headcount_ratio$censored
-```
-
-```{r, echo=F}
-mpi_result$headcount_ratio$censored |> 
-  ungroup() |> 
-  gt::gt() |> 
-  gt::tab_header(
-    title = 'Censored Headcount Ratio using 33% Poverty Cutoff'
-  ) |> 
+```{r, echo = FALSE}
+mpi_result$headcount_ratio$k_33 |>
+  dplyr::ungroup() |>
+  gt::gt() |>
+  gt::tab_header(title = "Censored Headcount Ratio (poor households only, k = 33%)") |>
   gtx(.decimals = 3)
 ```
 
-#### 4. Deprivation matrix (first 6 observations)
+### The deprivation matrix
 
-```{r, eval=F}
+The deprivation matrix records each household's individual score and indicator flags. The first few rows:
+
+```{r, eval = FALSE}
 mpi_result$deprivation_matrix$uncensored |> head()
 ```
 
-```{r, echo=F}
-mpi_result$deprivation_matrix$uncensored |> 
-  ungroup() |> 
-  head() |> 
-  rename_all(~ stringr::str_remove(., '^(Health|Education|Living Standards)>')) |> 
-  gt::gt() |> 
-  gt::tab_header(
-    title = 'Uncensored Deprivation Matrix '
-  ) |> 
-  gtx(.decimals = 0, .offset = 1) |> 
-  gt::fmt_number(
-    columns = 3,
-    decimals = 3
-  ) 
+```{r, echo = FALSE}
+mpi_result$deprivation_matrix$uncensored |>
+  dplyr::ungroup() |>
+  head() |>
+  gt::gt() |>
+  gt::tab_header(title = "Deprivation Matrix — first 6 households (uncensored)") |>
+  gtx(.decimals = 0, .offset = 1) |>
+  gt::fmt_number(columns = 3, decimals = 3)
 ```
 
+After applying the poverty cutoff, households with a deprivation score below the threshold have all their indicator flags set to zero — they are not counted as poor:
 
-```{r, eval=F}
-mpi_result$deprivation_matrix$censored |> head()
+```{r, eval = FALSE}
+mpi_result$deprivation_matrix$k_33 |> head()
 ```
 
-```{r, echo=F}
-mpi_result$deprivation_matrix$censored |> 
-  ungroup() |> 
-  head() |> 
-  rename_all(~ stringr::str_remove(., '^(Health|Education|Living Standards)>')) |> 
-  gt::gt() |> 
-  gt::tab_header(
-    title = 'Censored Deprivation Matrix using 33% Poverty Cutoff'
-  ) |> 
-  gtx(.decimals = 0, .offset = 1) |> 
-  gt::fmt_number(
-    columns = 3,
-    decimals = 3
-  )
+```{r, echo = FALSE}
+mpi_result$deprivation_matrix$k_33 |>
+  dplyr::ungroup() |>
+  head() |>
+  gt::gt() |>
+  gt::tab_header(title = "Deprivation Matrix — first 6 households (k = 33% cutoff)") |>
+  gtx(.decimals = 0, .offset = 1) |>
+  gt::fmt_number(columns = 3, decimals = 3)
 ```
 
-Note: Deprivation matrices are included by default when you run `compute_mpi`. If you want to exclude these in your output, set `.include_deprivation_matrix` equal to `FALSE`.
+> To save memory, you can exclude deprivation matrices from the output by setting `include_deprivation_matrix = FALSE` in `compute_mpi()`.
 
-## 6. Saving output
+---
 
-You may also save your output into an Excel file. You may choose to format the output or retain its tidy format by setting the `formatted_output` parameter appropriately.
+## Step 5: Save results to Excel
 
-```{r, eval=F}
-# Formatted output
-save_mpi(mpi_result, .filename = 'MPI Sample Output')
+`save_mpi()` writes all results to a formatted Excel workbook:
 
-# Not formatted
-save_mpi(mpi_result, .filename = 'MPI Sample Output (no format)', .formatted_output = FALSE)
+```{r, eval = FALSE}
+save_mpi(mpi_result, mpi_specs = mpi_specs, filename = "MPI Results")
 ```
 
+Each component gets its own sheet. To also include the specification table as a reference:
 
-## Full script
-
-```{r, eval=F}
-# ----------------------------------
-# Load MPI specs from the built-in specs file 
-use_global_mpi_specs(
-  .uid = 'uuid',
-  .aggregation = 'class'
-)
-
-# ----------------------------------
-# Create an empty list to store deprivation profile for each indicator
-deprivation_profile <- list()
-
-deprivation_profile$nutrition <- df_household_roster |>
-  define_deprivation(
-   .indicator = nutrition,
-   .cutoff = undernourished == 1 & age < 70,
-   .collapse = TRUE
-  )
-
-deprivation_profile$child_mortality <- df_household |>
-  define_deprivation(
-   .indicator = child_mortality,
-   .cutoff = with_child_died == 1
-  )
-
-deprivation_profile$year_schooling <- df_household_roster |>
-  define_deprivation(
-   .indicator = year_schooling,
-   .cutoff = completed_6yrs_schooling == 2,
-   .collapse = TRUE
-  )
-
-deprivation_profile$school_attendance <- df_household_roster |>
-  define_deprivation(
-   .indicator = school_attendance,
-   .cutoff = attending_school == 2 & age %in% c(5:24),
-   .collapse = TRUE
-  )
-
-deprivation_profile$cooking_fuel <- df_household |>
-  define_deprivation(
-   .indicator = cooking_fuel,
-   .cutoff = cooking_fuel %in% c(4:6, 9)
-  )
-
-deprivation_profile$sanitation <- df_household |>
-  define_deprivation(
-   .indicator = sanitation,
-   .cutoff = toilet > 1
-  )
-
-deprivation_profile$drinking_water <- df_household |>
-  define_deprivation(
-   .indicator = drinking_water,
-   .cutoff = drinking_water == 2
-  )
-
-deprivation_profile$electricity <- df_household |>
-  define_deprivation(
-   .indicator = electricity,
-   .cutoff = electricity == 2
-  )
-
-deprivation_profile$housing <- df_household |>
-  define_deprivation(
-   .indicator = housing,
-   .cutoff = roof %in% c(5, 7, 9) | 
-     walls %in% c(5, 8, 9, 99) == 2 | 
-     floor %in% c(5, 6, 9)
-  )
-
-deprivation_profile$assets <- df_household |>
-  dplyr::mutate_at(
-    dplyr::vars(dplyr::starts_with('asset_')), 
-    ~ dplyr::if_else(. > 0, 1L, 0L)
-  ) |>
-  dplyr::mutate(
-   asset_phone = dplyr::if_else(
-     (asset_telephone + asset_mobile_phone) > 0,
-     1L,
-     0L
-   )
-  ) |>
-  dplyr::mutate(
-   with_hh_conveniences = (
-     asset_tv + asset_phone + asset_computer +
-       asset_animal_cart + asset_bicycle +
-       asset_motorcycle + asset_refrigerator) > 1,
-   with_mobility_assets = (asset_car + asset_truck) > 0
-  ) |>
-  define_deprivation(
-   .indicator = assets,
-   .cutoff = !(with_hh_conveniences & with_mobility_assets)
-  )
-
-# ----------------------------------
-# Compute the MPI
-mpi_result <- df_household |>
-  compute_mpi(deprivation_profile)
-
-# ----------------------------------
-# You may also save your output into an Excel file
-
-# Formatted output
-# save_mpi(mpi_result, .filename = 'MPI Sample Output', .include_specs = T)
-
-# Not formatted
+```{r, eval = FALSE}
 save_mpi(
-  mpi_result, 
-  .filename = 'MPI Sample Output (no format)', 
-  .formatted_output = FALSE, 
-  .include_specs = TRUE
+  mpi_result,
+  mpi_specs = mpi_specs,
+  filename = "MPI Results",
+  include_specs = TRUE
 )
 ```
 
+---
 
+## Quick-reference script
+
+Here is the complete workflow in one place:
+
+```{r, eval = FALSE}
+library(mpindex)
+
+# 1. Load specifications
+mpi_specs <- global_mpi_specs(uid = "uuid", unit_of_analysis = 'households')
+
+# 2. Compute the MPI
+mpi_result <- compute_mpi(
+  df_household,
+  mpi_specs = mpi_specs,
+  deprivations = list(
+    nutrition = deprived(undernourished == 1 & age < 70, .data = df_household_roster, collapse_fn = max),
+    child_mortality = deprived(with_child_died == 1),
+    year_schooling = deprived(completed_6yrs_schooling == 2, .data = df_household_roster, collapse_fn = max),
+    school_attendance = deprived(attending_school == 2 & age %in% 5:24, .data = df_household_roster, collapse_fn = max),
+    cooking_fuel = deprived(cooking_fuel %in% c(4:6, 9)),
+    sanitation = deprived(toilet > 1),
+    drinking_water = deprived(drinking_water == 2),
+    electricity = deprived(electricity == 2),
+    housing = deprived(roof %in% c(5, 7, 9) |walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)),
+    assets = deprived(
+      !(asset_tv + 
+        asset_telephone + 
+        asset_mobile_phone + 
+        asset_computer + 
+        asset_animal_cart + 
+        asset_bicycle + 
+        asset_motorcycle + 
+        asset_refrigerator) > 1 & 
+      (asset_car + asset_truck) > 0
+    )
+  )
+)
+
+# 3. Inspect results
+mpi_result$index$k_33          # headline MPI, H, A
+mpi_result$contribution$k_33   # indicator contributions (%)
+mpi_result$headcount_ratio$k_33
+mpi_result$deprivation_matrix$k_33
+
+# 4. Save to Excel
+save_mpi(mpi_result, mpi_specs = mpi_specs, filename = "MPI Results")
+```
+
+---
+
+## Further reading
+
+- [OPHI — How to Apply the Alkire-Foster Method](https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/)
+- [Global MPI 2023 Report](https://hdr.undp.org/content/2023-global-multidimensional-poverty-index-mpi)
+- Package documentation: `?compute_mpi`, `?define_mpi_specs`, `?define_deprivation`, `?save_mpi`

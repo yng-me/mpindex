@@ -1,5 +1,3 @@
-library(mpindex)
-
 mpi_specs <- global_mpi_specs(uid = "uuid")
 attr_spec <- attributes(mpi_specs)
 deprivation_profile <- list()
@@ -70,12 +68,11 @@ deprivation_profile$housing <- df_household |>
     mpi_specs = mpi_specs
   )
 
-
 deprivation_profile$assets <- df_household |>
-  dplyr::mutate_at(
-    dplyr::vars(dplyr::starts_with("asset_")),
+  dplyr::mutate(dplyr::across(
+    dplyr::starts_with("asset_"),
     ~ dplyr::if_else(. > 0, 1L, 0L)
-  ) |>
+  )) |>
   dplyr::mutate(
     asset_phone = dplyr::if_else(
       (asset_telephone + asset_mobile_phone) > 0,

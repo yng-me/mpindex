@@ -1,7 +1,5 @@
-library(mpindex)
-
-indicators <- data.frame(
-  dimension = c("A", "B"),
+indicators_simple <- data.frame(
+  dimension = c("A", "A", "B", "B"),
   indicator = c("A1", "A2", "B1", "B2"),
   variable = c("a1", "a2", "b1", "b2"),
   weight = rep(1 / 4, 4)
@@ -9,7 +7,7 @@ indicators <- data.frame(
 
 specs_simple <- define_mpi_specs(
   poverty_cutoffs = 1 / 2,
-  indicators = indicators
+  indicators = indicators_simple
 )
 
 df_simple <- data.frame(
@@ -28,4 +26,3 @@ dp_simple$b1 <- df_simple |>
   define_deprivation(b1, b1 == 1, mpi_specs = specs_simple)
 dp_simple$b2 <- df_simple |>
   define_deprivation(b2, b2 == 1, mpi_specs = specs_simple)
-

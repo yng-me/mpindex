@@ -1,7 +1,7 @@
 Package: mpindex
 Type: Package
-Title: Multidimensional Poverty Index (MPI)
-Version: 0.2.1
+Title: Multidimensional Poverty Index (MPI) via the Alkire-Foster Method
+Version: 0.3.0
 Authors@R: c(
     person(
       "Bhas", 
@@ -13,29 +13,37 @@ Authors@R: c(
   )
 Author: Bhas Abdulsamad [aut, cre, cph] (<https://orcid.org/0009-0002-5891-8124>)
 Maintainer: Bhas Abdulsamad <aeabdulsamad@gmail.com>
-Description: A set of easy-to-use functions for computing the Multidimensional Poverty Index (MPI).
+Description: Estimate Multidimensional Poverty Index (MPI) measures from household
+    survey microdata using the Alkire-Foster dual-cutoff counting method (Alkire
+    and Foster, 2011, <doi:10.1016/j.jpubeco.2010.11.006>). Load indicator
+    specifications from CSV, Excel, JSON, or plain-text files; compute the
+    headcount ratio (H), intensity (A), and MPI = H x A across any subgroup;
+    and export results to formatted Excel reports. Supports complex survey
+    designs — stratification, clustering, and probability weights — and
+    optionally appends design-based standard errors and confidence intervals.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
-    tidyr,
     stringr,
     jsonlite,
-    purrr,
     tibble,
-    openxlsx
-Suggests: 
+    openxlsx,
+    tsg,
     rlang,
+    lifecycle
+Suggests:
+    tidyr,
+    survey,
     testthat (>= 3.0.0),
-    lifecycle,
     knitr,
     rmarkdown,
     gt
 Config/testthat/edition: 3
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 BugReports: https://github.com/yng-me/mpindex/issues
-URL: https://github.com/yng-me/mpindex, https://mpindex.r-lib.org, https://yng-me.github.io/mpindex/
+URL: https://github.com/yng-me/mpindex, https://yng-me.github.io/mpindex/
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1.0)

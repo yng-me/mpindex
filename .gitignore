@@ -7,3 +7,11 @@ inst/doc
 docs
 playground
 vignettes/.xlsx$
+.positai
+/doc/
+/Meta/
+.agents
+.claude
+CONTEXT.md
+CLAUDE.md
+skills-lock.json
