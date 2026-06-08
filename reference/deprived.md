@@ -57,7 +57,7 @@ deprived(drinking_water == 2)
 #> $cutoff
 #> <quosure>
 #> expr: ^drinking_water == 2
-#> env:  0x5641d8851128
+#> env:  0x55bfeb220df8
 #> 
 #> $data
 #> NULL
@@ -74,7 +74,7 @@ deprived(undernourished == 1 & age < 70, .data = df_household_roster, collapse_f
 #> $cutoff
 #> <quosure>
 #> expr: ^undernourished == 1 & age < 70
-#> env:  0x5641d8851128
+#> env:  0x55bfeb220df8
 #> 
 #> $data
 #> # A tibble: 905 × 8
