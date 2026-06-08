@@ -1,10 +1,11 @@
-pandoc: 3.1.11
-pkgdown: 2.0.7
+pandoc: 3.8.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
+  migrating-to-0-3-0: migrating-to-0-3-0.html
   mpindex: mpindex.html
-last_built: 2024-03-16T11:17Z
+  survey-weights: survey-weights.html
+last_built: 2026-06-08T00:24Z
 urls:
   reference: https://yng-me.github.io/mpindex/reference
   article: https://yng-me.github.io/mpindex/articles
-
