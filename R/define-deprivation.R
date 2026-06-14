@@ -20,7 +20,7 @@
 #' @param ... Reserved; passing old dotted names (e.g. \code{.collapse_fn})
 #'   triggers a helpful error.
 #'
-#' @return An object of class \code{mpi_deprivation_spec}.
+#' @return An object of class \code{mpi_d}.
 #' @export
 #'
 #' @seealso \link[mpindex]{compute_mpi}
@@ -44,7 +44,7 @@ deprived <- function(
       collapse_fn     = collapse_fn,
       set_na_equal_to = set_na_equal_to
     ),
-    class = "mpi_deprivation_spec"
+    class = "mpi_d"
   )
 }
 

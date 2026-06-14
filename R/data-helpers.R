@@ -12,37 +12,23 @@ rename_indicators <- function(.data, mpi_specs = NULL) {
     dplyr::as_tibble() |>
     dplyr::mutate(variable_name = value) |>
     dplyr::left_join(mpi_specs, by = "variable_name") |>
-    dplyr::mutate(label = dplyr::if_else(
-      is.na(label),
-      to_title_case(value),
-      indicator
-    ))
+    dplyr::mutate(label = dplyr::if_else(is.na(label), to_title_case(value), label))
 
   for (i in seq_along(mpi_colnames$value)) {
     mpi_col <- mpi_colnames$value[i]
     attr(.data[[mpi_col]], "label") <- mpi_colnames$label[i]
-
-    if (!is.na(mpi_colnames$dimension[i])) {
-      attr(.data[[mpi_col]], "dimension") <- mpi_colnames$dimension[i]
-    }
-
-    if (!is.na(mpi_colnames$indicator[i])) {
-      attr(.data[[mpi_col]], "indicator") <- mpi_colnames$indicator[i]
-    }
   }
 
   if ("n" %in% names(.data)) {
-    attr_specs <- attributes(mpi_specs)
-    .data <- .data |>
-      rename_n(attr_specs$unit_of_analysis)
+    .data <- rename_n(.data, attributes(mpi_specs)$unit_of_analysis)
   }
 
   if ("uuid" %in% names(.data)) {
-    attr(.data$uuid, "label") <- "UUID"
+    .data <- tsg::rename_label(.data, uuid = "UUID")
   }
 
   if ("deprivation_score" %in% names(.data)) {
-    attr(.data$deprivation_score, "label") <- "Deprivation score"
+    .data <- tsg::rename_label(.data, deprivation_score = "Deprivation score")
   }
 
   .data <- .data |>
@@ -87,17 +73,50 @@ print.mpi_output <- function(x, ...) {
   idx <- x$index
   for (k in names(idx)) {
     pct <- stringr::str_remove(k, "^k_")
-    cat(sprintf("  Poverty cutoff k = %s%%\n", pct))
+    cat(sprintf("  Poverty cutoff, k = %s%%\n", pct))
     row     <- idx[[k]]
     n_col   <- grep("^number_of_", names(row), value = TRUE)[1]
     h_col   <- grep("headcount_ratio", names(row), value = TRUE)[1]
     a_col   <- grep("^intensity",      names(row), value = TRUE)[1]
     mpi_col <- grep("^mpi",            names(row), value = TRUE)[1]
-    if (!is.na(n_col))   cat(sprintf("    n   = %s\n",   row[[n_col]][1]))
+    if (!is.na(n_col))   cat(sprintf("    n   = %s\n",   format(row[[n_col]][1], big.mark = ",")))
     if (!is.na(h_col))   cat(sprintf("    H   = %.4f\n", row[[h_col]][1]))
     if (!is.na(a_col))   cat(sprintf("    A   = %.4f\n", row[[a_col]][1]))
     if (!is.na(mpi_col)) cat(sprintf("    MPI = %.4f\n", row[[mpi_col]][1]))
   }
   cat("-----------------------------------------------------\n")
+  invisible(x)
+}
+
+#' @export
+print.mpi_list <- function(x, ...) {
+  cat("-- MPI by Poverty Cutoff ----------------------------\n")
+  for (k in names(x)) {
+    cat(sprintf("  Poverty cutoff, k = %s%%\n", stringr::str_remove(k, "^k_")))
+    print(x[[k]])
+    cat("---------------------------------------------------\n")
+  }
+  invisible(x)
+}
+
+#' @export
+print.mpi_hr_list <- function(x, ...) {
+  cat("-- Headcount Ratio by Poverty Cutoff ----------------\n")
+  for (k in names(x)) {
+    cat(sprintf("  Poverty cutoff, k = %s%%\n", stringr::str_remove(k, "^k_")))
+    print(x[[k]])
+    cat("---------------------------------------------------\n")
+  }
+  invisible(x)
+}
+
+#' @export
+print.mpi_c_list <- function(x, ...) {
+  cat("-- Contribution by Poverty Cutoff -------------------\n")
+  for (k in names(x)) {
+    cat(sprintf("  Poverty cutoff, k = %s%%\n", stringr::str_remove(k, "^k_")))
+    print(x[[k]])
+    cat("---------------------------------------------------\n")
+  }
   invisible(x)
 }

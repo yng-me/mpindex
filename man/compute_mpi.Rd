@@ -10,10 +10,7 @@ compute_mpi(
   deprivations,
   ...,
   by = NULL,
-  include_deprivation_matrix = TRUE,
-  generate_output = FALSE,
-  mpi_output_filename = NULL,
-  include_specs = FALSE,
+  include_deprivation_matrix = FALSE,
   weight = NULL,
   strata = NULL,
   cluster = NULL,
@@ -31,20 +28,17 @@ compute_mpi(
 \item{deprivations}{A named list of \code{\link[mpindex]{deprived}} calls. Each
 name must exactly match a \code{variable} in \code{mpi_specs}.}
 
-\item{...}{Grouping columns (tidyselect) or reserved for old-name detection.}
+\item{...}{\emph{(Optional)} Extra columns to carry through into the
+deprivation matrix (tidyselect). These columns are included in the matrix
+after \code{by} columns but do \strong{not} affect grouping of summary
+outputs. Also catches old dotted argument names.}
 
-\item{by}{\emph{(Optional)} Columns to group results by, passed as a
-tidyselect expression, e.g. \code{c(region, sex)}.}
+\item{by}{\emph{(Optional)} Columns to group summary outputs by (tidyselect),
+e.g. \code{c(region, sex)}. These columns are also included in the
+deprivation matrix, before any \code{...} columns.}
 
 \item{include_deprivation_matrix}{Whether to include deprivation matrices.
-Default \code{TRUE}.}
-
-\item{generate_output}{Whether to write an Excel file as a side effect.
 Default \code{FALSE}.}
-
-\item{mpi_output_filename}{Output filename when \code{generate_output = TRUE}.}
-
-\item{include_specs}{Whether to include MPI specification sheet in Excel output.}
 
 \item{weight}{Name of the sampling-weight column in \code{.data}. When
 supplied, all estimates are survey-weighted. Requires the \pkg{survey}
@@ -81,9 +75,6 @@ The primary single-call API for computing the MPI using the
 Alkire-Foster (AF) counting method. Deprivation cutoffs are specified inline
 using the \code{\link[mpindex]{deprived}} helper, making the workflow
 self-contained and readable.
-
-For a step-by-step workflow using a pre-assembled deprivation profile, see
-\code{\link[mpindex]{compute_mpi_from_profile}}.
 }
 \examples{
 specs <- define_mpi_specs(
@@ -136,5 +127,5 @@ mpi_result <- compute_mpi(
 }
 \seealso{
 \link[mpindex]{define_mpi_specs}, \link[mpindex]{deprived},
-  \link[mpindex]{compute_mpi_from_profile}, \link[mpindex]{save_mpi}
+  \link[mpindex]{save_mpi}
 }

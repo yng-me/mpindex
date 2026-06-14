@@ -9,12 +9,14 @@ check_survey_pkg <- function() {
 }
 
 # Returns a svydesign or NULL.
-resolve_survey_design <- function(.data,
-                                   weight        = NULL,
-                                   strata        = NULL,
-                                   cluster       = NULL,
-                                   fpc           = NULL,
-                                   survey_design = NULL) {
+resolve_survey_design <- function(
+  .data,
+  weight        = NULL,
+  strata        = NULL,
+  cluster       = NULL,
+  fpc           = NULL,
+  survey_design = NULL
+) {
   if (is.null(weight) && is.null(survey_design)) return(NULL)
   check_survey_pkg()
 
@@ -55,8 +57,8 @@ svy_compute_mpi_summary <- function(design, by_cols, inference, ci_level) {
   by_f   <- if (has_by) stats::as.formula(paste("~", paste(by_cols, collapse = " + "))) else NULL
 
   if (!has_by) {
-    h_res <- survey::svymean(~is_deprived, design, na.rm = TRUE)
-    a_res <- survey::svymean(~deprivation_score, subset(design, is_deprived == 1), na.rm = TRUE)
+    h_res <- survey::svymean(~ is_deprived, design, na.rm = TRUE)
+    a_res <- survey::svymean(~ deprivation_score, subset(design, is_deprived == 1), na.rm = TRUE)
     h  <- stats::coef(h_res)[["is_deprived"]]
     a  <- stats::coef(a_res)[["deprivation_score"]]
     n  <- nrow(design$variables)
@@ -75,16 +77,9 @@ svy_compute_mpi_summary <- function(design, by_cols, inference, ci_level) {
   }
 
   # By-group: always compute SE; drop afterwards if not requested
-  h_by <- as.data.frame(survey::svyby(~is_deprived, by_f, design,
-                                       survey::svymean, na.rm = TRUE,
-                                       keep.names = FALSE, vartype = "se"))
-  a_by <- as.data.frame(survey::svyby(~deprivation_score, by_f,
-                                       subset(design, is_deprived == 1),
-                                       survey::svymean, na.rm = TRUE,
-                                       keep.names = FALSE, vartype = "se"))
-  n_by <- as.data.frame(survey::svyby(~is_deprived, by_f, design,
-                                       survey::unwtd.count,
-                                       keep.names = FALSE))
+  h_by <- as.data.frame(survey::svyby(~ is_deprived, by_f, design, survey::svymean, na.rm = TRUE, keep.names = FALSE, vartype = "se"))
+  a_by <- as.data.frame(survey::svyby(~ deprivation_score, by_f, subset(design, is_deprived == 1), survey::svymean, na.rm = TRUE, keep.names = FALSE, vartype = "se"))
+  n_by <- as.data.frame(survey::svyby(~ is_deprived, by_f, design, survey::unwtd.count, keep.names = FALSE))
 
   h_se_orig <- setdiff(names(h_by), c(by_cols, "is_deprived"))[1]
   a_se_orig <- setdiff(names(a_by), c(by_cols, "deprivation_score"))[1]
@@ -92,9 +87,7 @@ svy_compute_mpi_summary <- function(design, by_cols, inference, ci_level) {
   names(a_by)[names(a_by) == a_se_orig] <- ".a_se"
   names(n_by)[names(n_by) == "counts"]  <- "n"
 
-  df <- merge(h_by[, c(by_cols, "is_deprived", ".h_se")],
-              a_by[, c(by_cols, "deprivation_score", ".a_se")],
-              by = by_cols)
+  df <- merge(h_by[, c(by_cols, "is_deprived", ".h_se")], a_by[, c(by_cols, "deprivation_score", ".a_se")], by = by_cols)
   df <- merge(df, n_by[, c(by_cols, "n")], by = by_cols)
 
   names(df)[names(df) == "is_deprived"]      <- "headcount_ratio"
@@ -147,9 +140,16 @@ svy_compute_headcount_ratio <- function(design, by_cols, pattern, inference, ci_
     return(df)
   }
 
-  res  <- as.data.frame(survey::svyby(ind_f, by_f, design, survey::svymean,
-                                       na.rm = TRUE, keep.names = FALSE,
-                                       vartype = "se"))
+  res  <- as.data.frame(survey::svyby(
+    ind_f,
+    by_f,
+    design,
+    survey::svymean,
+    na.rm = TRUE,
+    keep.names = FALSE,
+    vartype = "se")
+  )
+
   n_by <- as.data.frame(survey::svyby(
     stats::as.formula(paste0("~`", ind_cols[1], "`")),
     by_f, design, survey::unwtd.count, keep.names = FALSE

@@ -1,6 +1,9 @@
-test_that("compute_mpi with deprived() produces the same result as compute_mpi_from_profile", {
-  manual_result <- df_simple |>
-    compute_mpi_from_profile(dp_simple, mpi_specs = specs_simple)
+test_that("compute_mpi with deprived() produces the same result as with pre-built profile", {
+  profile_result <- compute_mpi(
+    df_simple,
+    mpi_specs = specs_simple,
+    deprivations = dp_simple
+  )
 
   inline_result <- compute_mpi(
     df_simple,
@@ -13,9 +16,9 @@ test_that("compute_mpi with deprived() produces the same result as compute_mpi_f
     )
   )
 
-  expect_equal(inline_result$index, manual_result$index)
-  expect_equal(inline_result$contribution, manual_result$contribution)
-  expect_equal(inline_result$headcount_ratio, manual_result$headcount_ratio)
+  expect_equal(inline_result$index, profile_result$index)
+  expect_equal(inline_result$contribution, profile_result$contribution)
+  expect_equal(inline_result$headcount_ratio, profile_result$headcount_ratio)
 })
 
 test_that("compute_mpi returns an mpi_output object", {
@@ -31,7 +34,7 @@ test_that("compute_mpi returns an mpi_output object", {
   )
 
   expect_s3_class(result, "mpi_output")
-  expect_named(result, c("index", "contribution", "headcount_ratio", "deprivation_matrix"))
+  expect_named(result, c("index", "headcount_ratio", "contribution"))
 })
 
 test_that("compute_mpi raises an error for an indicator not in specs", {
@@ -63,8 +66,7 @@ test_that("compute_mpi accepts a per-indicator .data override via deprived()", {
     )
   )
 
-  manual_result <- df_simple |>
-    compute_mpi_from_profile(dp_simple, mpi_specs = specs_simple)
+  manual_result <- compute_mpi(df_simple, mpi_specs = specs_simple, deprivations = dp_simple)
 
   expect_equal(inline_result$index, manual_result$index)
 })
@@ -83,8 +85,12 @@ test_that("compute_mpi passes .by grouping to the output", {
   dp_grouped$b2 <- df_grouped |>
     define_deprivation(b2, b2 == 1, mpi_specs = specs_simple)
 
-  manual_result <- df_grouped |>
-    compute_mpi_from_profile(dp_grouped, mpi_specs = specs_simple, region)
+  manual_result <- compute_mpi(
+    df_grouped,
+    mpi_specs = specs_simple,
+    deprivations = dp_grouped,
+    by = region
+  )
 
   inline_result <- compute_mpi(
     df_grouped,

@@ -15,7 +15,6 @@
 #'   All values must be in (0, 1]. Default is \code{NULL} which will be automatically set to \code{1/n}, where \code{n} is the total number of dimensions.
 #' @param unit_of_analysis e.g. \code{"individuals"}, \code{"households"}.
 #'   Default \code{NULL}.
-#' @param aggregation Column name that defines an aggregation level.
 #' @param uid Column name containing the unique ID (unit of analysis).
 #' @param source_of_data Source of data; used in output footnotes.
 #' @param names_separator \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Column separator for the header hierarchy.
@@ -23,7 +22,7 @@
 #' @param ... Reserved for forward-compatibility; passing old dotted argument
 #'   names (e.g. \code{.uid}) triggers a helpful error.
 #'
-#' @return An \code{mpi_specs_df} object. Pass this directly as the
+#' @return An \code{mpi_specs} object. Pass this directly as the
 #'   \code{mpi_specs} argument in \code{\link{compute_mpi}},
 #'   \code{\link{define_deprivation}}, and \code{\link{save_mpi}}.
 #' @export
@@ -43,17 +42,27 @@ define_mpi_specs <- function(
   indicators        = NULL,
   poverty_cutoffs   = NULL,
   unit_of_analysis  = NULL,
-  aggregation       = NULL,
   uid               = NULL,
   source_of_data    = NULL,
-  names_separator   = "__",
+  names_separator   = getOption('mpindex.options')$names_separator %||% "__",
   save_as_global_options = FALSE,
   ...
 ) {
+  dots <- rlang::list2(...)
+  if (any(c("aggregation", ".aggregation") %in% names(dots))) {
+    rlang::abort(
+      paste0(
+        "The `aggregation` argument has been removed from `define_mpi_specs()`. ",
+        "Pass grouping columns via `by` in `compute_mpi()` instead."
+      ),
+      call = rlang::caller_env()
+    )
+  }
+
   check_old_dotted_args(
     "define_mpi_specs",
     c(".mpi_specs_file", ".indicators", ".poverty_cutoffs", ".unit_of_analysis",
-      ".aggregation", ".uid", ".source_of_data", ".names_separator",
+      ".uid", ".source_of_data", ".names_separator",
       ".save_as_global_options"),
     ...
   )
@@ -156,12 +165,11 @@ define_mpi_specs <- function(
 
   attr(df, "poverty_cutoffs")  <- poverty_cutoffs
   attr(df, "unit_of_analysis") <- unit_of_analysis
-  attr(df, "aggregation")      <- aggregation
   attr(df, "uid")              <- uid
   attr(df, "source_of_data")   <- source_of_data
   attr(df, "names_separator")  <- names_separator
 
-  class(df) <- c("mpi_specs_df", class(df))
+  class(df) <- c("mpi_specs", class(df))
 
   if (!missing(save_as_global_options) && isTRUE(save_as_global_options)) {
     lifecycle::deprecate_warn(
@@ -187,9 +195,9 @@ validate_mpi_specs <- function(mpi_specs) {
     )
   }
 
-  if (!("mpi_specs_df" %in% class(mpi_specs))) {
+  if (!("mpi_specs" %in% class(mpi_specs))) {
     rlang::abort(
-      "`mpi_specs` must be an `mpi_specs_df` object returned by `define_mpi_specs()`.",
+      "`mpi_specs` must be an `mpi_specs` object returned by `define_mpi_specs()`.",
       call = rlang::caller_env()
     )
   }
@@ -198,7 +206,7 @@ validate_mpi_specs <- function(mpi_specs) {
 
 #' Load the built-in Global MPI specification
 #'
-#' @description Returns the \code{mpi_specs_df} object for the standard
+#' @description Returns the \code{mpi_specs} object for the standard
 #'   Global MPI (10 indicators across Health, Education, and Living Standards).
 #'   Assign the result and pass it explicitly as \code{mpi_specs}.
 #'
@@ -207,7 +215,7 @@ validate_mpi_specs <- function(mpi_specs) {
 #' @param poverty_cutoffs Single value or vector of poverty cutoffs (k).
 #'   All values must be in (0, 1]. Default is \code{1/3}.
 #'
-#' @return An \code{mpi_specs_df} object.
+#' @return An \code{mpi_specs} object.
 #' @export
 #'
 #' @examples
@@ -230,7 +238,7 @@ global_mpi_specs <- function(..., poverty_cutoffs = 1/3) {
 #'
 #' @param ... Passed to \code{\link{global_mpi_specs}}.
 #'
-#' @return An \code{mpi_specs_df} object.
+#' @return An \code{mpi_specs} object.
 #' @export
 #'
 #' @examples

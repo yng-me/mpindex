@@ -17,7 +17,8 @@ utils::globalVariables(
     "value",
     "variable",
     "variable_name",
-    "weight"
+    "weight",
+    "poverty_cutoff"
   )
 )
 
@@ -26,7 +27,7 @@ utils::globalVariables(
   op <- options()
   op.mpindex <- list(
     mpindex.options = list(
-      
+      names_separator = "__"
     )
   )
 

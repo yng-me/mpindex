@@ -2,17 +2,15 @@
 % Please edit documentation in R/compute-mpi-from-profile.R
 \name{compute_mpi_from_profile}
 \alias{compute_mpi_from_profile}
-\title{Compute MPI from a deprivation profile}
+\title{Compute MPI from a deprivation profile (internal)}
 \usage{
 compute_mpi_from_profile(
   .data,
   deprivation_profile,
   ...,
+  by = character(0),
   mpi_specs = NULL,
   include_deprivation_matrix = TRUE,
-  generate_output = FALSE,
-  mpi_output_filename = NULL,
-  include_specs = FALSE,
   weight = NULL,
   strata = NULL,
   cluster = NULL,
@@ -26,61 +24,24 @@ compute_mpi_from_profile(
 \item{.data}{A tidy data frame where each row is the unit of analysis.}
 
 \item{deprivation_profile}{A named list of data frames produced by
-\code{\link[mpindex]{define_deprivation}}. Names must exactly match the
-\code{variable} column in \code{mpi_specs}.}
+\code{\link[mpindex]{define_deprivation}}.}
 
-\item{...}{Grouping columns (tidyselect), e.g. \code{region}, \code{sex}.}
+\item{...}{Extra columns (tidyselect) to carry through into the deprivation
+matrix. Not used for grouping.}
+
+\item{by}{Pre-resolved character vector of grouping column names. Populated
+by \code{compute_mpi()} from its \code{by} tidyselect argument.}
 
 \item{mpi_specs}{MPI specifications from \code{\link[mpindex]{define_mpi_specs}}.}
 
-\item{include_deprivation_matrix}{Whether to include deprivation matrices
-in the output. Default \code{TRUE}.}
+\item{include_deprivation_matrix}{Whether to include deprivation matrices.}
 
-\item{generate_output}{Whether to write an Excel file as a side effect.
-Default \code{FALSE}.}
-
-\item{mpi_output_filename}{Output filename when \code{generate_output = TRUE}.}
-
-\item{include_specs}{Whether to include MPI specification sheet in Excel output.}
-
-\item{weight}{Name of the sampling-weight column in \code{.data}. When
-supplied, all estimates are survey-weighted. Requires the \pkg{survey}
-package.}
-
-\item{strata}{Name of the stratum column in \code{.data}.}
-
-\item{cluster}{Name of the cluster / PSU column in \code{.data}.}
-
-\item{fpc}{Name of the finite-population correction column in \code{.data}.}
-
-\item{survey_design}{A pre-built \code{survey::svydesign()} object.
-Provide either \code{weight} / \code{strata} / \code{cluster} /
-\code{fpc} \emph{or} \code{survey_design}, not both.}
-
-\item{inference}{Logical. When \code{TRUE} (and a survey design is
-supplied), standard errors and confidence intervals are appended as
-\code{*_se}, \code{*_ci_low}, \code{*_ci_high} columns. Default
-\code{FALSE}.}
-
-\item{ci_level}{Confidence level for intervals. Default \code{0.95}.}
-}
-\value{
-A named list of class \code{mpi_output} with components:
-  \describe{
-    \item{\code{$index}}{Named list keyed by \code{k_*}: MPI, H, A, n.}
-    \item{\code{$contribution}}{Named list keyed by \code{k_*}: contribution by indicator/dimension.}
-    \item{\code{$headcount_ratio}}{Named list with \code{uncensored} and per-\code{k_*} censored ratios.}
-    \item{\code{$deprivation_matrix}}{Named list with \code{uncensored} and per-\code{k_*} matrices.}
-  }
+\item{weight, strata, cluster, fpc, survey_design, inference, ci_level}{Survey
+design arguments; forwarded from \code{\link[mpindex]{compute_mpi}}.}
 }
 \description{
-Computes the Multidimensional Poverty Index using a
-pre-assembled deprivation profile — a named list produced by calling
-\code{\link[mpindex]{define_deprivation}} once per indicator.
-
-This is the lower-level entry point. For a single-call workflow with inline
-cutoff expressions, use \code{\link[mpindex]{compute_mpi}} with
-\code{\link[mpindex]{deprived}}.
+Internal implementation used by \code{\link[mpindex]{compute_mpi}}.
+Not exported. Use \code{\link[mpindex]{compute_mpi}} directly.
 }
 \examples{
 specs <- define_mpi_specs(
@@ -106,10 +67,4 @@ mpi_result <- compute_mpi_from_profile(
 }
 
 }
-\references{
-\href{https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/}{Alkire-Foster Method}
-}
-\seealso{
-\link[mpindex]{define_mpi_specs}, \link[mpindex]{define_deprivation},
-  \link[mpindex]{compute_mpi}, \link[mpindex]{save_mpi}
-}
+\keyword{internal}

@@ -8,7 +8,7 @@ specs_file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex"
 
 test_that("define_mpi_specs accepts unprefixed argument names", {
   s <- define_mpi_specs(mpi_specs_file = specs_file, uid = "uuid")
-  expect_s3_class(s, "mpi_specs_df")
+  expect_s3_class(s, "mpi_specs")
   expect_equal(as.character(attributes(s)$uid), "uuid")
 })
 
@@ -30,7 +30,7 @@ test_that("define_mpi_specs old dotted name triggers helpful error", {
 
 test_that("global_mpi_specs accepts unprefixed uid", {
   s <- global_mpi_specs(uid = "uuid")
-  expect_s3_class(s, "mpi_specs_df")
+  expect_s3_class(s, "mpi_specs")
   expect_equal(as.character(attributes(s)$uid), "uuid")
 })
 
@@ -105,23 +105,7 @@ test_that("compute_mpi old dotted name triggers helpful error", {
   )
 })
 
-# ---------------------------------------------------------------------------
-# compute_mpi_from_profile
-# ---------------------------------------------------------------------------
-
-test_that("compute_mpi_from_profile accepts unprefixed mpi_specs", {
-  s <- global_mpi_specs(uid = "uuid")
-  r <- compute_mpi_from_profile(df_household, deprivation_profile, mpi_specs = s)
-  expect_s3_class(r, "mpi_output")
-})
-
-test_that("compute_mpi_from_profile old dotted name triggers helpful error", {
-  s <- global_mpi_specs(uid = "uuid")
-  expect_error(
-    compute_mpi_from_profile(df_household, deprivation_profile, .mpi_specs = s),
-    "renamed"
-  )
-})
+# compute_mpi_from_profile is internal — tested indirectly via compute_mpi
 
 # ---------------------------------------------------------------------------
 # save_mpi
@@ -129,7 +113,7 @@ test_that("compute_mpi_from_profile old dotted name triggers helpful error", {
 
 test_that("save_mpi accepts unprefixed mpi_specs and filename", {
   s   <- global_mpi_specs(uid = "uuid")
-  r   <- compute_mpi_from_profile(df_household, deprivation_profile, mpi_specs = s)
+  r   <- compute_mpi(df_household, mpi_specs = s, deprivations = deprivation_profile)
   f   <- tempfile(fileext = ".xlsx")
   out <- save_mpi(r, mpi_specs = s, filename = f)
   expect_true(file.exists(out))
@@ -137,6 +121,6 @@ test_that("save_mpi accepts unprefixed mpi_specs and filename", {
 
 test_that("save_mpi old dotted name triggers helpful error", {
   s <- global_mpi_specs(uid = "uuid")
-  r <- compute_mpi_from_profile(df_household, deprivation_profile, mpi_specs = s)
+  r <- compute_mpi(df_household, mpi_specs = s, deprivations = deprivation_profile)
   expect_error(save_mpi(r, .mpi_specs = s), "renamed")
 })

@@ -84,7 +84,7 @@ test_that("weighted MPI differs from unweighted MPI", {
 test_that("weighted MPI output has the same structure as unweighted", {
   r <- compute_mpi(df_household_svy, mpi_specs, svy_deps, weight = "hh_weight")
 
-  expect_named(r, c("index", "contribution", "headcount_ratio", "deprivation_matrix"))
+  expect_named(r, c("index", "headcount_ratio", "contribution"))
   expect_named(r$index, "k_33")
   expect_named(r$headcount_ratio, c("uncensored", "k_33"))
   expect_equal(ncol(r$index$k_33), 4)        # n, H, A, MPI — no extra cols
@@ -147,7 +147,7 @@ test_that("pre-built svydesign path produces same estimates as column-name path"
 test_that("pre-built svydesign output has correct structure", {
   r <- compute_mpi(df_household_svy, mpi_specs, svy_deps,
                    survey_design = svy_design_prebuilt)
-  expect_named(r, c("index", "contribution", "headcount_ratio", "deprivation_matrix"))
+  expect_named(r, c("index", "headcount_ratio", "contribution"))
   expect_equal(ncol(r$index$k_33), 4)
 })
 
@@ -254,40 +254,25 @@ test_that("weighted .by + inference appends SE columns per group", {
 })
 
 # ---------------------------------------------------------------------------
-# compute_mpi_from_profile — survey path
+# compute_mpi — survey path (compute_mpi_from_profile is now internal)
 # ---------------------------------------------------------------------------
 
-test_that("compute_mpi_from_profile accepts survey args", {
-  r <- compute_mpi_from_profile(
-    df_household_svy,
-    deprivation_profile,
-    mpi_specs = mpi_specs,
-    weight = "hh_weight"
-  )
+test_that("compute_mpi accepts survey weight arg", {
+  r <- compute_mpi(df_household_svy, mpi_specs, svy_deps, weight = "hh_weight")
   expect_s3_class(r, "mpi_output")
   expect_true(is.numeric(r$index$k_33$headcount_ratio))
 })
 
-test_that("compute_mpi_from_profile weighted + inference matches compute_mpi", {
-  r_profile <- compute_mpi_from_profile(
-    df_household_svy,
-    deprivation_profile,
-    mpi_specs = mpi_specs,
-    weight = "hh_weight",
-    strata = "strata",
-    cluster = "psu",
-    inference = TRUE
-  )
-  r_inline <- compute_mpi(
+test_that("compute_mpi weighted + inference produces numeric SE columns", {
+  r <- compute_mpi(
     df_household_svy, mpi_specs, svy_deps,
     weight = "hh_weight",
     strata = "strata",
     cluster = "psu",
     inference = TRUE
   )
-  expect_equal(r_profile$index$k_33$headcount_ratio,
-               r_inline$index$k_33$headcount_ratio,
-               tolerance = 1e-10)
+  expect_s3_class(r, "mpi_output")
+  expect_true(any(grepl("_se$", names(r$index$k_33))))
 })
 
 # ---------------------------------------------------------------------------

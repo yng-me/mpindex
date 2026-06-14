@@ -10,7 +10,7 @@ use_global_mpi_specs(...)
 \item{...}{Passed to \code{\link{global_mpi_specs}}.}
 }
 \value{
-An \code{mpi_specs_df} object.
+An \code{mpi_specs} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}

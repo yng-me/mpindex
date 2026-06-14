@@ -28,7 +28,7 @@ all values are \code{NA} the result is \code{NA}.}
 triggers a helpful error.}
 }
 \value{
-An object of class \code{mpi_deprivation_spec}.
+An object of class \code{mpi_d}.
 }
 \description{
 A helper that captures a bare deprivation cutoff expression and
