@@ -2,6 +2,7 @@ create_deprivation_matrix <- function(
   .data,
   deprivation_profile,
   ...,
+  by_cols   = character(0),
   mpi_specs = NULL
 ) {
 
@@ -10,12 +11,6 @@ create_deprivation_matrix <- function(
 
   if (!identical(sort(mpi_specs$variable), sort(names(deprivation_profile)))) {
     stop("Deprivation profile is incomplete.")
-  }
-
-  if (!is.null(spec_attr$aggregation)) {
-    if (!(spec_attr$aggregation %in% names(.data))) {
-      stop("aggregation column defined in specification file does not exist in the dataset.")
-    }
   }
 
   if (!is.null(spec_attr$uid)) {
@@ -28,7 +23,7 @@ create_deprivation_matrix <- function(
   dep_matrix <- list()
 
   dep_matrix_ref <- .data |>
-    dplyr::select(!!as.name(join_by), dplyr::any_of(spec_attr$aggregation), ...) |>
+    dplyr::select(!!as.name(join_by), dplyr::any_of(by_cols), ...) |>
     bind_list(deprivation_profile, join_by) |>
     dplyr::mutate(
       deprivation_score = rowSums(
@@ -40,7 +35,7 @@ create_deprivation_matrix <- function(
   dep_matrix[["uncensored"]] <- dep_matrix_ref |>
     dplyr::select(
       !!as.name(join_by),
-      dplyr::any_of(spec_attr$aggregation),
+      dplyr::any_of(by_cols),
       ...,
       deprivation_score,
       dplyr::ends_with("_unweighted")
@@ -67,7 +62,7 @@ create_deprivation_matrix <- function(
       )) |>
       dplyr::select(
         !!as.name(join_by),
-        dplyr::any_of(spec_attr$aggregation),
+        dplyr::any_of(by_cols),
         ...,
         cutoff,
         is_deprived,

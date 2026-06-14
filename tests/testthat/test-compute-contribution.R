@@ -3,10 +3,10 @@ test_that("contribution by dimension works correctly", {
     create_deprivation_matrix(deprivation_profile, mpi_specs = mpi_specs)
 
   hr <- dm$k_33 |>
-    compute_headcount_ratio(aggregation = attr_spec$aggregation)
+    compute_headcount_ratio()
 
   m_0 <- dm$k_33 |>
-    compute_headcount_ratio_adjusted(aggregation = attr_spec$aggregation) |>
+    compute_headcount_ratio_adjusted() |>
     dplyr::select(mpi) |>
     dplyr::bind_cols(hr) |>
     compute_contribution(mpi_specs = mpi_specs)
@@ -19,23 +19,21 @@ test_that("contribution by dimension works correctly", {
 })
 
 
-test_that("contribution by dimension works correctly with aggregation", {
-  mpi_specs <- global_mpi_specs(uid = "uuid", aggregation = "class")
-  attr_spec <- attributes(mpi_specs)
+test_that("contribution by dimension works correctly with grouping", {
+  mpi_specs <- global_mpi_specs(uid = "uuid")
 
   dm <- df_household |>
-    create_deprivation_matrix(deprivation_profile, mpi_specs = mpi_specs)
+    create_deprivation_matrix(deprivation_profile, class, mpi_specs = mpi_specs)
 
   hr <- dm$k_33 |>
-    compute_headcount_ratio(aggregation = attr_spec$aggregation)
+    compute_headcount_ratio(class)
 
   m_0 <- dm$k_33 |>
-    compute_headcount_ratio_adjusted(aggregation = attr_spec$aggregation) |>
+    compute_headcount_ratio_adjusted(class) |>
     dplyr::select(mpi) |>
     dplyr::bind_cols(hr) |>
-    compute_contribution(mpi_specs = mpi_specs)
+    compute_contribution(class, mpi_specs = mpi_specs)
 
   expect_equal(nrow(m_0), 2)
   expect_equal(ncol(m_0), 12)
-
 })

@@ -14,10 +14,10 @@ e.g. \code{uid}, \code{poverty_cutoffs}.}
 All values must be in (0, 1]. Default is \code{1/3}.}
 }
 \value{
-An \code{mpi_specs_df} object.
+An \code{mpi_specs} object.
 }
 \description{
-Returns the \code{mpi_specs_df} object for the standard
+Returns the \code{mpi_specs} object for the standard
   Global MPI (10 indicators across Health, Education, and Living Standards).
   Assign the result and pass it explicitly as \code{mpi_specs}.
 }

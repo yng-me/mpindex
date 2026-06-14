@@ -9,10 +9,9 @@ define_mpi_specs(
   indicators = NULL,
   poverty_cutoffs = NULL,
   unit_of_analysis = NULL,
-  aggregation = NULL,
   uid = NULL,
   source_of_data = NULL,
-  names_separator = "__",
+  names_separator = getOption("mpindex.options")$names_separator \%||\% "__",
   save_as_global_options = FALSE,
   ...
 )
@@ -32,8 +31,6 @@ All values must be in (0, 1]. Default is \code{NULL} which will be automatically
 \item{unit_of_analysis}{e.g. \code{"individuals"}, \code{"households"}.
 Default \code{NULL}.}
 
-\item{aggregation}{Column name that defines an aggregation level.}
-
 \item{uid}{Column name containing the unique ID (unit of analysis).}
 
 \item{source_of_data}{Source of data; used in output footnotes.}
@@ -46,7 +43,7 @@ Default \code{NULL}.}
 names (e.g. \code{.uid}) triggers a helpful error.}
 }
 \value{
-An \code{mpi_specs_df} object. Pass this directly as the
+An \code{mpi_specs} object. Pass this directly as the
   \code{mpi_specs} argument in \code{\link{compute_mpi}},
   \code{\link{define_deprivation}}, and \code{\link{save_mpi}}.
 }

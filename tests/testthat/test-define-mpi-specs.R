@@ -5,7 +5,6 @@ list_name <- c(
   "poverty_cutoffs",
   "uid",
   "unit_of_analysis",
-  "aggregation",
   "source_of_data",
   "names_separator"
 )
@@ -17,26 +16,36 @@ test_that("define_mpi_specs sets attributes correctly", {
     file,
     uid = "uuid",
     unit_of_analysis = "household",
-    aggregation = "class",
     poverty_cutoffs = c(1 / 3, 1 / 2)
   )
 
   attrs <- attributes(specs)
   expect_equal(attrs$uid, "uuid")
   expect_equal(attrs$unit_of_analysis, "household")
-  expect_equal(attrs$aggregation, "class")
   expect_equal(attrs$poverty_cutoffs, c(1 / 3, 1 / 2))
 })
 
-test_that("define_mpi_specs stores the mpi_specs_df class", {
+test_that("define_mpi_specs errors when aggregation is passed", {
+  file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
+  expect_error(
+    define_mpi_specs(file, aggregation = "class"),
+    "The `aggregation` argument has been removed"
+  )
+  expect_error(
+    define_mpi_specs(file, .aggregation = "class"),
+    "The `aggregation` argument has been removed"
+  )
+})
+
+test_that("define_mpi_specs stores the mpi_specs class", {
   file <- system.file("extdata", "global-mpi-specs.csv", package = "mpindex")
   specs <- define_mpi_specs(file)
-  expect_s3_class(specs, "mpi_specs_df")
+  expect_s3_class(specs, "mpi_specs")
 })
 
 test_that("define_mpi_specs with inline .indicators data frame", {
   specs <- define_mpi_specs(indicators = indicators_simple)
-  expect_s3_class(specs, "mpi_specs_df")
+  expect_s3_class(specs, "mpi_specs")
   expect_equal(nrow(specs), 4)
 })
 

@@ -2,10 +2,10 @@
 
 ## Breaking changes
 
-* All argument names have dropped the `.` prefix (except `.data`). E.g. `.mpi_specs` → `mpi_specs`, `.weight` → `weight`, `.inference` → `inference`. Passing an old dotted name now triggers an informative error naming the renamed argument and its replacement (ADR-0006).
+* All argument names have dropped the `.` prefix (except `.data`). E.g. `.mpi_specs` → `mpi_specs`, `.cutoff` → `cutoff`. Passing an old dotted name now triggers an informative error naming the renamed argument and its replacement (ADR-0006).
 * `compute_mpi()` now uses a new `deprived()` helper for inline deprivation cutoffs. The previous `.deprivation_profile` list workflow is available via the new `compute_mpi_from_profile()`.
 * `define_deprivation()` replaces the boolean `.collapse` argument with `.collapse_fn` — pass a function (e.g. `max`) instead of `TRUE`.
-* `save_mpi()` now delegates Excel formatting to the `tsg` package. The `.formatted_output` and `.include_table_summary` arguments have been removed. A new `.include_deprivation_matrix` argument controls whether deprivation matrix sheets are written.
+* `save_mpi()` now delegates Excel formatting to the `tsg` package. The `.formatted_output` and `.include_table_summary` arguments have been removed.
 * Default `.names_separator` in `define_mpi_specs()` changed from `">"` to `"__"`.
 * `.mpi_specs` is now required in `define_deprivation()`, `compute_mpi_from_profile()`, and `save_mpi()`. The `getOption("mpi_specs")` default has been removed — pass the result of `define_mpi_specs()` or `global_mpi_specs()` explicitly.
 * `use_global_mpi_specs()` is deprecated. Use `global_mpi_specs()` instead.

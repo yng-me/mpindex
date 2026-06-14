@@ -20,10 +20,10 @@ test_that("deprivation matrix works correctly", {
   expect_equal(nrow(dm$k_33), nrow(df_household))
 })
 
-test_that("aggregation works correctly", {
-  mpi_specs <- global_mpi_specs(uid = "uuid", aggregation = "class")
+test_that("grouping works correctly", {
+  mpi_specs <- global_mpi_specs(uid = "uuid")
   dm <- df_household |>
-    create_deprivation_matrix(deprivation_profile, mpi_specs = mpi_specs)
+    create_deprivation_matrix(deprivation_profile, class, mpi_specs = mpi_specs)
   expect_length(names(dm$uncensored), 13)
   expect_length(names(dm$k_33), 15)
   expect_contains(names(dm$k_33), "class")

@@ -5,21 +5,15 @@
 #' using the \code{\link[mpindex]{deprived}} helper, making the workflow
 #' self-contained and readable.
 #'
-#' For a step-by-step workflow using a pre-assembled deprivation profile, see
-#' \code{\link[mpindex]{compute_mpi_from_profile}}.
-#'
 #' @param .data A data frame where each row is the unit of analysis.
 #' @param mpi_specs MPI specifications from \code{\link[mpindex]{define_mpi_specs}}.
 #' @param deprivations A named list of \code{\link[mpindex]{deprived}} calls. Each
 #'   name must exactly match a \code{variable} in \code{mpi_specs}.
-#' @param by \emph{(Optional)} Columns to group results by, passed as a
-#'   tidyselect expression, e.g. \code{c(region, sex)}.
+#' @param by \emph{(Optional)} Columns to group summary outputs by (tidyselect),
+#'   e.g. \code{c(region, sex)}. These columns are also included in the
+#'   deprivation matrix, before any \code{...} columns.
 #' @param include_deprivation_matrix Whether to include deprivation matrices.
-#'   Default \code{TRUE}.
-#' @param generate_output Whether to write an Excel file as a side effect.
 #'   Default \code{FALSE}.
-#' @param mpi_output_filename Output filename when \code{generate_output = TRUE}.
-#' @param include_specs Whether to include MPI specification sheet in Excel output.
 #' @param weight Name of the sampling-weight column in \code{.data}. When
 #'   supplied, all estimates are survey-weighted. Requires the \pkg{survey}
 #'   package.
@@ -34,7 +28,10 @@
 #'   \code{*_se}, \code{*_ci_low}, \code{*_ci_high} columns. Default
 #'   \code{FALSE}.
 #' @param ci_level Confidence level for intervals. Default \code{0.95}.
-#' @param ... Grouping columns (tidyselect) or reserved for old-name detection.
+#' @param ... \emph{(Optional)} Extra columns to carry through into the
+#'   deprivation matrix (tidyselect). These columns are included in the matrix
+#'   after \code{by} columns but do \strong{not} affect grouping of summary
+#'   outputs. Also catches old dotted argument names.
 #'
 #' @return A named list of class \code{mpi_output} with components:
 #'   \describe{
@@ -49,7 +46,7 @@
 #' @references \href{https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/}{Alkire-Foster Method} \cr
 #' \href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
 #' @seealso \link[mpindex]{define_mpi_specs}, \link[mpindex]{deprived},
-#'   \link[mpindex]{compute_mpi_from_profile}, \link[mpindex]{save_mpi}
+#'   \link[mpindex]{save_mpi}
 #'
 #' @examples
 #' specs <- define_mpi_specs(
@@ -101,10 +98,7 @@ compute_mpi <- function(
   deprivations,
   ...,
   by                         = NULL,
-  include_deprivation_matrix = TRUE,
-  generate_output            = FALSE,
-  mpi_output_filename        = NULL,
-  include_specs              = FALSE,
+  include_deprivation_matrix = FALSE,
   weight                     = NULL,
   strata                     = NULL,
   cluster                    = NULL,
@@ -116,16 +110,13 @@ compute_mpi <- function(
 
   check_old_dotted_args(
     "compute_mpi",
-    c(".mpi_specs", ".deprivations", ".by", ".include_deprivation_matrix",
-      ".generate_output", ".mpi_output_filename", ".include_specs",
-      ".weight", ".strata", ".cluster", ".fpc", ".survey_design",
-      ".inference", ".ci_level"),
+    c(".mpi_specs", ".deprivations", ".by", ".include_deprivation_matrix"),
     ...
   )
 
   validate_mpi_specs(mpi_specs)
 
-  # Resolve `by` into a character vector of column names
+  # Resolve `by` into a character vector before forwarding internally
   by_cols <- names(dplyr::select(.data, {{by}}))
 
   # Validate deprivations names
@@ -151,7 +142,7 @@ compute_mpi <- function(
   for (ind in dep_names) {
     entry <- deprivations[[ind]]
 
-    if (inherits(entry, "mpi_deprivation_spec")) {
+    if (inherits(entry, "mpi_d")) {
       data_for_ind <- if (!is.null(entry$data)) entry$data else .data
 
       deprivation_profile[[ind]] <- rlang::inject(
@@ -171,25 +162,19 @@ compute_mpi <- function(
     }
   }
 
-  # Delegate to compute_mpi_from_profile, injecting `by` columns as ...
-  rlang::inject(
-    compute_mpi_from_profile(
-      .data,
-      deprivation_profile,
-      ...,
-      !!!rlang::syms(by_cols),
-      mpi_specs                  = mpi_specs,
-      include_deprivation_matrix = include_deprivation_matrix,
-      generate_output            = generate_output,
-      mpi_output_filename        = mpi_output_filename,
-      include_specs              = include_specs,
-      weight                     = weight,
-      strata                     = strata,
-      cluster                    = cluster,
-      fpc                        = fpc,
-      survey_design              = survey_design,
-      inference                  = inference,
-      ci_level                   = ci_level
-    )
+  compute_mpi_from_profile(
+    .data,
+    deprivation_profile,
+    ...,
+    by                         = by_cols,
+    mpi_specs                  = mpi_specs,
+    include_deprivation_matrix = include_deprivation_matrix,
+    weight                     = weight,
+    strata                     = strata,
+    cluster                    = cluster,
+    fpc                        = fpc,
+    survey_design              = survey_design,
+    inference                  = inference,
+    ci_level                   = ci_level
   )
 }
