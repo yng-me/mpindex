@@ -1,6 +1,6 @@
 # Load the built-in Global MPI specification
 
-Returns the `mpi_specs_df` object for the standard Global MPI (10
+Returns the `mpi_specs` object for the standard Global MPI (10
 indicators across Health, Education, and Living Standards). Assign the
 result and pass it explicitly as `mpi_specs`.
 
@@ -25,7 +25,7 @@ global_mpi_specs(..., poverty_cutoffs = 1/3)
 
 ## Value
 
-An `mpi_specs_df` object.
+An `mpi_specs` object.
 
 ## Examples
 

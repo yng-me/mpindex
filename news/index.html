@@ -48,13 +48,13 @@
 <h2 class="pkg-version" data-toc-text="0.3.0" id="mpindex-030">mpindex 0.3.0<a class="anchor" aria-label="anchor" href="#mpindex-030"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-0-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-0"></a></h3>
-<ul><li>All argument names have dropped the <code>.</code> prefix (except <code>.data</code>). E.g. <code>.mpi_specs</code> → <code>mpi_specs</code>, <code>.weight</code> → <code>weight</code>, <code>.inference</code> → <code>inference</code>. Passing an old dotted name now triggers an informative error naming the renamed argument and its replacement (ADR-0006).</li>
+<ul><li>All argument names have dropped the <code>.</code> prefix (except <code>.data</code>). E.g. <code>.mpi_specs</code> → <code>mpi_specs</code>, <code>.cutoff</code> → <code>cutoff</code>. Passing an old dotted name now triggers an informative error naming the renamed argument and its replacement (ADR-0006).</li>
 <li>
 <code><a href="../reference/compute_mpi.html">compute_mpi()</a></code> now uses a new <code><a href="../reference/deprived.html">deprived()</a></code> helper for inline deprivation cutoffs. The previous <code>.deprivation_profile</code> list workflow is available via the new <code><a href="../reference/compute_mpi_from_profile.html">compute_mpi_from_profile()</a></code>.</li>
 <li>
 <code><a href="../reference/define_deprivation.html">define_deprivation()</a></code> replaces the boolean <code>.collapse</code> argument with <code>.collapse_fn</code> — pass a function (e.g. <code>max</code>) instead of <code>TRUE</code>.</li>
 <li>
-<code><a href="../reference/save_mpi.html">save_mpi()</a></code> now delegates Excel formatting to the <code>tsg</code> package. The <code>.formatted_output</code> and <code>.include_table_summary</code> arguments have been removed. A new <code>.include_deprivation_matrix</code> argument controls whether deprivation matrix sheets are written.</li>
+<code><a href="../reference/save_mpi.html">save_mpi()</a></code> now delegates Excel formatting to the <code>tsg</code> package. The <code>.formatted_output</code> and <code>.include_table_summary</code> arguments have been removed.</li>
 <li>Default <code>.names_separator</code> in <code><a href="../reference/define_mpi_specs.html">define_mpi_specs()</a></code> changed from <code>"&gt;"</code> to <code>"__"</code>.</li>
 <li>
 <code>.mpi_specs</code> is now required in <code><a href="../reference/define_deprivation.html">define_deprivation()</a></code>, <code><a href="../reference/compute_mpi_from_profile.html">compute_mpi_from_profile()</a></code>, and <code><a href="../reference/save_mpi.html">save_mpi()</a></code>. The <code>getOption("mpi_specs")</code> default has been removed — pass the result of <code><a href="../reference/define_mpi_specs.html">define_mpi_specs()</a></code> or <code><a href="../reference/global_mpi_specs.html">global_mpi_specs()</a></code> explicitly.</li>

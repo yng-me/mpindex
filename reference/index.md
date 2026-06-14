@@ -5,9 +5,6 @@
 - [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md)
   : Compute Multidimensional Poverty Index (MPI)
 
-- [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md)
-  : Compute MPI from a deprivation profile
-
 - [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md)
   : Define deprivation cutoffs
 

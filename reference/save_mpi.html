@@ -45,7 +45,7 @@ publication-ready table formatting."><!-- Google tag (gtag.js) --><script async 
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Save MPI output</h1>
-      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/main/R/save_mpi.R" class="external-link"><code>R/save_mpi.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/main/R/save-mpi.R" class="external-link"><code>R/save-mpi.R</code></a></small>
       <div class="d-none name"><code>save_mpi.Rd</code></div>
     </div>
 
@@ -59,11 +59,12 @@ publication-ready table formatting.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">save_mpi</span><span class="op">(</span></span>
 <span>  <span class="va">mpi_output</span>,</span>
-<span>  mpi_specs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">mpi_specs</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  include_deprivation_matrix <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_specs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  overall_label <span class="op">=</span> <span class="st">"Overall"</span>,</span>
+<span>  facade <span class="op">=</span> <span class="fu">tsg</span><span class="fu">::</span><span class="fu"><a href="https://yng-me.github.io/tsg/reference/get_tsg_facade.html" class="external-link">get_tsg_facade</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -80,15 +81,14 @@ publication-ready table formatting.</p>
 <code><a href="define_mpi_specs.html">define_mpi_specs</a></code>.</p></dd>
 
 
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Reserved; passing old dotted names triggers a helpful error.</p></dd>
+
+
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
 <dd><p>Output filename. The <code>.xlsx</code> extension is added
 automatically when missing. Defaults to <code>"MPI Results.xlsx"</code> in the
 current working directory.</p></dd>
-
-
-<dt id="arg-include-deprivation-matrix">include_deprivation_matrix<a class="anchor" aria-label="anchor" href="#arg-include-deprivation-matrix"></a></dt>
-<dd><p>Whether to include deprivation matrices
-as separate sheets. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-include-specs">include_specs<a class="anchor" aria-label="anchor" href="#arg-include-specs"></a></dt>
@@ -96,13 +96,17 @@ as separate sheets. Defaults to <code>TRUE</code>.</p></dd>
 sheet. Defaults to <code>FALSE</code>.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Reserved; passing old dotted names triggers a helpful error.</p></dd>
+<dt id="arg-overall-label">overall_label<a class="anchor" aria-label="anchor" href="#arg-overall-label"></a></dt>
+<dd><p>Overall label to assign when grouping is defined in <code><a href="compute_mpi.html">compute_mpi()</a></code> through <code>by</code> argument. Default is <code>"Overall"</code>. Accepts vector of elements matching the number of grouping variables defined.</p></dd>
+
+
+<dt id="arg-facade">facade<a class="anchor" aria-label="anchor" href="#arg-facade"></a></dt>
+<dd><p><code>tsg</code> facade (see <a href="https://yng-me.github.io/tsg/reference/add_facade.html" class="external-link">add_facade</a>).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns the normalised file path of the generated Excel file.</p>
+    <p>Returns the normalized file path of the generated Excel file.</p>
     </div>
 
     <div class="section level2">

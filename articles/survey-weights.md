@@ -318,15 +318,18 @@ cat("Weighted   H:", round(mpi_weighted$index$k_33$headcount_ratio,   4), "\n")
 
 ## Step-by-step workflow
 
-The same survey arguments work with
-[`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md):
+The same survey arguments work when using a pre-assembled profile (list
+of
+[`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md)
+outputs) passed to
+[`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md):
 
 ``` r
 
-mpi_result <- compute_mpi_from_profile(
+mpi_result <- compute_mpi(
   df_hh,
-  deprivation_profile,        # pre-assembled list from define_deprivation()
-  mpi_specs = mpi_specs,
+  mpi_specs    = mpi_specs,
+  deprivations = deprivation_profile,  # pre-assembled list from define_deprivation()
   weight = "hh_weight",
   strata = "strata",
   cluster = "psu",

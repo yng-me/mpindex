@@ -5,9 +5,9 @@
 ### Breaking changes
 
 - All argument names have dropped the `.` prefix (except `.data`). E.g.
-  `.mpi_specs` → `mpi_specs`, `.weight` → `weight`, `.inference` →
-  `inference`. Passing an old dotted name now triggers an informative
-  error naming the renamed argument and its replacement (ADR-0006).
+  `.mpi_specs` → `mpi_specs`, `.cutoff` → `cutoff`. Passing an old
+  dotted name now triggers an informative error naming the renamed
+  argument and its replacement (ADR-0006).
 - [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md)
   now uses a new
   [`deprived()`](https://yng-me.github.io/mpindex/reference/deprived.md)
@@ -20,8 +20,7 @@
 - [`save_mpi()`](https://yng-me.github.io/mpindex/reference/save_mpi.md)
   now delegates Excel formatting to the `tsg` package. The
   `.formatted_output` and `.include_table_summary` arguments have been
-  removed. A new `.include_deprivation_matrix` argument controls whether
-  deprivation matrix sheets are written.
+  removed.
 - Default `.names_separator` in
   [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md)
   changed from `">"` to `"__"`.

@@ -40,31 +40,28 @@ in your scripts:
 | `.uid` | `uid` | [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md) |
 | `.poverty_cutoffs` | `poverty_cutoffs` | [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md) |
 | `.unit_of_analysis` | `unit_of_analysis` | [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md) |
-| `.aggregation` | `aggregation` | [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md) |
 | `.source_of_data` | `source_of_data` | [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md) |
 | `.names_separator` | `names_separator` | [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md) |
 | `.save_as_global_options` | `save_as_global_options` | [`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md) *(deprecated)* |
 | `.indicator` | `indicator` | [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md) |
 | `.cutoff` | `cutoff` | [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md) |
-| `.mpi_specs` | `mpi_specs` | [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md), [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md), [`save_mpi()`](https://yng-me.github.io/mpindex/reference/save_mpi.md) |
+| `.mpi_specs` | `mpi_specs` | [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md), [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`save_mpi()`](https://yng-me.github.io/mpindex/reference/save_mpi.md) |
 | `.collapse_fn` | `collapse_fn` | [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md), [`deprived()`](https://yng-me.github.io/mpindex/reference/deprived.md) |
 | `.collapse_condition` | `collapse_fn` | [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md) |
 | `.set_na_equal_to` | `set_na_equal_to` | [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md), [`deprived()`](https://yng-me.github.io/mpindex/reference/deprived.md) |
-| `.deprivation_profile` | `deprivation_profile` | [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
+| `.deprivation_profile` | `deprivations` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
 | `.by` | `by` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
-| `.include_deprivation_matrix` | `include_deprivation_matrix` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md), [`save_mpi()`](https://yng-me.github.io/mpindex/reference/save_mpi.md) |
-| `.generate_output` | `generate_output` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.mpi_output_filename` | `mpi_output_filename` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.include_specs` | `include_specs` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md), [`save_mpi()`](https://yng-me.github.io/mpindex/reference/save_mpi.md) |
-| `.weight` | `weight` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.strata` | `strata` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.cluster` | `cluster` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.fpc` | `fpc` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.survey_design` | `survey_design` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.inference` | `inference` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
-| `.ci_level` | `ci_level` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md), [`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md) |
+| `.generate_output` | `generate_output` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.mpi_output_filename` | `mpi_output_filename` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.include_specs` | `include_specs` | [`save_mpi()`](https://yng-me.github.io/mpindex/reference/save_mpi.md) |
+| `.weight` | `weight` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.strata` | `strata` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.cluster` | `cluster` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.fpc` | `fpc` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.survey_design` | `survey_design` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.inference` | `inference` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
+| `.ci_level` | `ci_level` | [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md) |
 | `.filename` | `filename` | [`save_mpi()`](https://yng-me.github.io/mpindex/reference/save_mpi.md) |
-| `.aggregation` | `aggregation` | `compute_headcount_ratio()`, `compute_headcount_ratio_adjusted()` |
 
 **Before:**
 
@@ -206,19 +203,17 @@ specs <- define_mpi_specs("specs.csv")
 
 ------------------------------------------------------------------------
 
-## 5. `compute_mpi()` has a new signature — old profile workflow moved
+## 5. `compute_mpi()` has a new signature — `deprivations` replaces `.deprivation_profile`
 
 In 0.2.x,
 [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md)
 accepted a `.deprivation_profile` list of pre-computed deprivation
-matrices. That workflow is now in the separate function
-[`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md).
-
-The new
-[`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md)
-uses inline
+matrices. The argument is now called `deprivations` and accepts either
+inline
 [`deprived()`](https://yng-me.github.io/mpindex/reference/deprived.md)
-cutoffs instead:
+cutoffs or pre-built
+[`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md)
+data frames.
 
 **Before:**
 
@@ -234,7 +229,9 @@ result <- compute_mpi(
 )
 ```
 
-**After — Option A: new inline API (`compute_mpi`)**
+**After — inline
+[`deprived()`](https://yng-me.github.io/mpindex/reference/deprived.md)
+cutoffs (recommended):**
 
 ``` r
 
@@ -250,8 +247,8 @@ result <- compute_mpi(
 )
 ```
 
-**After — Option B: keep the profile workflow
-(`compute_mpi_from_profile`)**
+**After — pre-built profile (useful when you need to inspect
+intermediates):**
 
 ``` r
 
@@ -262,10 +259,10 @@ dm1 <- define_deprivation(df_household, drinking_water,
 dm2 <- define_deprivation(df_household, electricity,
                            cutoff = electricity == 2,    mpi_specs = specs)
 
-result <- compute_mpi_from_profile(
+result <- compute_mpi(
   df_household,
-  list(drinking_water = dm1, electricity = dm2),
-  mpi_specs = specs
+  mpi_specs    = specs,
+  deprivations = list(drinking_water = dm1, electricity = dm2)
 )
 ```
 
@@ -351,6 +348,45 @@ specs <- define_mpi_specs("specs.csv", names_separator = ">")
 
 ------------------------------------------------------------------------
 
+## 5. `aggregation` removed from `define_mpi_specs()` — use `by` in `compute_mpi()`
+
+The `aggregation` argument in
+[`define_mpi_specs()`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md)
+(and its old dotted form `.aggregation`) has been removed. Subgroup
+grouping is now specified at compute time via the `by` argument in
+[`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md).
+
+Passing `aggregation =` now raises an informative error:
+
+``` r
+
+define_mpi_specs(
+  system.file("extdata", "global-mpi-specs.csv", package = "mpindex"),
+  aggregation = "region"
+)
+#> Error:
+#> ! The `aggregation` argument has been removed from `define_mpi_specs()`. Pass grouping columns via `by` in `compute_mpi()` instead.
+```
+
+**Before:**
+
+``` r
+
+specs <- define_mpi_specs("specs.csv", uid = "uuid", aggregation = "region")
+result <- compute_mpi(df, mpi_specs = specs, deprivations = ...)
+# grouped by region automatically
+```
+
+**After:**
+
+``` r
+
+specs  <- define_mpi_specs("specs.csv", uid = "uuid")
+result <- compute_mpi(df, mpi_specs = specs, deprivations = ..., by = region)
+```
+
+------------------------------------------------------------------------
+
 ## 9. Minimum R version bumped to 4.1.0
 
 `mpindex` 0.3.0 requires R ≥ 4.1.0 (released May 2021). The native pipe
@@ -365,9 +401,11 @@ Update R if you are on an older version.
     [ ] Replace use_global_mpi_specs() with specs <- global_mpi_specs()
     [ ] Remove .save_as_global_options = TRUE; store the return value instead
     [ ] Pass mpi_specs = specs explicitly in define_deprivation(),
-        compute_mpi_from_profile(), and save_mpi()
+        compute_mpi(), and save_mpi()
     [ ] Replace .collapse = TRUE with collapse_fn = max (or collapse_fn = any)
-    [ ] Move deprivation-profile workflows to compute_mpi_from_profile() or
-        switch to the new inline deprived() API in compute_mpi()
+    [ ] Replace .deprivation_profile = list(...) with deprivations = list(...) in
+        compute_mpi() — inline deprived() cutoffs or pre-built define_deprivation()
+        outputs both work
+    [ ] Remove aggregation = from define_mpi_specs(); pass by = in compute_mpi() instead
     [ ] Remove .formatted_output / .include_table_summary from save_mpi() calls
     [ ] Verify your R version is ≥ 4.1.0

@@ -44,7 +44,7 @@ deprived(.cutoff, .data = NULL, collapse_fn = NULL, set_na_equal_to = 0, ...)
 
 ## Value
 
-An object of class `mpi_deprivation_spec`.
+An object of class `mpi_d`.
 
 ## See also
 
@@ -57,7 +57,7 @@ deprived(drinking_water == 2)
 #> $cutoff
 #> <quosure>
 #> expr: ^drinking_water == 2
-#> env:  0x55bfeb220df8
+#> env:  0x55cd570fedc8
 #> 
 #> $data
 #> NULL
@@ -69,12 +69,12 @@ deprived(drinking_water == 2)
 #> [1] 0
 #> 
 #> attr(,"class")
-#> [1] "mpi_deprivation_spec"
+#> [1] "mpi_d"
 deprived(undernourished == 1 & age < 70, .data = df_household_roster, collapse_fn = max)
 #> $cutoff
 #> <quosure>
 #> expr: ^undernourished == 1 & age < 70
-#> env:  0x55bfeb220df8
+#> env:  0x55cd570fedc8
 #> 
 #> $data
 #> # A tibble: 905 × 8
@@ -100,5 +100,5 @@ deprived(undernourished == 1 & age < 70, .data = df_household_roster, collapse_f
 #> [1] 0
 #> 
 #> attr(,"class")
-#> [1] "mpi_deprivation_spec"
+#> [1] "mpi_d"
 ```

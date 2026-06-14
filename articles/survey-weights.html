@@ -364,13 +364,14 @@ correlated with poverty status), the differences can be substantial.</p>
 <div class="section level2">
 <h2 id="step-by-step-workflow">Step-by-step workflow<a class="anchor" aria-label="anchor" href="#step-by-step-workflow"></a>
 </h2>
-<p>The same survey arguments work with
-<code><a href="../reference/compute_mpi_from_profile.html">compute_mpi_from_profile()</a></code>:</p>
+<p>The same survey arguments work when using a pre-assembled profile
+(list of <code><a href="../reference/define_deprivation.html">define_deprivation()</a></code> outputs) passed to
+<code><a href="../reference/compute_mpi.html">compute_mpi()</a></code>:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mpi_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_mpi_from_profile.html">compute_mpi_from_profile</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">mpi_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_hh</span>,</span>
-<span>  <span class="va">deprivation_profile</span>,        <span class="co"># pre-assembled list from define_deprivation()</span></span>
-<span>  mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span>,</span>
+<span>  mpi_specs    <span class="op">=</span> <span class="va">mpi_specs</span>,</span>
+<span>  deprivations <span class="op">=</span> <span class="va">deprivation_profile</span>,  <span class="co"># pre-assembled list from define_deprivation()</span></span>
 <span>  weight <span class="op">=</span> <span class="st">"hh_weight"</span>,</span>
 <span>  strata <span class="op">=</span> <span class="st">"strata"</span>,</span>
 <span>  cluster <span class="op">=</span> <span class="st">"psu"</span>,</span>

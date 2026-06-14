@@ -9,11 +9,12 @@ publication-ready table formatting.
 ``` r
 save_mpi(
   mpi_output,
-  mpi_specs = NULL,
+  mpi_specs,
+  ...,
   filename = NULL,
-  include_deprivation_matrix = TRUE,
   include_specs = FALSE,
-  ...
+  overall_label = "Overall",
+  facade = tsg::get_tsg_facade()
 )
 ```
 
@@ -29,29 +30,36 @@ save_mpi(
   MPI specifications defined in
   [`define_mpi_specs`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md).
 
+- ...:
+
+  Reserved; passing old dotted names triggers a helpful error.
+
 - filename:
 
   Output filename. The `.xlsx` extension is added automatically when
   missing. Defaults to `"MPI Results.xlsx"` in the current working
   directory.
 
-- include_deprivation_matrix:
-
-  Whether to include deprivation matrices as separate sheets. Defaults
-  to `TRUE`.
-
 - include_specs:
 
   Whether to include MPI specification as a separate sheet. Defaults to
   `FALSE`.
 
-- ...:
+- overall_label:
 
-  Reserved; passing old dotted names triggers a helpful error.
+  Overall label to assign when grouping is defined in
+  [`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md)
+  through `by` argument. Default is `"Overall"`. Accepts vector of
+  elements matching the number of grouping variables defined.
+
+- facade:
+
+  `tsg` facade (see
+  [add_facade](https://yng-me.github.io/tsg/reference/add_facade.html)).
 
 ## Value
 
-Returns the normalised file path of the generated Excel file.
+Returns the normalized file path of the generated Excel file.
 
 ## Examples
 

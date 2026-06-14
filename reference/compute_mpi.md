@@ -6,10 +6,6 @@ inline using the
 [`deprived`](https://yng-me.github.io/mpindex/reference/deprived.md)
 helper, making the workflow self-contained and readable.
 
-For a step-by-step workflow using a pre-assembled deprivation profile,
-see
-[`compute_mpi_from_profile`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md).
-
 ## Usage
 
 ``` r
@@ -19,10 +15,7 @@ compute_mpi(
   deprivations,
   ...,
   by = NULL,
-  include_deprivation_matrix = TRUE,
-  generate_output = FALSE,
-  mpi_output_filename = NULL,
-  include_specs = FALSE,
+  include_deprivation_matrix = FALSE,
   weight = NULL,
   strata = NULL,
   cluster = NULL,
@@ -52,28 +45,20 @@ compute_mpi(
 
 - ...:
 
-  Grouping columns (tidyselect) or reserved for old-name detection.
+  *(Optional)* Extra columns to carry through into the deprivation
+  matrix (tidyselect). These columns are included in the matrix after
+  `by` columns but do **not** affect grouping of summary outputs. Also
+  catches old dotted argument names.
 
 - by:
 
-  *(Optional)* Columns to group results by, passed as a tidyselect
-  expression, e.g. `c(region, sex)`.
+  *(Optional)* Columns to group summary outputs by (tidyselect), e.g.
+  `c(region, sex)`. These columns are also included in the deprivation
+  matrix, before any `...` columns.
 
 - include_deprivation_matrix:
 
-  Whether to include deprivation matrices. Default `TRUE`.
-
-- generate_output:
-
-  Whether to write an Excel file as a side effect. Default `FALSE`.
-
-- mpi_output_filename:
-
-  Output filename when `generate_output = TRUE`.
-
-- include_specs:
-
-  Whether to include MPI specification sheet in Excel output.
+  Whether to include deprivation matrices. Default `FALSE`.
 
 - weight:
 
@@ -140,7 +125,6 @@ Method](https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkir
 
 [define_mpi_specs](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md),
 [deprived](https://yng-me.github.io/mpindex/reference/deprived.md),
-[compute_mpi_from_profile](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md),
 [save_mpi](https://yng-me.github.io/mpindex/reference/save_mpi.md)
 
 ## Examples

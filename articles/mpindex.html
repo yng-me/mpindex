@@ -878,8 +878,7 @@ household is deprived.</p>
 <p>The result is a named list:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mpi_result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "index"              "contribution"       "headcount_ratio"   </span></span>
-<span><span class="co">#&gt; [4] "deprivation_matrix"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "index"           "headcount_ratio" "contribution"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="disaggregating-by-a-subgroup">Disaggregating by a subgroup<a class="anchor" aria-label="anchor" href="#disaggregating-by-a-subgroup"></a>
@@ -899,8 +898,8 @@ household is deprived.</p>
 </h3>
 <p>If you prefer to build and inspect each deprivation indicator before
 combining them, use <code><a href="../reference/define_deprivation.html">define_deprivation()</a></code> to create each one
-separately, then pass them all to
-<code><a href="../reference/compute_mpi_from_profile.html">compute_mpi_from_profile()</a></code>:</p>
+separately, then pass the list to <code><a href="../reference/compute_mpi.html">compute_mpi()</a></code> via
+<code>deprivations</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -920,7 +919,7 @@ separately, then pass them all to
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ... define all remaining indicators, then:</span></span>
-<span><span class="va">mpi_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_mpi_from_profile.html">compute_mpi_from_profile</a></span><span class="op">(</span><span class="va">df_household</span>, <span class="va">dp</span>, mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">mpi_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span><span class="va">df_household</span>, mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span>, deprivations <span class="op">=</span> <span class="va">dp</span><span class="op">)</span></span></code></pre></div>
 <p>This is useful when your data preparation for some indicators is
 complex and you want to examine intermediate results.</p>
 <hr>
@@ -932,9 +931,14 @@ complex and you want to examine intermediate results.</p>
 <div class="section level3">
 <h3 id="understanding-the-output">Understanding the output<a class="anchor" aria-label="anchor" href="#understanding-the-output"></a>
 </h3>
-<p><code>mpi_result</code> is a named list with four components. Each
+<p><code>mpi_result</code> is a named list with varying components. Each
 component is itself a named list keyed by the poverty cutoff used —
-e.g. <code>k_33</code> for the 33% cutoff.</p>
+e.g. <code>k_33</code> for the 33% cutoff. If
+<code>include_deprivation_matrix</code> is set to <code>TRUE</code>,
+<code>$deprivation_matrix</code> is added to the list. And if grouping
+is defined in the <code>by</code> argument of
+<code><a href="../reference/compute_mpi.html">compute_mpi()</a></code>, <code>$overall</code> is included in the
+list, showing the overall summary of the group.</p>
 <table class="table">
 <colgroup>
 <col width="39%">
@@ -961,8 +965,13 @@ censored)</td>
 </tr>
 <tr class="even">
 <td><code>$deprivation_matrix</code></td>
-<td>Row-level deprivation scores and indicator flags for every
-household</td>
+<td>Row-level deprivation scores and indicator flags for every household
+if <code>include_deprivation_matrix</code> is set to <code>TRUE</code>
+(default is <code>FALSE</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>$overall</code></td>
+<td>Overall summary if grouping is defined</td>
 </tr>
 </tbody>
 </table>
@@ -1928,16 +1937,16 @@ table answers this — values sum to 100% across all indicators.</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body"><tr>
@@ -2433,16 +2442,16 @@ only those households also identified as multidimensionally poor.</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body"><tr>
@@ -2927,16 +2936,16 @@ only those households also identified as multidimensionally poor.</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body"><tr>
@@ -2958,10 +2967,18 @@ only those households also identified as multidimensionally poor.</p>
 <div class="section level3">
 <h3 id="the-deprivation-matrix">The deprivation matrix<a class="anchor" aria-label="anchor" href="#the-deprivation-matrix"></a>
 </h3>
-<p>The deprivation matrix records each household’s individual score and
-indicator flags. The first few rows:</p>
+<p>The deprivation matrix (added when
+<code>include_deprivation_matrix = TRUE</code>) records each household’s
+individual score and indicator flags. The first few rows:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mpi_result</span><span class="op">$</span><span class="va">deprivation_matrix</span><span class="op">$</span><span class="va">uncensored</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mpi_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span></span>
+<span>  <span class="va">df_household</span>,</span>
+<span>  mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span>,</span>
+<span>  deprivations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>  include_deprivation_matrix <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mpi_result</span><span class="op">$</span><span class="va">deprivation_matrix</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div id="orehalspkz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#orehalspkz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -3430,16 +3447,16 @@ indicator flags. The first few rows:</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -4003,16 +4020,16 @@ they are not counted as poor:</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">

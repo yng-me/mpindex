@@ -13,10 +13,9 @@ define_mpi_specs(
   indicators = NULL,
   poverty_cutoffs = NULL,
   unit_of_analysis = NULL,
-  aggregation = NULL,
   uid = NULL,
   source_of_data = NULL,
-  names_separator = "__",
+  names_separator = getOption("mpindex.options")$names_separator %||% "__",
   save_as_global_options = FALSE,
   ...
 )
@@ -45,10 +44,6 @@ define_mpi_specs(
 
   e.g. `"individuals"`, `"households"`. Default `NULL`.
 
-- aggregation:
-
-  Column name that defines an aggregation level.
-
 - uid:
 
   Column name containing the unique ID (unit of analysis).
@@ -72,8 +67,7 @@ define_mpi_specs(
 
 ## Value
 
-An `mpi_specs_df` object. Pass this directly as the `mpi_specs` argument
-in
+An `mpi_specs` object. Pass this directly as the `mpi_specs` argument in
 [`compute_mpi`](https://yng-me.github.io/mpindex/reference/compute_mpi.md),
 [`define_deprivation`](https://yng-me.github.io/mpindex/reference/define_deprivation.md),
 and

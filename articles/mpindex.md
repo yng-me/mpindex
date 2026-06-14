@@ -279,8 +279,7 @@ The result is a named list:
 ``` r
 
 names(mpi_result)
-#> [1] "index"              "contribution"       "headcount_ratio"   
-#> [4] "deprivation_matrix"
+#> [1] "index"           "headcount_ratio" "contribution"
 ```
 
 ### Disaggregating by a subgroup
@@ -303,8 +302,9 @@ compute_mpi(
 If you prefer to build and inspect each deprivation indicator before
 combining them, use
 [`define_deprivation()`](https://yng-me.github.io/mpindex/reference/define_deprivation.md)
-to create each one separately, then pass them all to
-[`compute_mpi_from_profile()`](https://yng-me.github.io/mpindex/reference/compute_mpi_from_profile.md):
+to create each one separately, then pass the list to
+[`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md)
+via `deprivations`:
 
 ``` r
 
@@ -326,7 +326,7 @@ dp$drinking_water <- df_household |>
   )
 
 # ... define all remaining indicators, then:
-mpi_result <- compute_mpi_from_profile(df_household, dp, mpi_specs = mpi_specs)
+mpi_result <- compute_mpi(df_household, mpi_specs = mpi_specs, deprivations = dp)
 ```
 
 This is useful when your data preparation for some indicators is complex
@@ -338,16 +338,22 @@ and you want to examine intermediate results.
 
 ### Understanding the output
 
-`mpi_result` is a named list with four components. Each component is
+`mpi_result` is a named list with varying components. Each component is
 itself a named list keyed by the poverty cutoff used — e.g. `k_33` for
-the 33% cutoff.
+the 33% cutoff. If `include_deprivation_matrix` is set to `TRUE`,
+`$deprivation_matrix` is added to the list. And if grouping is defined
+in the `by` argument of
+[`compute_mpi()`](https://yng-me.github.io/mpindex/reference/compute_mpi.md),
+`$overall` is included in the list, showing the overall summary of the
+group.
 
 | Component | What it contains |
 |----|----|
 | `$index` | The headline MPI value, headcount ratio (H), intensity (A), and sample size (n) |
 | `$contribution` | Each indicator’s percentage contribution to the overall MPI |
 | `$headcount_ratio` | The share of households deprived on each indicator (uncensored and censored) |
-| `$deprivation_matrix` | Row-level deprivation scores and indicator flags for every household |
+| `$deprivation_matrix` | Row-level deprivation scores and indicator flags for every household if `include_deprivation_matrix` is set to `TRUE` (default is `FALSE`) |
+| `$overall` | Overall summary if grouping is defined |
 
 ### The headline MPI
 
@@ -401,12 +407,20 @@ mpi_result$headcount_ratio$k_33         # deprivation rate — poor households o
 
 ### The deprivation matrix
 
-The deprivation matrix records each household’s individual score and
-indicator flags. The first few rows:
+The deprivation matrix (added when `include_deprivation_matrix = TRUE`)
+records each household’s individual score and indicator flags. The first
+few rows:
 
 ``` r
 
-mpi_result$deprivation_matrix$uncensored |> head()
+mpi_result <- compute_mpi(
+  df_household,
+  mpi_specs = mpi_specs,
+  deprivations = list(...),
+  include_deprivation_matrix = TRUE
+)
+
+mpi_result$deprivation_matrix |> head()
 ```
 
 [TABLE]

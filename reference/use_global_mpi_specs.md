@@ -19,7 +19,7 @@ use_global_mpi_specs(...)
 
 ## Value
 
-An `mpi_specs_df` object.
+An `mpi_specs` object.
 
 ## Examples
 
