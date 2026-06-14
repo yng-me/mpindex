@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/yng-me/mpindex/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/yng-me/mpindex/blob/v0.3.0/DESCRIPTION)
 
 Abdulsamad B (2026). *mpindex: Multidimensional Poverty Index (MPI) via
 the Alkire-Foster Method*. R package version 0.3.0,
