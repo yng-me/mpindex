@@ -72,9 +72,9 @@ deprived <- function(
 #' @return A data frame with columns \code{*_unweighted} and \code{*_weighted}.
 #'
 #' @export
-#' @references \href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
 #'
 #' @seealso \link[mpindex]{define_mpi_specs}
+
 #' @examples
 #' specs_file <- system.file(
 #'  "extdata",
@@ -84,34 +84,27 @@ deprived <- function(
 #'
 #' specs <- define_mpi_specs(specs_file, uid = "uuid")
 #'
-#' df_household |>
-#'   define_deprivation(
-#'     indicator  = drinking_water,
-#'     cutoff     = drinking_water == 2,
-#'     mpi_specs  = specs
-#'   )
+#' define_deprivation(
+#'   df_household,
+#'   indicator = drinking_water,
+#'   cutoff = drinking_water == 2,
+#'   mpi_specs = specs
+#' )
 #'
-#' df_household_roster |>
-#'   define_deprivation(
-#'     indicator   = school_attendance,
-#'     cutoff      = attending_school == 2,
-#'     mpi_specs   = specs,
-#'     collapse_fn = max
-#'   )
+#' define_deprivation(
+#'   df_household_roster,
+#'   indicator = school_attendance,
+#'   cutoff = attending_school == 2,
+#'   mpi_specs = specs,
+#'   collapse_fn = max
+#' )
 #'
-define_deprivation <- function(
-  .data,
-  indicator,
-  cutoff,
-  mpi_specs       = NULL,
-  collapse_fn     = NULL,
-  set_na_equal_to = 0,
-  ...
-) {
+
+define_deprivation <- function(.data, indicator, cutoff, mpi_specs = NULL, collapse_fn = NULL, set_na_equal_to = 0, ...) {
+
   check_old_dotted_args(
     "define_deprivation",
-    c(".indicator", ".cutoff", ".mpi_specs", ".collapse_fn",
-      ".collapse", ".collapse_condition", ".set_na_equal_to"),
+    c(".indicator", ".cutoff", ".mpi_specs", ".collapse_fn", ".collapse", ".collapse_condition", ".set_na_equal_to"),
     ...
   )
 
@@ -125,11 +118,11 @@ define_deprivation <- function(
   }
 
   ind <- dplyr::pull(selected_indicator, variable_name)
-  v   <- dplyr::pull(selected_indicator, indicator)
-  w   <- dplyr::pull(selected_indicator, weight)
+  v <- dplyr::pull(selected_indicator, indicator)
+  w <- dplyr::pull(selected_indicator, weight)
 
   unweighted <- paste0(ind[1], "_unweighted")
-  weighted   <- paste0(ind[1], "_weighted")
+  weighted <- paste0(ind[1], "_weighted")
 
   with_uid <- !is.null(spec_attr$uid)
 
@@ -146,10 +139,11 @@ define_deprivation <- function(
   .data <- dplyr::transmute(
     .data,
     !!as.name(uid_name) := uid,
-    !!as.name(v[1])     := dplyr::if_else({{cutoff}}, 1L, 0L, as.integer(set_na_equal_to))
+    !!as.name(v[1]) := dplyr::if_else({{cutoff}}, 1L, 0L, as.integer(set_na_equal_to))
   )
 
   if (!is.null(collapse_fn) && with_uid) {
+
     collapse_safe <- function(x) {
       x_clean <- x[!is.na(x)]
       if (length(x_clean) == 0L) return(NA_integer_)
@@ -157,17 +151,21 @@ define_deprivation <- function(
       if (length(result) != 1L) stop("collapse_fn must return a scalar value.")
       as.integer(result)
     }
-    .data <- .data |>
-      dplyr::group_by(!!as.name(uid_name)) |>
-      dplyr::summarise(
-        !!as.name(v[1]) := collapse_safe(!!as.name(v[1])),
-        .groups = "drop"
-      )
+
+    .data <- dplyr::group_by(.data, !!as.name(uid_name))
+
+    .data <- dplyr::summarise(
+      .data,
+      !!as.name(v[1]) := collapse_safe(!!as.name(v[1])),
+      .groups = "drop"
+    )
   }
+
+  .data <- dplyr::mutate(.data, !!as.name(weighted) := w[1] * !!as.name(v[1]))
+  .data <- dplyr::rename(.data, !!as.name(unweighted) := !!as.name(v[1]))
 
   class(.data) <- c("mpi_dm", class(.data))
 
-  .data |>
-    dplyr::mutate(!!as.name(weighted) := w[1] * !!as.name(v[1])) |>
-    dplyr::rename(!!as.name(unweighted) := !!as.name(v[1]))
+  .data
+
 }

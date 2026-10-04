@@ -42,9 +42,6 @@
 #'   }
 #'
 #' @export
-#'
-#' @references \href{https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/}{Alkire-Foster Method} \cr
-#' \href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
 #' @seealso \link[mpindex]{define_mpi_specs}, \link[mpindex]{deprived},
 #'   \link[mpindex]{save_mpi}
 #'
@@ -75,11 +72,11 @@
 #'       .data = df_household_roster,
 #'       collapse_fn = max
 #'     ),
-#'     cooking_fuel   = deprived(cooking_fuel %in% c(4:6, 9)),
-#'     sanitation     = deprived(toilet > 1),
+#'     cooking_fuel = deprived(cooking_fuel %in% c(4:6, 9)),
+#'     sanitation = deprived(toilet > 1),
 #'     drinking_water = deprived(drinking_water == 2),
-#'     electricity    = deprived(electricity == 2),
-#'     housing        = deprived(
+#'     electricity = deprived(electricity == 2),
+#'     housing = deprived(
 #'       roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
 #'     ),
 #'     assets = deprived(!(
@@ -97,15 +94,15 @@ compute_mpi <- function(
   mpi_specs,
   deprivations,
   ...,
-  by                         = NULL,
+  by = NULL,
   include_deprivation_matrix = FALSE,
-  weight                     = NULL,
-  strata                     = NULL,
-  cluster                    = NULL,
-  fpc                        = NULL,
-  survey_design              = NULL,
-  inference                  = FALSE,
-  ci_level                   = 0.95
+  weight = NULL,
+  strata = NULL,
+  cluster = NULL,
+  fpc = NULL,
+  survey_design = NULL,
+  inference = FALSE,
+  ci_level = 0.95
 ) {
 
   check_old_dotted_args(
@@ -147,11 +144,11 @@ compute_mpi <- function(
 
       deprivation_profile[[ind]] <- rlang::inject(
         define_deprivation(
-          .data           = data_for_ind,
-          indicator       = !!rlang::sym(ind),
-          cutoff          = !!entry$cutoff,
-          mpi_specs       = mpi_specs,
-          collapse_fn     = entry$collapse_fn,
+          .data = data_for_ind,
+          indicator = !!rlang::sym(ind),
+          cutoff = !!entry$cutoff,
+          mpi_specs = mpi_specs,
+          collapse_fn = entry$collapse_fn,
           set_na_equal_to = entry$set_na_equal_to
         )
       )
@@ -166,15 +163,16 @@ compute_mpi <- function(
     .data,
     deprivation_profile,
     ...,
-    by                         = by_cols,
-    mpi_specs                  = mpi_specs,
+    by = by_cols,
+    mpi_specs = mpi_specs,
     include_deprivation_matrix = include_deprivation_matrix,
-    weight                     = weight,
-    strata                     = strata,
-    cluster                    = cluster,
-    fpc                        = fpc,
-    survey_design              = survey_design,
-    inference                  = inference,
-    ci_level                   = ci_level
+    weight = weight,
+    strata = strata,
+    cluster = cluster,
+    fpc = fpc,
+    survey_design = survey_design,
+    inference = inference,
+    ci_level = ci_level
   )
+  
 }

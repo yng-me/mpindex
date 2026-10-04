@@ -1,3 +1,8 @@
+# mpindex 0.3.1
+
+* Fixed ordering of indicators as defined in the specification file.
+* Removed `stringr` and pipe "|>" dependencies.
+
 # mpindex 0.3.0
 
 ## Breaking changes

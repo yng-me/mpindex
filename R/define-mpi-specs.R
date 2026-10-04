@@ -35,7 +35,7 @@
 #'   "global-mpi-specs.csv",
 #'   package = "mpindex"
 #' )
-#' system.file("extdata", package = "mpindex") |> list.files()
+#' list.files(system.file("extdata", package = "mpindex"))
 #'
 define_mpi_specs <- function(
   mpi_specs_file    = NULL,
@@ -77,7 +77,7 @@ define_mpi_specs <- function(
   }
 
   if (!is.null(uid)) {
-    uid <- stringr::str_trim(as.character(uid))
+    uid <- trimws(as.character(uid))
     if (length(uid) != 1) {
       stop("uid argument cannot accept multiple values.")
     }
@@ -90,8 +90,8 @@ define_mpi_specs <- function(
   # accepts JSON, CSV, XLSX (Excel), TXT (TSV)
   if (!is.null(mpi_specs_file)) {
     if (grepl("\\.xlsx$", mpi_specs_file, ignore.case = TRUE)) {
-      df <- openxlsx::read.xlsx(mpi_specs_file, skipEmptyRows = TRUE, skipEmptyCols = TRUE) |>
-        dplyr::mutate(dplyr::across(dplyr::where(is.character), trimws))
+      df <- openxlsx::read.xlsx(mpi_specs_file, skipEmptyRows = TRUE, skipEmptyCols = TRUE)
+      df <- dplyr::mutate(df, dplyr::across(dplyr::where(is.character), trimws))
     } else if (grepl("\\.csv$", mpi_specs_file, ignore.case = TRUE)) {
       df <- utils::read.csv(mpi_specs_file, strip.white = TRUE)
     } else if (grepl("\\.json$", mpi_specs_file, ignore.case = TRUE)) {
@@ -109,11 +109,10 @@ define_mpi_specs <- function(
     }
   }
 
-  df <- df |>
-    clean_colnames() |>
-    dplyr::select(
-      dplyr::any_of(c("dimension", "indicator", "variable", "weight", "description"))
-    )
+  df <- dplyr::select(
+    clean_colnames(df),
+    dplyr::any_of(c("dimension", "indicator", "variable", "weight", "description"))
+  )
 
   if(is.null(poverty_cutoffs)) {
     poverty_cutoffs <- 1 / length(unique(df$dimension))
@@ -141,33 +140,35 @@ define_mpi_specs <- function(
 
   if (!is_colnames_identical) stop("Invalid column names found.")
 
-  dimensions <- df |>
-    dplyr::distinct(dimension) |>
-    dplyr::mutate(m = seq_along(dimension))
+  dimensions <- dplyr::distinct(df, dimension)
 
-  df <- df |>
-    dplyr::group_by(dimension) |>
-    dplyr::mutate(n = seq_along(dimension)) |>
-    dplyr::ungroup() |>
-    dplyr::left_join(dimensions, by = "dimension") |>
-    dplyr::mutate(
-      variable_name = paste0(
-        "d",
-        stringr::str_pad(m, width = 2, pad = "0"),
-        "_i",
-        stringr::str_pad(n, width = 2, pad = "0"),
-        "_",
-        tolower(variable)
-      ),
-      label = paste0(dimension, names_separator, indicator)
-    ) |>
-    dplyr::select(-c(n, m))
+  df <- dplyr::group_by(df, dimension)
+  df <- dplyr::mutate(df, n = seq_along(dimension)) 
+  df <- dplyr::ungroup(df) 
+  
+  df <- dplyr::left_join(
+    df, 
+    dplyr::mutate(dimensions, m = seq_along(dimension)), 
+    by = "dimension"
+  )
 
-  attr(df, "poverty_cutoffs")  <- poverty_cutoffs
+  df <- dplyr::mutate(
+    df,
+    variable_name = paste(
+      paste0("d", sprintf("%02d", m)),
+      paste0("i", sprintf("%02d", n)),
+      tolower(variable),
+      sep = "_"
+    ),
+    label = paste0(dimension, names_separator, indicator)
+  )
+  df <- dplyr::select(df, -c(n, m))
+
+  attr(df, "poverty_cutoffs") <- poverty_cutoffs
   attr(df, "unit_of_analysis") <- unit_of_analysis
-  attr(df, "uid")              <- uid
-  attr(df, "source_of_data")   <- source_of_data
-  attr(df, "names_separator")  <- names_separator
+  attr(df, "uid") <- uid
+  attr(df, "source_of_data") <- source_of_data
+  attr(df, "names_separator") <- names_separator
 
   class(df) <- c("mpi_specs", class(df))
 
