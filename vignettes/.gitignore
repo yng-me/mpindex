@@ -1,3 +1,6 @@
 *.html
 *.R
 *.xlsx
+
+/.quarto/
+**/*.quarto_ipynb

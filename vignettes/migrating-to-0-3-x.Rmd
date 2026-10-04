@@ -10,8 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment  = "#>",
-  error    = TRUE   # allow expect_error demonstrations to render
+  comment = "#>",
+  error = TRUE   # allow expect_error demonstrations to render
 )
 ```
 
@@ -86,7 +86,7 @@ specs <- define_mpi_specs(
 
 result <- compute_mpi(
   df_household,
-  .mpi_specs   = specs,
+  .mpi_specs = specs,
   .deprivations = deps,
   .by = region
 )
@@ -134,7 +134,7 @@ specs <- global_mpi_specs()                   # load once …
 
 dm <- define_deprivation(
   df, drinking_water,
-  cutoff    = drinking_water == 2,
+  cutoff = drinking_water == 2,
   mpi_specs = specs                           # … then pass it
 )
 ```
@@ -202,7 +202,7 @@ data frames.
 
 ```r
 dm1 <- define_deprivation(df, drinking_water, .cutoff = drinking_water == 2, ...)
-dm2 <- define_deprivation(df, electricity,    .cutoff = electricity == 2,    ...)
+dm2 <- define_deprivation(df, electricity, .cutoff = electricity == 2, ...)
 
 result <- compute_mpi(
   df,
@@ -320,7 +320,7 @@ time via the `by` argument in `compute_mpi()`.
 
 Passing `aggregation =` now raises an informative error:
 
-```{r aggregation-error}
+```r
 define_mpi_specs(
   system.file("extdata", "global-mpi-specs.csv", package = "mpindex"),
   aggregation = "region"
@@ -341,14 +341,6 @@ result <- compute_mpi(df, mpi_specs = specs, deprivations = ...)
 specs  <- define_mpi_specs("specs.csv", uid = "uuid")
 result <- compute_mpi(df, mpi_specs = specs, deprivations = ..., by = region)
 ```
-
----
-
-## 9. Minimum R version bumped to 4.1.0
-
-`mpindex` 0.3.* requires R ≥ 4.1.0 (released May 2021). The native pipe `|>`
-and `\(x)` lambda syntax are used throughout the package internals. Update R if
-you are on an older version.
 
 ---
 
