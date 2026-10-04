@@ -23,7 +23,7 @@ If you want to get the latest development version of `mpindex`, install it from 
 
 ```r
 # install.packages("devtools")
-devtools::install_github('yng-me/mpindex')
+pak::pak('yng-me/mpindex')
 ```
 ## Usage
 
