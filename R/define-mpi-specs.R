@@ -155,8 +155,8 @@ define_mpi_specs <- function(
   df <- dplyr::mutate(
     df,
     variable_name = paste(
-      paste0("d", sprintf("%02s", as.character(m))),
-      paste0("i", sprintf("%02s", as.character(n))),
+      paste0("d", sprintf("%02d", m)),
+      paste0("i", sprintf("%02d", n)),
       tolower(variable),
       sep = "_"
     ),
@@ -164,11 +164,11 @@ define_mpi_specs <- function(
   )
   df <- dplyr::select(df, -c(n, m))
 
-  attr(df, "poverty_cutoffs")  <- poverty_cutoffs
+  attr(df, "poverty_cutoffs") <- poverty_cutoffs
   attr(df, "unit_of_analysis") <- unit_of_analysis
-  attr(df, "uid")              <- uid
-  attr(df, "source_of_data")   <- source_of_data
-  attr(df, "names_separator")  <- names_separator
+  attr(df, "uid") <- uid
+  attr(df, "source_of_data") <- source_of_data
+  attr(df, "names_separator") <- names_separator
 
   class(df) <- c("mpi_specs", class(df))
 
