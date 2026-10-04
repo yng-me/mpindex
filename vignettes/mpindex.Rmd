@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 The **Multidimensional Poverty Index (MPI)** measures poverty not just by income, but by whether people are deprived across multiple areas of their lives — health, education, and living standards. A person or household is considered poor only if they fall short on *enough* of these areas at the same time.
 
-The approach used here is the **Alkire-Foster (AF) method**, developed by Sabina Alkire and James Foster at the Oxford Poverty and Human Development Initiative (OPHI). It is the basis of the [Global MPI](https://ophi.org.uk/multidimensional-poverty-index/) published annually by OPHI and the UNDP.
+The approach used here is the **Alkire-Foster (AF) method**, developed by Sabina Alkire and James Foster at the Oxford Poverty and Human Development Initiative (OPHI). It is the basis of the Global MPI published annually by OPHI and the UNDP.
 
 The `mpindex` package makes it straightforward to compute the MPI from survey data in R.
 
@@ -498,11 +498,3 @@ mpi_result$deprivation_matrix$k_33
 # 4. Save to Excel
 save_mpi(mpi_result, mpi_specs = mpi_specs, filename = "MPI Results")
 ```
-
----
-
-## Further reading
-
-- [OPHI — How to Apply the Alkire-Foster Method](https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/)
-- [Global MPI 2023 Report](https://hdr.undp.org/content/2023-global-multidimensional-poverty-index-mpi)
-- Package documentation: `?compute_mpi`, `?define_mpi_specs`, `?define_deprivation`, `?save_mpi`
