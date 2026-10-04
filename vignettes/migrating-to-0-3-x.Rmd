@@ -1,8 +1,8 @@
 ---
-title: "Migrating to mpindex 0.3.*"
+title: "Migrating to mpindex 0.3.x"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Migrating to mpindex 0.3.*}
+  %\VignetteIndexEntry{Migrating to mpindex 0.3.x}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

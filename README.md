@@ -9,7 +9,7 @@ Estimate **Multidimensional Poverty Index (MPI)** measures from household survey
 
 Learn more in `vignette("mpindex")` and `?compute_mpi`.
 
-> **Upgrading from 0.2.x?** See the [migration guide](https://yng-me.github.io/mpindex/articles/migrating-to-0-3.html) for a full list of breaking changes and before/after examples.
+> **Upgrading from 0.2.x?** See the [migration guide](https://yng-me.github.io/mpindex/articles/migrating-to-0-3-x.html) for a full list of breaking changes and before/after examples.
 
 ## Installation
 
