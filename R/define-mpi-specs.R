@@ -155,8 +155,8 @@ define_mpi_specs <- function(
   df <- dplyr::mutate(
     df,
     variable_name = paste(
-      paste0("d", sprintf("%02s", m)),
-      paste0("i", sprintf("%02s", n)),
+      paste0("d", sprintf("%02s", as.character(m))),
+      paste0("i", sprintf("%02s", as.character(n))),
       tolower(variable),
       sep = "_"
     ),
