@@ -92,7 +92,7 @@ compute_mpi_from_profile <- function(
 
   # --- Build survey design (if requested) ---------------------------------
   uid_col <- if (!is.null(spec_attr$uid)) as.character(spec_attr$uid) else "uid"
-  svy     <- resolve_survey_design(.data, weight, strata, cluster, fpc, survey_design)
+  svy <- resolve_survey_design(.data, weight, strata, cluster, fpc, survey_design)
 
   svy_for_dm <- function(dm_slice) {
     if (is.null(svy)) return(NULL)

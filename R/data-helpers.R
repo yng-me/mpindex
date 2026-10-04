@@ -30,10 +30,18 @@ rename_indicators <- function(.data, mpi_specs = NULL) {
     .data <- tsg::rename_label(.data, deprivation_score = "Deprivation score")
   }
 
+  cols <- names(.data)
+  cols_start <- cols[!grepl("^d\\d{2}_i\\d{2}_", cols)]
+  cols_end <- sort(cols[grepl("^d\\d{2}_i\\d{2}_", cols)])
+
+  .data <- dplyr::select(.data, dplyr::any_of(c(cols_start, cols_end)))
+
   .data <- dplyr::rename_with(
     .data, 
     ~ sub("^d\\d{2}_i\\d{2}_", "", .)
   )
+
+  
 
   return(.data)
 }
