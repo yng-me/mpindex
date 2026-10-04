@@ -36,7 +36,7 @@ Or install the development version from GitHub:
 
 ```{r, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("yng-me/mpindex")
+pak::pak("yng-me/mpindex")
 ```
 
 Then load the package:

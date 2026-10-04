@@ -8,11 +8,10 @@ bind_list <- function(.data, list_data, by) {
 
 rename_indicators <- function(.data, mpi_specs = NULL) {
 
-  mpi_colnames <- names(.data) |>
-    dplyr::as_tibble() |>
-    dplyr::mutate(variable_name = value) |>
-    dplyr::left_join(mpi_specs, by = "variable_name") |>
-    dplyr::mutate(label = dplyr::if_else(is.na(label), to_title_case(value), label))
+  mpi_colnames <- dplyr::as_tibble(names(.data)) 
+  mpi_colnames <- dplyr::mutate(mpi_colnames, variable_name = value) 
+  mpi_colnames <- dplyr::left_join(mpi_colnames, mpi_specs, by = "variable_name") 
+  mpi_colnames <- dplyr::mutate(mpi_colnames, label = dplyr::if_else(is.na(label), to_title_case(value), label))
 
   for (i in seq_along(mpi_colnames$value)) {
     mpi_col <- mpi_colnames$value[i]
@@ -31,8 +30,7 @@ rename_indicators <- function(.data, mpi_specs = NULL) {
     .data <- tsg::rename_label(.data, deprivation_score = "Deprivation score")
   }
 
-  .data <- .data |>
-    dplyr::rename_with(~ stringr::str_remove_all(., "^d\\d{2}_i\\d{2}_"))
+  .data <- dplyr::rename_with(.data, ~ stringr::str_remove_all(., "^d\\d{2}_i\\d{2}_"))
 
   return(.data)
 }
@@ -42,9 +40,7 @@ rename_n <- function(.data, label) {
   if (is.null(label)) label <- "cases"
 
   mpi_colname <- paste0("number_of_", tolower(label))
-
-  .data <- .data |>
-    dplyr::rename(!!as.name(mpi_colname) := n)
+  .data <- dplyr::rename(.data, !!as.name(mpi_colname) := n)
 
   attr(.data[[mpi_colname]], "label") <- paste0("Number of ", label)
 
@@ -74,10 +70,10 @@ print.mpi_output <- function(x, ...) {
   for (k in names(idx)) {
     pct <- stringr::str_remove(k, "^k_")
     cat(sprintf("  Poverty cutoff, k = %s%%\n", pct))
-    row     <- idx[[k]]
-    n_col   <- grep("^number_of_", names(row), value = TRUE)[1]
-    h_col   <- grep("headcount_ratio", names(row), value = TRUE)[1]
-    a_col   <- grep("^intensity",      names(row), value = TRUE)[1]
+    row <- idx[[k]]
+    n_col <- grep("^number_of_", names(row), value = TRUE)[1]
+    h_col <- grep("headcount_ratio", names(row), value = TRUE)[1]
+    a_col <- grep("^intensity",      names(row), value = TRUE)[1]
     mpi_col <- grep("^mpi",            names(row), value = TRUE)[1]
     if (!is.na(n_col))   cat(sprintf("    n   = %s\n",   format(row[[n_col]][1], big.mark = ",")))
     if (!is.na(h_col))   cat(sprintf("    H   = %.4f\n", row[[h_col]][1]))

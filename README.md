@@ -5,7 +5,7 @@
 [![R-CMD-check](https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/yng-me/mpindex/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Estimate **Multidimensional Poverty Index (MPI)** measures from household survey microdata using the [Alkire-Foster dual-cutoff counting method](https://doi.org/10.1016/j.jpubeco.2010.11.006). Load your indicator specification from a CSV, Excel, JSON, or plain-text file; compute the headcount ratio (H), intensity (A), and MPI = H × A; disaggregate by any subgroup; and export results to a formatted Excel report. Complex survey designs — stratification, clustering, and probability weights — are supported out of the box, with optional design-based standard errors and confidence intervals.
+Estimate **Multidimensional Poverty Index (MPI)** measures from household survey microdata using the **Alkire-Foster dual-cutoff counting method**. Load your indicator specification from a CSV, Excel, JSON, or plain-text file; compute the headcount ratio (H), intensity (A), and MPI = H × A; disaggregate by any subgroup; and export results to a formatted Excel report. Complex survey designs — stratification, clustering, and probability weights — are supported out of the box, with optional design-based standard errors and confidence intervals.
 
 Learn more in `vignette("mpindex")` and `?compute_mpi`.
 

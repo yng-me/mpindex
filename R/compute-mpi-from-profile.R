@@ -25,12 +25,12 @@
 #'
 #' deprivation_profile <- list()
 #'
-#' deprivation_profile$drinking_water <- df_household |>
-#'   define_deprivation(
-#'     indicator = drinking_water,
-#'     cutoff    = drinking_water == 2,
-#'     mpi_specs = specs
-#'   )
+#' deprivation_profile$drinking_water <- define_deprivation(
+#'   df_household,
+#'   indicator = drinking_water,
+#'   cutoff = drinking_water == 2,
+#'   mpi_specs = specs
+#' )
 #'
 #' # ... (define remaining indicators) ...
 #'
@@ -44,16 +44,16 @@ compute_mpi_from_profile <- function(
   .data,
   deprivation_profile,
   ...,
-  by                         = character(0),
-  mpi_specs                  = NULL,
+  by = character(0),
+  mpi_specs = NULL,
   include_deprivation_matrix = TRUE,
-  weight                     = NULL,
-  strata                     = NULL,
-  cluster                    = NULL,
-  fpc                        = NULL,
-  survey_design              = NULL,
-  inference                  = FALSE,
-  ci_level                   = 0.95
+  weight = NULL,
+  strata = NULL,
+  cluster = NULL,
+  fpc = NULL,
+  survey_design = NULL,
+  inference = FALSE,
+  ci_level = 0.95
 ) {
 
   check_old_dotted_args(
@@ -65,12 +65,12 @@ compute_mpi_from_profile <- function(
   validate_mpi_specs(mpi_specs)
 
   spec_attr <- attributes(mpi_specs)
-  cutoffs   <- spec_attr$poverty_cutoffs
+  cutoffs <- spec_attr$poverty_cutoffs
   p_cutoffs <- set_k_label(cutoffs)
 
   headcount_ratio_list <- list()
-  mpi_computed_list    <- list()
-  contribution_list    <- list()
+  mpi_computed_list <- list()
+  contribution_list <- list()
 
   by_cols <- by
 
@@ -85,7 +85,7 @@ compute_mpi_from_profile <- function(
       .data,
       deprivation_profile,
       ...,
-      by_cols   = by_cols,
+      by_cols = by_cols,
       mpi_specs = mpi_specs
     )
   }
@@ -103,15 +103,16 @@ compute_mpi_from_profile <- function(
   unc_dm  <- deprivation_matrix$uncensored
   unc_svy <- svy_for_dm(unc_dm)
 
-  headcount_ratio_list[["uncensored"]] <- rlang::inject(
-    compute_headcount_ratio(
-      unc_dm,
-      !!!rlang::syms(by_cols),
-      survey_design = unc_svy,
-      inference     = inference,
-      ci_level      = ci_level
-    )
-  ) |> rename_indicators(mpi_specs = mpi_specs)
+  hr_exp <- compute_headcount_ratio(
+    unc_dm,
+    !!!rlang::syms(by_cols),
+    survey_design = unc_svy,
+    inference = inference,
+    ci_level = ci_level
+  )
+
+  hr <- rlang::inject(hr_exp)
+  headcount_ratio_list[["uncensored"]] <- rename_indicators(hr, mpi_specs = mpi_specs)
 
   # --- Per-cutoff computation ---------------------------------------------
   for (i in seq_along(p_cutoffs)) {
@@ -119,33 +120,30 @@ compute_mpi_from_profile <- function(
     dm_temp   <- deprivation_matrix[[dep_label]]
     dm_svy    <- svy_for_dm(dm_temp)
 
-    incidence_temp <- rlang::inject(
-      compute_headcount_ratio(
-        dm_temp,
-        !!!rlang::syms(by_cols),
-        survey_design = dm_svy,
-        inference     = inference,
-        ci_level      = ci_level
-      )
+    incidence_temp_exp <- compute_headcount_ratio(
+      dm_temp,
+      !!!rlang::syms(by_cols),
+      survey_design = dm_svy,
+      inference = inference,
+      ci_level = ci_level
     )
 
+    incidence_temp <- rlang::inject(incidence_temp_exp)
     headcount_ratio_list[[dep_label]] <- rename_indicators(incidence_temp, mpi_specs = mpi_specs)
 
-    mpi_computed_temp <- rlang::inject(
-      compute_headcount_ratio_adjusted(
-        dm_temp,
-        !!!rlang::syms(by_cols),
-        survey_design = dm_svy,
-        inference     = inference,
-        ci_level      = ci_level
-      )
+    mpi_computed_temp <- compute_headcount_ratio_adjusted(
+      dm_temp,
+      !!!rlang::syms(by_cols),
+      survey_design = dm_svy,
+      inference = inference,
+      ci_level = ci_level
     )
 
+    mpi_computed_temp <- rlang::inject(mpi_computed_temp)
     mpi_computed_list[[dep_label]] <- rename_n(mpi_computed_temp, spec_attr$unit_of_analysis)
 
-    tmp <- mpi_computed_temp |>
-      dplyr::select(mpi) |>
-      dplyr::bind_cols(incidence_temp)
+    tmp <- dplyr::select(mpi_computed_temp, mpi)
+    tmp <- dplyr::bind_cols(tmp, incidence_temp)
 
     contribution_list[[dep_label]] <- rlang::inject(
       compute_contribution(tmp, !!!rlang::syms(by_cols), mpi_specs = mpi_specs)
@@ -157,9 +155,9 @@ compute_mpi_from_profile <- function(
   class(contribution_list) <- c("mpi_c_list", class(contribution_list))
 
   mpi_output <- list(
-    index           = mpi_computed_list,
+    index = mpi_computed_list,
     headcount_ratio = headcount_ratio_list,
-    contribution    = contribution_list
+    contribution = contribution_list
   )
 
   if (include_deprivation_matrix) {
@@ -167,16 +165,20 @@ compute_mpi_from_profile <- function(
     join_by <- uid_col
 
     mpi_output[["deprivation_matrix"]] <- stats::setNames(
+
       lapply(dm_n, function(x) {
-        deprivation_matrix[[x]] |>
-          dplyr::select(
-            !!as.name(join_by),
-            dplyr::any_of(by_cols),
-            ...,
-            dplyr::any_of("deprivation_score"),
-            dplyr::matches("^d\\d{2}_i\\d{2}.*")
-          ) |>
-          rename_indicators(mpi_specs = mpi_specs)
+
+        df_x <- dplyr::select(
+          deprivation_matrix[[x]],
+          !!as.name(join_by),
+          dplyr::any_of(by_cols),
+          ...,
+          dplyr::any_of("deprivation_score"),
+          dplyr::matches("^d\\d{2}_i\\d{2}.*")
+        )
+
+        rename_indicators(df_x, mpi_specs = mpi_specs)
+
       }),
       dm_n
     )
@@ -187,46 +189,49 @@ compute_mpi_from_profile <- function(
     overall_mpi_list <- list()
     overall_ct_list  <- list()
 
-    overall_hr_list[["uncensored"]] <- compute_headcount_ratio(
+    unc_dm_u <- compute_headcount_ratio(
       unc_dm,
       survey_design = unc_svy,
-      inference     = inference,
-      ci_level      = ci_level
-    ) |> rename_indicators(mpi_specs = mpi_specs)
+      inference = inference,
+      ci_level = ci_level
+    )
+
+    overall_hr_list[["uncensored"]] <- rename_indicators(unc_dm_u, mpi_specs = mpi_specs)
 
     for (i in seq_along(p_cutoffs)) {
+
       dep_label <- set_dep_label(p_cutoffs, i)
-      dm_temp   <- deprivation_matrix[[dep_label]]
-      dm_svy    <- svy_for_dm(dm_temp)
+      dm_temp <- deprivation_matrix[[dep_label]]
+      dm_svy <- svy_for_dm(dm_temp)
 
       inc_temp <- compute_headcount_ratio(
         dm_temp,
         survey_design = dm_svy,
-        inference     = inference,
-        ci_level      = ci_level
+        inference = inference,
+        ci_level = ci_level
       )
       overall_hr_list[[dep_label]] <- rename_indicators(inc_temp, mpi_specs = mpi_specs)
 
       mpi_temp <- compute_headcount_ratio_adjusted(
         dm_temp,
         survey_design = dm_svy,
-        inference     = inference,
-        ci_level      = ci_level
+        inference = inference,
+        ci_level = ci_level
       )
       overall_mpi_list[[dep_label]] <- rename_n(mpi_temp, spec_attr$unit_of_analysis)
 
-      tmp_overall <- mpi_temp |>
-        dplyr::select(mpi) |>
-        dplyr::bind_cols(inc_temp)
+      tmp_overall <- dplyr::select(mpi_temp, mpi)
+      tmp_overall <- dplyr::bind_cols(tmp_overall, inc_temp)
+
       overall_ct_list[[dep_label]] <- compute_contribution(
         tmp_overall, mpi_specs = mpi_specs
       )
     }
 
     mpi_output[["overall"]] <- list(
-      index           = overall_mpi_list,
+      index = overall_mpi_list,
       headcount_ratio = overall_hr_list,
-      contribution    = overall_ct_list
+      contribution = overall_ct_list
     )
   }
 

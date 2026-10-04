@@ -75,11 +75,8 @@ save_mpi <- function(
   }
 
   if (include_specs) {
-    sheets[["MPI Specification"]] <- mpi_specs |>
-      dplyr::select(
-        dplyr::any_of(c("dimension", "indicator", "variable", "weight", "description"))
-      ) |>
-      dplyr::rename_with(to_title_case)
+    cols <- c("dimension", "indicator", "variable", "weight", "description")
+    sheets[["MPI Specification"]] <- dplyr::rename_with(dplyr::select(mpi_specs, dplyr::any_of(cols)), to_title_case)
   }
 
   tsg::write_xlsx(sheets, path = file, facade = facade)
@@ -122,15 +119,16 @@ tidy_poverty_cutoff <- function(data) {
 
   if(length(data) == 1) return(data[[1]])
 
-  data |>
-    dplyr::bind_rows(.id = "poverty_cutoff") |>
-    dplyr::mutate(
-      poverty_cutoff = dplyr::if_else(
-        grepl("^k_", poverty_cutoff),
-        paste0(stringr::str_pad(stringr::str_remove(poverty_cutoff, "^k_"), width = 2, pad = "0"), "%"),
-        to_title_case(poverty_cutoff)
-      )
+  data <- dplyr::bind_rows(data, .id = "poverty_cutoff") 
+
+  dplyr::mutate(
+    data,
+    poverty_cutoff = dplyr::if_else(
+      grepl("^k_", poverty_cutoff),
+      paste0(stringr::str_pad(stringr::str_remove(poverty_cutoff, "^k_"), width = 2, pad = "0"), "%"),
+      to_title_case(poverty_cutoff)
     )
+  )
 
 }
 
@@ -153,11 +151,8 @@ bind_sheets <- function(data, key, overall_label) {
   # Multiple poverty cutoffs and with no grouping
   if(length(df) > 1 && is.null(data$overall)) {
 
-    res <- df |>
-      tidy_poverty_cutoff() |>
-      set_column_labels(labels = data_labels)
-
-    return(res)
+    res <- tidy_poverty_cutoff(df)
+    set_column_labels(res, labels = data_labels)
 
   }
 

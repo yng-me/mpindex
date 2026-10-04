@@ -1,19 +1,12 @@
-compute_headcount_ratio_adjusted <- function(
-  .data,
-  ...,
-  survey_design = NULL,
-  inference     = FALSE,
-  ci_level      = 0.95
-) {
+compute_headcount_ratio_adjusted <- function(.data, ..., survey_design = NULL, inference = FALSE, ci_level = 0.95) {
 
   if (!"is_deprived" %in% names(.data)) {
-    .data <- .data |>
-      dplyr::mutate(is_deprived = as.integer(deprivation_score > 0))
+    .data <- dplyr::mutate(.data, is_deprived = as.integer(deprivation_score > 0))
   }
 
   # --- Survey path --------------------------------------------------------
   if (!is.null(survey_design)) {
-    dots     <- rlang::quos(...)
+    dots <- rlang::quos(...)
     by_names <- vapply(dots, rlang::as_label, character(1))
 
     needed <- c("is_deprived", "deprivation_score")
@@ -26,8 +19,8 @@ compute_headcount_ratio_adjusted <- function(
     df <- svy_compute_mpi_summary(survey_design, by_names, inference, ci_level)
     df <- tsg::rename_label(df,
       headcount_ratio = "Headcount Ratio (H)",
-      intensity       = "Intensity of Deprivation Among the Poor (A)",
-      mpi             = "MPI (H x A)"
+      intensity = "Intensity of Deprivation Among the Poor (A)",
+      mpi = "MPI (H x A)"
     )
     class(df) <- c("mpi", class(df))
     return(df)
@@ -36,22 +29,24 @@ compute_headcount_ratio_adjusted <- function(
   # --- dplyr path ---------------------------------------------------------
   df <- dplyr::group_by(.data, ...)
 
-  df <- df |>
-    dplyr::summarise(
-      n = dplyr::n(),
-      headcount_ratio = (sum(is_deprived, na.rm = TRUE)) / n,
-      intensity = dplyr::if_else(
-        sum(is_deprived, na.rm = TRUE) == 0, 0,
-        sum(deprivation_score, na.rm = TRUE) * (1 / sum(is_deprived, na.rm = TRUE))
-      ),
-      mpi = headcount_ratio * intensity,
-      .groups = "drop"
-    ) |>
-    tsg::rename_label(
-      headcount_ratio = "Headcount Ratio (H)",
-      intensity       = "Intensity of Deprivation Among the Poor (A)",
-      mpi             = "MPI (H x A)"
-    )
+  df <- dplyr::summarise(
+    df,
+    n = dplyr::n(),
+    headcount_ratio = (sum(is_deprived, na.rm = TRUE)) / n,
+    intensity = dplyr::if_else(
+      sum(is_deprived, na.rm = TRUE) == 0, 0,
+      sum(deprivation_score, na.rm = TRUE) * (1 / sum(is_deprived, na.rm = TRUE))
+    ),
+    mpi = headcount_ratio * intensity,
+    .groups = "drop"
+  )
+  
+  df <- tsg::rename_label(
+    df,
+    headcount_ratio = "Headcount Ratio (H)",
+    intensity = "Intensity of Deprivation Among the Poor (A)",
+    mpi = "MPI (H x A)"
+  )
 
   class(df) <- c("mpi", class(df))
   return(df)

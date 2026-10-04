@@ -59,7 +59,7 @@ specs_file <- system.file(
   "global-mpi-specs.csv",
   package = "mpindex"
 )
-system.file("extdata", package = "mpindex") |> list.files()
+list.files(system.file("extdata", package = "mpindex"))
 
 }
 \seealso{

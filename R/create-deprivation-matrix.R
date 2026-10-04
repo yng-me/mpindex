@@ -17,61 +17,73 @@ create_deprivation_matrix <- function(
     join_by <- spec_attr$uid
   } else {
     join_by <- "uid"
-    .data <- .data |> tibble::rownames_to_column(var = join_by)
+    .data <- tibble::rownames_to_column(.data, var = join_by)
   }
 
   dep_matrix <- list()
 
-  dep_matrix_ref <- .data |>
-    dplyr::select(!!as.name(join_by), dplyr::any_of(by_cols), ...) |>
-    bind_list(deprivation_profile, join_by) |>
-    dplyr::mutate(
-      deprivation_score = rowSums(
-        dplyr::across(dplyr::ends_with("_weighted")),
-        na.rm = TRUE
-      )
+  dep_matrix_ref <- dplyr::select(.data, !!as.name(join_by), dplyr::any_of(by_cols), ...)
+  dep_matrix_ref <- bind_list(dep_matrix_ref, deprivation_profile, join_by) 
+  
+  dep_matrix_ref <- dplyr::mutate(
+    dep_matrix_ref,
+    deprivation_score = rowSums(
+      dplyr::across(dplyr::ends_with("_weighted")),
+      na.rm = TRUE
     )
+  )
 
-  dep_matrix[["uncensored"]] <- dep_matrix_ref |>
-    dplyr::select(
-      !!as.name(join_by),
-      dplyr::any_of(by_cols),
-      ...,
-      deprivation_score,
-      dplyr::ends_with("_unweighted")
-    ) |>
-    dplyr::rename_with(~ stringr::str_remove(., "_unweighted$"))
+  dep_matrix_u <- dplyr::select(
+    dep_matrix_ref,
+    !!as.name(join_by),
+    dplyr::any_of(by_cols),
+    ...,
+    deprivation_score,
+    dplyr::ends_with("_unweighted")
+  )
+
+  dep_matrix[["uncensored"]] <- dplyr::rename_with(
+    dep_matrix_u, 
+    ~ stringr::str_remove(., "_unweighted$")
+  )
 
   cutoffs   <- spec_attr$poverty_cutoffs
   p_cutoffs <- set_k_label(cutoffs)
 
   for (k in seq_along(cutoffs)) {
+    
     dep_label <- set_dep_label(p_cutoffs, k)
 
-    dep_matrix[[dep_label]] <- dep_matrix_ref |>
-      dplyr::mutate(
-        cutoff      = cutoffs[k],
-        is_deprived = dplyr::if_else(deprivation_score >= cutoff, 1, 0)
-      ) |>
-      dplyr::mutate(
-        deprivation_score = dplyr::if_else(is_deprived == 1, deprivation_score, 0)
-      ) |>
-      dplyr::mutate(dplyr::across(
+    dep_matrix_k <- dplyr::mutate(
+      dep_matrix_ref,
+      cutoff = cutoffs[k],
+      is_deprived = dplyr::if_else(deprivation_score >= cutoff, 1, 0),
+      deprivation_score = dplyr::if_else(is_deprived == 1, deprivation_score, 0),
+      dplyr::across(
         dplyr::ends_with("_unweighted"),
         list(censored = ~ dplyr::if_else(is_deprived == 0, 0, .))
-      )) |>
-      dplyr::select(
-        !!as.name(join_by),
-        dplyr::any_of(by_cols),
-        ...,
-        cutoff,
-        is_deprived,
-        deprivation_score,
-        dplyr::ends_with("_censored")
-      ) |>
-      dplyr::rename_with(~ stringr::str_remove(., "_unweighted_censored$"))
+      )
+    )
+
+    dep_matrix_k <- dplyr::select(
+      dep_matrix_k,
+      !!as.name(join_by),
+      dplyr::any_of(by_cols),
+      ...,
+      cutoff,
+      is_deprived,
+      deprivation_score,
+      dplyr::ends_with("_censored")
+    )
+  
+    dep_matrix[[dep_label]] <- dplyr::rename_with(
+      dep_matrix_k, 
+      ~ stringr::str_remove(., "_unweighted_censored$")
+    )
+
   }
 
   class(dep_matrix) <- c("mpi_dm", class(dep_matrix))
   return(dep_matrix)
+
 }

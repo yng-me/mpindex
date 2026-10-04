@@ -103,11 +103,11 @@ mpi_result <- compute_mpi(
       .data = df_household_roster,
       collapse_fn = max
     ),
-    cooking_fuel   = deprived(cooking_fuel \%in\% c(4:6, 9)),
-    sanitation     = deprived(toilet > 1),
+    cooking_fuel = deprived(cooking_fuel \%in\% c(4:6, 9)),
+    sanitation = deprived(toilet > 1),
     drinking_water = deprived(drinking_water == 2),
-    electricity    = deprived(electricity == 2),
-    housing        = deprived(
+    electricity = deprived(electricity == 2),
+    housing = deprived(
       roof \%in\% c(5, 7, 9) | walls \%in\% c(5, 8, 9, 99) == 2 | floor \%in\% c(5, 6, 9)
     ),
     assets = deprived(!(
@@ -120,10 +120,6 @@ mpi_result <- compute_mpi(
 )
 }
 
-}
-\references{
-\href{https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/}{Alkire-Foster Method} \cr
-\href{https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/}{How to Apply the Alkire-Foster Method}
 }
 \seealso{
 \link[mpindex]{define_mpi_specs}, \link[mpindex]{deprived},

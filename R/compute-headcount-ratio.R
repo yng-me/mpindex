@@ -1,10 +1,4 @@
-compute_headcount_ratio <- function(
-  .data,
-  ...,
-  survey_design = NULL,
-  inference     = FALSE,
-  ci_level      = 0.95
-) {
+compute_headcount_ratio <- function(.data, ..., survey_design = NULL, inference = FALSE, ci_level = 0.95) {
 
   pattern_str <- "^d\\d{2}_i\\d{2}.*"
 
@@ -15,6 +9,7 @@ compute_headcount_ratio <- function(
 
     ind_cols <- grep(pattern_str, names(.data), value = TRUE)
     missing  <- ind_cols[!ind_cols %in% names(survey_design$variables)]
+
     if (length(missing) > 0) {
       uid_col <- intersect(names(survey_design$variables), names(.data))
       uid_col <- uid_col[!uid_col %in% c("is_deprived", "deprivation_score")][1]
@@ -27,17 +22,14 @@ compute_headcount_ratio <- function(
   }
 
   # --- dplyr path ---------------------------------------------------------
-  df <- .data |>
-    dplyr::group_by(...) |>
-    dplyr::add_count() |>
-    dplyr::ungroup() |>
-    dplyr::group_by(..., n) |>
-    dplyr::summarise(
-      dplyr::across(dplyr::matches(pattern_str), \(x) mean(x, na.rm = TRUE)),
-      .groups = "drop"
-    ) |>
-    dplyr::select(..., n, dplyr::matches(pattern_str))
+  df <- dplyr::group_by(.data, ...)
+  df <- dplyr::ungroup(dplyr::add_count(df))
+  df <- dplyr::group_by(df, ..., n) 
+  df <- dplyr::summarise(df, dplyr::across(dplyr::matches(pattern_str), \(x) mean(x, na.rm = TRUE)), .groups = "drop")
+  df <- dplyr::select(df, ..., n, dplyr::matches(pattern_str))
 
   class(df) <- c("mp_hr", class(df))
-  return(df)
+
+  df
+
 }
