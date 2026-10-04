@@ -19,7 +19,7 @@ self-contained and readable."><!-- Google tag (gtag.js) --><script async src="ht
 
     <a class="navbar-brand me-2" href="../index.html">mpindex</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@ self-contained and readable."><!-- Google tag (gtag.js) --><script async src="ht
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/migrating-to-0-3-0.html">Migrating to mpindex 0.3.0</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/migrating-to-0-3-x.html">Migrating to mpindex 0.3.x</a></li>
     <li><a class="dropdown-item" href="../articles/survey-weights.html">Survey-Weighted MPI</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -47,7 +47,7 @@ self-contained and readable."><!-- Google tag (gtag.js) --><script async src="ht
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Compute Multidimensional Poverty Index (MPI)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/v0.3.0/R/compute-mpi.R" class="external-link"><code>R/compute-mpi.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/main/R/compute-mpi.R" class="external-link"><code>R/compute-mpi.R</code></a></small>
       <div class="d-none name"><code>compute_mpi.Rd</code></div>
     </div>
 
@@ -164,10 +164,6 @@ supplied), standard errors and confidence intervals are appended as
 
 </dl></div>
     <div class="section level2">
-    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p><a href="https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/" class="external-link">Alkire-Foster Method</a> <br><a href="https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/" class="external-link">How to Apply the Alkire-Foster Method</a></p>
-    </div>
-    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><a href="define_mpi_specs.html">define_mpi_specs</a>, <a href="deprived.html">deprived</a>,
   <a href="save_mpi.html">save_mpi</a></p></div>
@@ -201,11 +197,11 @@ supplied), standard errors and confidence intervals are appended as
 <span class="r-in"><span>      .data <span class="op">=</span> <span class="va">df_household_roster</span>,</span></span>
 <span class="r-in"><span>      collapse_fn <span class="op">=</span> <span class="va">max</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span>,</span></span>
-<span class="r-in"><span>    cooking_fuel   <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="va">cooking_fuel</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    sanitation     <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="va">toilet</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    cooking_fuel <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="va">cooking_fuel</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    sanitation <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="va">toilet</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    drinking_water <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="va">drinking_water</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    electricity    <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="va">electricity</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    housing        <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    electricity <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="va">electricity</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    housing <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      <span class="va">roof</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">9</span><span class="op">)</span> <span class="op">|</span> <span class="va">walls</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">99</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">|</span> <span class="va">floor</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span>,</span></span>
 <span class="r-in"><span>    assets <span class="op">=</span> <span class="fu"><a href="deprived.html">deprived</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span></span></span>
@@ -229,7 +225,7 @@ supplied), standard errors and confidence intervals are appended as
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

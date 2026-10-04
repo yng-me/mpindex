@@ -10,9 +10,8 @@ these areas at the same time.
 
 The approach used here is the **Alkire-Foster (AF) method**, developed
 by Sabina Alkire and James Foster at the Oxford Poverty and Human
-Development Initiative (OPHI). It is the basis of the [Global
-MPI](https://ophi.org.uk/multidimensional-poverty-index/) published
-annually by OPHI and the UNDP.
+Development Initiative (OPHI). It is the basis of the Global MPI
+published annually by OPHI and the UNDP.
 
 The `mpindex` package makes it straightforward to compute the MPI from
 survey data in R.
@@ -33,7 +32,7 @@ Or install the development version from GitHub:
 ``` r
 
 # install.packages("devtools")
-devtools::install_github("yng-me/mpindex")
+pak::pak("yng-me/mpindex")
 ```
 
 Then load the package:
@@ -515,17 +514,3 @@ mpi_result$deprivation_matrix$k_33
 # 4. Save to Excel
 save_mpi(mpi_result, mpi_specs = mpi_specs, filename = "MPI Results")
 ```
-
-------------------------------------------------------------------------
-
-## Further reading
-
-- [OPHI — How to Apply the Alkire-Foster
-  Method](https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/)
-- [Global MPI 2023
-  Report](https://hdr.undp.org/content/2023-global-multidimensional-poverty-index-mpi)
-- Package documentation:
-  [`?compute_mpi`](https://yng-me.github.io/mpindex/reference/compute_mpi.md),
-  [`?define_mpi_specs`](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md),
-  [`?define_deprivation`](https://yng-me.github.io/mpindex/reference/define_deprivation.md),
-  [`?save_mpi`](https://yng-me.github.io/mpindex/reference/save_mpi.md)

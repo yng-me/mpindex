@@ -114,13 +114,6 @@ A named list of class `mpi_output` with components:
 
   Named list with `uncensored` and per-`k_*` matrices.
 
-## References
-
-[Alkire-Foster
-Method](https://ophi.org.uk/research/multidimensional-poverty/alkire-foster-method/)  
-[How to Apply the Alkire-Foster
-Method](https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/)
-
 ## See also
 
 [define_mpi_specs](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md),
@@ -156,11 +149,11 @@ mpi_result <- compute_mpi(
       .data = df_household_roster,
       collapse_fn = max
     ),
-    cooking_fuel   = deprived(cooking_fuel %in% c(4:6, 9)),
-    sanitation     = deprived(toilet > 1),
+    cooking_fuel = deprived(cooking_fuel %in% c(4:6, 9)),
+    sanitation = deprived(toilet > 1),
     drinking_water = deprived(drinking_water == 2),
-    electricity    = deprived(electricity == 2),
-    housing        = deprived(
+    electricity = deprived(electricity == 2),
+    housing = deprived(
       roof %in% c(5, 7, 9) | walls %in% c(5, 8, 9, 99) == 2 | floor %in% c(5, 6, 9)
     ),
     assets = deprived(!(

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mpindex</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/migrating-to-0-3-0.html">Migrating to mpindex 0.3.0</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/migrating-to-0-3-x.html">Migrating to mpindex 0.3.x</a></li>
     <li><a class="dropdown-item" href="../articles/survey-weights.html">Survey-Weighted MPI</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -41,11 +41,16 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/yng-me/mpindex/blob/v0.3.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/yng-me/mpindex/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.0" id="mpindex-030">mpindex 0.3.0<a class="anchor" aria-label="anchor" href="#mpindex-030"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.1" id="mpindex-031">mpindex 0.3.1<a class="anchor" aria-label="anchor" href="#mpindex-031"></a></h2>
+<ul><li>Fixed ordering of indicators as defined in the specification file.</li>
+<li>Removed <code>stringr</code> and pipe “|&gt;” dependencies.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="mpindex-030">mpindex 0.3.0<a class="anchor" aria-label="anchor" href="#mpindex-030"></a></h2><p class="text-muted">CRAN release: 2026-06-15</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-3-0"></a></h3>
 <ul><li>All argument names have dropped the <code>.</code> prefix (except <code>.data</code>). E.g. <code>.mpi_specs</code> → <code>mpi_specs</code>, <code>.cutoff</code> → <code>cutoff</code>. Passing an old dotted name now triggers an informative error naming the renamed argument and its replacement (ADR-0006).</li>
@@ -118,7 +123,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

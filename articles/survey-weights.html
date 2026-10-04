@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mpindex</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/migrating-to-0-3-0.html">Migrating to mpindex 0.3.0</a></li>
+<li><a class="dropdown-item" href="../articles/migrating-to-0-3-x.html">Migrating to mpindex 0.3.x</a></li>
     <li><a class="dropdown-item" href="../articles/survey-weights.html">Survey-Weighted MPI</a></li>
   </ul>
 </li>
@@ -70,7 +70,7 @@
       <h1>Survey-Weighted MPI</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/v0.3.0/vignettes/survey-weights.Rmd" class="external-link"><code>vignettes/survey-weights.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/main/vignettes/survey-weights.Rmd" class="external-link"><code>vignettes/survey-weights.Rmd</code></a></small>
       <div class="d-none name"><code>survey-weights.Rmd</code></div>
     </div>
 
@@ -127,25 +127,20 @@ dataset. In real work these columns come from the survey microdata.</p>
 <span></span>
 <span><span class="va">df_hh</span> <span class="op">&lt;-</span> <span class="va">df_household</span></span>
 <span><span class="va">df_hh</span><span class="op">$</span><span class="va">hh_weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0.8</span>, <span class="fl">2.5</span><span class="op">)</span>   <span class="co"># sampling weight</span></span>
-<span><span class="va">df_hh</span><span class="op">$</span><span class="va">strata</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"urban"</span>, <span class="st">"rural"</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">df_hh</span><span class="op">$</span><span class="va">psu</span>       <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># primary sampling unit</span></span></code></pre></div>
+<span><span class="va">df_hh</span><span class="op">$</span><span class="va">strata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"urban"</span>, <span class="st">"rural"</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">df_hh</span><span class="op">$</span><span class="va">psu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># primary sampling unit</span></span></code></pre></div>
 <p>Define the deprivation cutoffs (same as in the main vignette):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deprivations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  nutrition         <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">undernourished</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&lt;</span> <span class="fl">70</span>,</span>
-<span>                               .data <span class="op">=</span> <span class="va">df_household_roster</span>, collapse_fn <span class="op">=</span> <span class="va">max</span><span class="op">)</span>,</span>
-<span>  child_mortality   <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">with_child_died</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  year_schooling    <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">completed_6yrs_schooling</span> <span class="op">==</span> <span class="fl">2</span>,</span>
-<span>                               .data <span class="op">=</span> <span class="va">df_household_roster</span>, collapse_fn <span class="op">=</span> <span class="va">max</span><span class="op">)</span>,</span>
-<span>  school_attendance <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">attending_school</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">5</span><span class="op">:</span><span class="fl">24</span>,</span>
-<span>                               .data <span class="op">=</span> <span class="va">df_household_roster</span>, collapse_fn <span class="op">=</span> <span class="va">max</span><span class="op">)</span>,</span>
-<span>  cooking_fuel      <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">cooking_fuel</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  sanitation        <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">toilet</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  drinking_water    <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">drinking_water</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span>  electricity       <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">electricity</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span>  housing           <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span></span>
-<span>    <span class="va">roof</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">9</span><span class="op">)</span> <span class="op">|</span> <span class="va">walls</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">99</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">|</span> <span class="va">floor</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>  nutrition <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">undernourished</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&lt;</span> <span class="fl">70</span>, .data <span class="op">=</span> <span class="va">df_household_roster</span>, collapse_fn <span class="op">=</span> <span class="va">max</span><span class="op">)</span>,</span>
+<span>  child_mortality <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">with_child_died</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  year_schooling <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">completed_6yrs_schooling</span> <span class="op">==</span> <span class="fl">2</span>, .data <span class="op">=</span> <span class="va">df_household_roster</span>, collapse_fn <span class="op">=</span> <span class="va">max</span><span class="op">)</span>,</span>
+<span>  school_attendance <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">attending_school</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">5</span><span class="op">:</span><span class="fl">24</span>, .data <span class="op">=</span> <span class="va">df_household_roster</span>, collapse_fn <span class="op">=</span> <span class="va">max</span><span class="op">)</span>,</span>
+<span>  cooking_fuel <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">cooking_fuel</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  sanitation <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">toilet</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  drinking_water <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">drinking_water</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  electricity <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">electricity</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  housing <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="va">roof</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">9</span><span class="op">)</span> <span class="op">|</span> <span class="va">walls</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">99</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">|</span> <span class="va">floor</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  assets <span class="op">=</span> <span class="fu"><a href="../reference/deprived.html">deprived</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span></span>
 <span>    <span class="op">(</span><span class="va">asset_tv</span> <span class="op">+</span> <span class="va">asset_telephone</span> <span class="op">+</span> <span class="va">asset_mobile_phone</span> <span class="op">+</span> <span class="va">asset_computer</span> <span class="op">+</span></span>
 <span>       <span class="va">asset_animal_cart</span> <span class="op">+</span> <span class="va">asset_bicycle</span> <span class="op">+</span> <span class="va">asset_motorcycle</span> <span class="op">+</span></span>
@@ -227,9 +222,15 @@ estimates.</p>
 <p>A finite-population correction can also be supplied if your sampling
 frame contains the stratum sizes:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span><span class="va">df_hh</span>, mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span>, deprivations <span class="op">=</span> <span class="va">deprivations</span>,</span>
-<span>            weight <span class="op">=</span> <span class="st">"hh_weight"</span>, strata <span class="op">=</span> <span class="st">"strata"</span>, cluster <span class="op">=</span> <span class="st">"psu"</span>,</span>
-<span>            .fpc    <span class="op">=</span> <span class="st">"stratum_size"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span></span>
+<span>  <span class="va">df_hh</span>, </span>
+<span>  mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span>, </span>
+<span>  deprivations <span class="op">=</span> <span class="va">deprivations</span>,</span>
+<span>  weight <span class="op">=</span> <span class="st">"hh_weight"</span>, </span>
+<span>  strata <span class="op">=</span> <span class="st">"strata"</span>, </span>
+<span>  cluster <span class="op">=</span> <span class="st">"psu"</span>,</span>
+<span>  fpc <span class="op">=</span> <span class="st">"stratum_size"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -240,11 +241,11 @@ prefer to specify the design once and reuse it — pass it via
 <code>survey_design</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">svy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html" class="external-link">svydesign</a></span><span class="op">(</span></span>
-<span>  ids     <span class="op">=</span> <span class="op">~</span><span class="va">psu</span>,</span>
-<span>  strata  <span class="op">=</span> <span class="op">~</span><span class="va">strata</span>,</span>
-<span>  weights <span class="op">=</span> <span class="op">~</span><span class="va">hh_weight</span>,</span>
-<span>  nest    <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># PSU IDs restart within each stratum</span></span>
-<span>  data    <span class="op">=</span> <span class="va">df_hh</span></span>
+<span>  ids <span class="op">=</span> <span class="op">~</span> <span class="va">psu</span>,</span>
+<span>  strata <span class="op">=</span> <span class="op">~</span> <span class="va">strata</span>,</span>
+<span>  weights <span class="op">=</span> <span class="op">~</span> <span class="va">hh_weight</span>,</span>
+<span>  nest <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># PSU IDs restart within each stratum</span></span>
+<span>  data <span class="op">=</span> <span class="va">df_hh</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mpi_from_design</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span></span>
@@ -370,7 +371,7 @@ correlated with poverty status), the differences can be substantial.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mpi_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_mpi.html">compute_mpi</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_hh</span>,</span>
-<span>  mpi_specs    <span class="op">=</span> <span class="va">mpi_specs</span>,</span>
+<span>  mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span>,</span>
 <span>  deprivations <span class="op">=</span> <span class="va">deprivation_profile</span>,  <span class="co"># pre-assembled list from define_deprivation()</span></span>
 <span>  weight <span class="op">=</span> <span class="st">"hh_weight"</span>,</span>
 <span>  strata <span class="op">=</span> <span class="st">"strata"</span>,</span>
@@ -399,7 +400,7 @@ same sheets alongside the point estimates.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mpindex</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/migrating-to-0-3-0.html">Migrating to mpindex 0.3.0</a></li>
+<li><a class="dropdown-item" href="../articles/migrating-to-0-3-x.html">Migrating to mpindex 0.3.x</a></li>
     <li><a class="dropdown-item" href="../articles/survey-weights.html">Survey-Weighted MPI</a></li>
   </ul>
 </li>
@@ -70,7 +70,7 @@
       <h1>Getting Started with mpindex</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/v0.3.0/vignettes/mpindex.Rmd" class="external-link"><code>vignettes/mpindex.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/yng-me/mpindex/blob/main/vignettes/mpindex.Rmd" class="external-link"><code>vignettes/mpindex.Rmd</code></a></small>
       <div class="d-none name"><code>mpindex.Rmd</code></div>
     </div>
 
@@ -87,8 +87,7 @@ A person or household is considered poor only if they fall short on
 <p>The approach used here is the <strong>Alkire-Foster (AF)
 method</strong>, developed by Sabina Alkire and James Foster at the
 Oxford Poverty and Human Development Initiative (OPHI). It is the basis
-of the <a href="https://ophi.org.uk/multidimensional-poverty-index/" class="external-link">Global
-MPI</a> published annually by OPHI and the UNDP.</p>
+of the Global MPI published annually by OPHI and the UNDP.</p>
 <p>The <code>mpindex</code> package makes it straightforward to compute
 the MPI from survey data in R.</p>
 <hr>
@@ -102,7 +101,7 @@ the MPI from survey data in R.</p>
 <p>Or install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"yng-me/mpindex"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"yng-me/mpindex"</span><span class="op">)</span></span></code></pre></div>
 <p>Then load the package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yng-me/mpindex" class="external-link">mpindex</a></span><span class="op">)</span></span></code></pre></div>
@@ -1937,30 +1936,30 @@ table answers this — values sum to 100% across all indicators.</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body"><tr>
 <td headers="number_of_households" class="gt_row gt_right">198</td>
-<td headers="nutrition" class="gt_row gt_right">21.2</td>
-<td headers="child_mortality" class="gt_row gt_right">1.4</td>
-<td headers="year_schooling" class="gt_row gt_right">33.9</td>
-<td headers="school_attendance" class="gt_row gt_right">20.3</td>
-<td headers="cooking_fuel" class="gt_row gt_right">6.1</td>
-<td headers="sanitation" class="gt_row gt_right">1.7</td>
-<td headers="drinking_water" class="gt_row gt_right">0.6</td>
-<td headers="electricity" class="gt_row gt_right">1.4</td>
-<td headers="housing" class="gt_row gt_right">2.7</td>
-<td headers="assets" class="gt_row gt_right">10.7</td>
+<td headers="nutrition" class="gt_row gt_right">21.19</td>
+<td headers="child_mortality" class="gt_row gt_right">1.41</td>
+<td headers="year_schooling" class="gt_row gt_right">33.91</td>
+<td headers="school_attendance" class="gt_row gt_right">20.25</td>
+<td headers="cooking_fuel" class="gt_row gt_right">6.12</td>
+<td headers="sanitation" class="gt_row gt_right">1.73</td>
+<td headers="drinking_water" class="gt_row gt_right">0.63</td>
+<td headers="electricity" class="gt_row gt_right">1.41</td>
+<td headers="housing" class="gt_row gt_right">2.67</td>
+<td headers="assets" class="gt_row gt_right">10.68</td>
 </tr></tbody>
 </table>
 </div>
@@ -2442,16 +2441,16 @@ only those households also identified as multidimensionally poor.</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body"><tr>
@@ -2936,16 +2935,16 @@ only those households also identified as multidimensionally poor.</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body"><tr>
@@ -3431,7 +3430,7 @@ individual score and indicator flags. The first few rows:</p>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Deprivation Matrix — first 6 households (uncensored)</td>
+<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Deprivation Matrix — first 10 households (uncensored)</td>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="uuid">UUID</th>
@@ -3447,23 +3446,23 @@ individual score and indicator flags. The first few rows:</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
 <td headers="uuid" class="gt_row gt_left">5dbec60a-ebda-47bd-ae18-3b017a221125</td>
-<td headers="deprivation_score" class="gt_row gt_right">0.2222222</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.22</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">1</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -3476,8 +3475,8 @@ individual score and indicator flags. The first few rows:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">8b70c208-8642-408c-8a51-30bcaa106069</td>
-<td headers="deprivation_score" class="gt_row gt_right">0.2777778</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.28</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">1</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -3490,8 +3489,8 @@ individual score and indicator flags. The first few rows:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">aa7cb64d-ba16-4842-8994-8772060f432d</td>
-<td headers="deprivation_score" class="gt_row gt_right">0.1111111</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.11</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">0</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -3504,8 +3503,8 @@ individual score and indicator flags. The first few rows:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">df3e5c9b-7218-451d-9917-cd552cf4f40f</td>
-<td headers="deprivation_score" class="gt_row gt_right">0.2777778</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.28</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">1</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -3518,8 +3517,8 @@ individual score and indicator flags. The first few rows:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">57babe6a-c163-4d8e-aa80-3a9bc9290d2d</td>
-<td headers="deprivation_score" class="gt_row gt_right">0.2777778</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.28</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">1</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -3532,12 +3531,68 @@ individual score and indicator flags. The first few rows:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">ba3f75cd-102d-482d-a979-b9098e9e0e18</td>
-<td headers="deprivation_score" class="gt_row gt_right">0.2777778</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.28</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">1</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
 <td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">291c03d9-7947-459a-9c02-e68b38471467</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.44</td>
+<td headers="nutrition" class="gt_row gt_right">1</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">b8d1b52e-2b5d-4942-9939-7c0613f06e32</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.33</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">1</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">2e80bf1a-03e9-4894-8792-0ce936dc3347</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.22</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">208992f0-9c6d-4c5c-a72a-4ffab69ea965</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.22</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
 <td headers="sanitation" class="gt_row gt_right">0</td>
 <td headers="drinking_water" class="gt_row gt_right">0</td>
 <td headers="electricity" class="gt_row gt_right">0</td>
@@ -4004,7 +4059,7 @@ they are not counted as poor:</p>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading">
-<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Deprivation Matrix — first 6 households (k = 33% cutoff)</td>
+<td colspan="12" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Deprivation Matrix — first 10 households (k = 33% cutoff)</td>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="uuid">UUID</th>
@@ -4020,23 +4075,23 @@ they are not counted as poor:</p>
       </th>
     </tr>
 <tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Health__Nutrition</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Health__Child mortality</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Education__Years of schooling</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">Education__School attendance</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Living Standards__Cooking fuel</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Living Standards__Sanitation</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Living Standards__Drinking water</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Living Standards__Electricity</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Living Standards__Housing</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Living Standards__Assets</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="nutrition">Nutrition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="child_mortality">Child mortality</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="year_schooling">Years of schooling</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="school_attendance">School attendance</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="cooking_fuel">Cooking fuel</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sanitation">Sanitation</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="drinking_water">Drinking water</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="electricity">Electricity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="housing">Housing</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="assets">Assets</th>
     </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr>
 <td headers="uuid" class="gt_row gt_left">5dbec60a-ebda-47bd-ae18-3b017a221125</td>
-<td headers="deprivation_score" class="gt_row gt_right">0</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">0</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -4049,8 +4104,8 @@ they are not counted as poor:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">8b70c208-8642-408c-8a51-30bcaa106069</td>
-<td headers="deprivation_score" class="gt_row gt_right">0</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">0</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -4063,8 +4118,8 @@ they are not counted as poor:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">aa7cb64d-ba16-4842-8994-8772060f432d</td>
-<td headers="deprivation_score" class="gt_row gt_right">0</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">0</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -4077,8 +4132,8 @@ they are not counted as poor:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">df3e5c9b-7218-451d-9917-cd552cf4f40f</td>
-<td headers="deprivation_score" class="gt_row gt_right">0</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">0</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -4091,8 +4146,8 @@ they are not counted as poor:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">57babe6a-c163-4d8e-aa80-3a9bc9290d2d</td>
-<td headers="deprivation_score" class="gt_row gt_right">0</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">0</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -4105,8 +4160,64 @@ they are not counted as poor:</p>
 </tr>
 <tr>
 <td headers="uuid" class="gt_row gt_left">ba3f75cd-102d-482d-a979-b9098e9e0e18</td>
-<td headers="deprivation_score" class="gt_row gt_right">0</td>
-<td headers="nutrition" class="gt_row gt_right">0.000</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">291c03d9-7947-459a-9c02-e68b38471467</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.44</td>
+<td headers="nutrition" class="gt_row gt_right">1</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">1</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">1</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">b8d1b52e-2b5d-4942-9939-7c0613f06e32</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.33</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">1</td>
+<td headers="school_attendance" class="gt_row gt_right">1</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">2e80bf1a-03e9-4894-8792-0ce936dc3347</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
+<td headers="child_mortality" class="gt_row gt_right">0</td>
+<td headers="year_schooling" class="gt_row gt_right">0</td>
+<td headers="school_attendance" class="gt_row gt_right">0</td>
+<td headers="cooking_fuel" class="gt_row gt_right">0</td>
+<td headers="sanitation" class="gt_row gt_right">0</td>
+<td headers="drinking_water" class="gt_row gt_right">0</td>
+<td headers="electricity" class="gt_row gt_right">0</td>
+<td headers="housing" class="gt_row gt_right">0</td>
+<td headers="assets" class="gt_row gt_right">0</td>
+</tr>
+<tr>
+<td headers="uuid" class="gt_row gt_left">208992f0-9c6d-4c5c-a72a-4ffab69ea965</td>
+<td headers="deprivation_score" class="gt_row gt_right">0.00</td>
+<td headers="nutrition" class="gt_row gt_right">0</td>
 <td headers="child_mortality" class="gt_row gt_right">0</td>
 <td headers="year_schooling" class="gt_row gt_right">0</td>
 <td headers="school_attendance" class="gt_row gt_right">0</td>
@@ -4192,21 +4303,6 @@ table as a reference:</p>
 <span></span>
 <span><span class="co"># 4. Save to Excel</span></span>
 <span><span class="fu"><a href="../reference/save_mpi.html">save_mpi</a></span><span class="op">(</span><span class="va">mpi_result</span>, mpi_specs <span class="op">=</span> <span class="va">mpi_specs</span>, filename <span class="op">=</span> <span class="st">"MPI Results"</span><span class="op">)</span></span></code></pre></div>
-<hr>
-</div>
-<div class="section level2">
-<h2 id="further-reading">Further reading<a class="anchor" aria-label="anchor" href="#further-reading"></a>
-</h2>
-<ul>
-<li><a href="https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/" class="external-link">OPHI
-— How to Apply the Alkire-Foster Method</a></li>
-<li><a href="https://hdr.undp.org/content/2023-global-multidimensional-poverty-index-mpi" class="external-link">Global
-MPI 2023 Report</a></li>
-<li>Package documentation: <code><a href="../reference/compute_mpi.html">?compute_mpi</a></code>,
-<code><a href="../reference/define_mpi_specs.html">?define_mpi_specs</a></code>, <code><a href="../reference/define_deprivation.html">?define_deprivation</a></code>,
-<code><a href="../reference/save_mpi.html">?save_mpi</a></code>
-</li>
-</ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -4219,7 +4315,7 @@ MPI 2023 Report</a></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

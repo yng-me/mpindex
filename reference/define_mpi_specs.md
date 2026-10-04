@@ -85,7 +85,7 @@ specs_file <- system.file(
   "global-mpi-specs.csv",
   package = "mpindex"
 )
-system.file("extdata", package = "mpindex") |> list.files()
+list.files(system.file("extdata", package = "mpindex"))
 #> [1] "global-mpi-specs.csv"  "global-mpi-specs.json" "global-mpi-specs.txt" 
 #> [4] "global-mpi-specs.xlsx"
 ```

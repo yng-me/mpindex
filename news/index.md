@@ -1,6 +1,13 @@
 # Changelog
 
+## mpindex 0.3.1
+
+- Fixed ordering of indicators as defined in the specification file.
+- Removed `stringr` and pipe “\|\>” dependencies.
+
 ## mpindex 0.3.0
+
+CRAN release: 2026-06-15
 
 ### Breaking changes
 

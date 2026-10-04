@@ -13,8 +13,8 @@
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Multidimensional Poverty Index (MPI) via the Alkire-Foster Method">
-<meta name="description" content="Estimate Multidimensional Poverty Index (MPI) measures from household survey microdata using the Alkire-Foster dual-cutoff counting method (Alkire and Foster, 2011, &lt;doi:10.1016/j.jpubeco.2010.11.006&gt;). Load indicator specifications from CSV, Excel, JSON, or plain-text files; compute the headcount ratio (H), intensity (A), and MPI = H x A across any subgroup; and export results to formatted Excel reports. Supports complex survey designs — stratification, clustering, and probability weights — and optionally appends design-based standard errors and confidence intervals.">
-<meta property="og:description" content="Estimate Multidimensional Poverty Index (MPI) measures from household survey microdata using the Alkire-Foster dual-cutoff counting method (Alkire and Foster, 2011, &lt;doi:10.1016/j.jpubeco.2010.11.006&gt;). Load indicator specifications from CSV, Excel, JSON, or plain-text files; compute the headcount ratio (H), intensity (A), and MPI = H x A across any subgroup; and export results to formatted Excel reports. Supports complex survey designs — stratification, clustering, and probability weights — and optionally appends design-based standard errors and confidence intervals.">
+<meta name="description" content="Estimate Multidimensional Poverty Index (MPI) measures from household survey microdata using the Alkire-Foster dual-cutoff counting method (Alkire and Foster, 2011). Load indicator specifications from CSV, Excel, JSON, or plain-text files; compute the headcount ratio (H), intensity (A), and MPI = H x A across any subgroup; and export results to formatted Excel reports. Supports complex survey designs — stratification, clustering, and probability weights — and optionally appends design-based standard errors and confidence intervals.">
+<meta property="og:description" content="Estimate Multidimensional Poverty Index (MPI) measures from household survey microdata using the Alkire-Foster dual-cutoff counting method (Alkire and Foster, 2011). Load indicator specifications from CSV, Excel, JSON, or plain-text files; compute the headcount ratio (H), intensity (A), and MPI = H x A across any subgroup; and export results to formatted Excel reports. Supports complex survey designs — stratification, clustering, and probability weights — and optionally appends design-based standard errors and confidence intervals.">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RBKBW51W4H"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="index.html">mpindex</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/migrating-to-0-3-0.html">Migrating to mpindex 0.3.0</a></li>
+<li><a class="dropdown-item" href="articles/migrating-to-0-3-x.html">Migrating to mpindex 0.3.x</a></li>
     <li><a class="dropdown-item" href="articles/survey-weights.html">Survey-Weighted MPI</a></li>
   </ul>
 </li>
@@ -68,10 +68,10 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>Estimate <strong>Multidimensional Poverty Index (MPI)</strong> measures from household survey microdata using the <a href="https://doi.org/10.1016/j.jpubeco.2010.11.006" class="external-link">Alkire-Foster dual-cutoff counting method</a>. Load your indicator specification from a CSV, Excel, JSON, or plain-text file; compute the headcount ratio (H), intensity (A), and MPI = H × A; disaggregate by any subgroup; and export results to a formatted Excel report. Complex survey designs — stratification, clustering, and probability weights — are supported out of the box, with optional design-based standard errors and confidence intervals.</p>
+<p>Estimate <strong>Multidimensional Poverty Index (MPI)</strong> measures from household survey microdata using the <strong>Alkire-Foster dual-cutoff counting method</strong>. Load your indicator specification from a CSV, Excel, JSON, or plain-text file; compute the headcount ratio (H), intensity (A), and MPI = H × A; disaggregate by any subgroup; and export results to a formatted Excel report. Complex survey designs — stratification, clustering, and probability weights — are supported out of the box, with optional design-based standard errors and confidence intervals.</p>
 <p>Learn more in <code><a href="articles/mpindex.html">vignette("mpindex")</a></code> and <code><a href="reference/compute_mpi.html">?compute_mpi</a></code>.</p>
 <blockquote>
-<p><strong>Upgrading from 0.2.x?</strong> See the <a href="https://yng-me.github.io/mpindex/articles/migrating-to-0-3-0.html">migration guide</a> for a full list of breaking changes and before/after examples.</p>
+<p><strong>Upgrading from 0.2.x?</strong> See the <a href="https://yng-me.github.io/mpindex/articles/migrating-to-0-3-x.html">migration guide</a> for a full list of breaking changes and before/after examples.</p>
 </blockquote>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -82,7 +82,7 @@
 <p>If you want to get the latest development version of <code>mpindex</code>, install it from GitHub. Note that you may need to install <code>devtools</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'yng-me/mpindex'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">'yng-me/mpindex'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -141,7 +141,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -8,16 +8,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/yng-me/mpindex/blob/v0.3.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/yng-me/mpindex/blob/main/DESCRIPTION)
 
 Abdulsamad B (2026). *mpindex: Multidimensional Poverty Index (MPI) via
-the Alkire-Foster Method*. R package version 0.3.0,
+the Alkire-Foster Method*. R package version 0.3.1,
 <https://github.com/yng-me/mpindex>.
 
     @Manual{,
       title = {mpindex: Multidimensional Poverty Index (MPI) via the Alkire-Foster Method},
       author = {Bhas Abdulsamad},
       year = {2026},
-      note = {R package version 0.3.0},
+      note = {R package version 0.3.1},
       url = {https://github.com/yng-me/mpindex},
     }

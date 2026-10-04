@@ -3,7 +3,7 @@
 ### All vignettes
 
 - [Migrating to mpindex
-  0.3.0](https://yng-me.github.io/mpindex/articles/migrating-to-0-3-0.md):
+  0.3.x](https://yng-me.github.io/mpindex/articles/migrating-to-0-3-x.md):
 - [Getting Started with
   mpindex](https://yng-me.github.io/mpindex/articles/mpindex.md):
 - [Survey-Weighted

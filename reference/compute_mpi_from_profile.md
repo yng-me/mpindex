@@ -72,12 +72,12 @@ specs <- define_mpi_specs(
 
 deprivation_profile <- list()
 
-deprivation_profile$drinking_water <- df_household |>
-  define_deprivation(
-    indicator = drinking_water,
-    cutoff    = drinking_water == 2,
-    mpi_specs = specs
-  )
+deprivation_profile$drinking_water <- define_deprivation(
+  df_household,
+  indicator = drinking_water,
+  cutoff = drinking_water == 2,
+  mpi_specs = specs
+)
 
 # ... (define remaining indicators) ...
 

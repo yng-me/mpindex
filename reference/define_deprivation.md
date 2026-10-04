@@ -57,11 +57,6 @@ define_deprivation(
 
 A data frame with columns `*_unweighted` and `*_weighted`.
 
-## References
-
-[How to Apply the Alkire-Foster
-Method](https://ophi.org.uk/research/multidimensional-poverty/how-to-apply-alkire-foster/)
-
 ## See also
 
 [define_mpi_specs](https://yng-me.github.io/mpindex/reference/define_mpi_specs.md)
@@ -77,12 +72,12 @@ specs_file <- system.file(
 
 specs <- define_mpi_specs(specs_file, uid = "uuid")
 
-df_household |>
-  define_deprivation(
-    indicator  = drinking_water,
-    cutoff     = drinking_water == 2,
-    mpi_specs  = specs
-  )
+define_deprivation(
+  df_household,
+  indicator = drinking_water,
+  cutoff = drinking_water == 2,
+  mpi_specs = specs
+)
 #> # A tibble: 198 × 3
 #>    uuid                            d03_i03_drinking_wat…¹ d03_i03_drinking_wat…²
 #>    <chr>                                            <int>                  <dbl>
@@ -100,13 +95,13 @@ df_household |>
 #> # ℹ abbreviated names: ¹​d03_i03_drinking_water_unweighted,
 #> #   ²​d03_i03_drinking_water_weighted
 
-df_household_roster |>
-  define_deprivation(
-    indicator   = school_attendance,
-    cutoff      = attending_school == 2,
-    mpi_specs   = specs,
-    collapse_fn = max
-  )
+define_deprivation(
+  df_household_roster,
+  indicator = school_attendance,
+  cutoff = attending_school == 2,
+  mpi_specs = specs,
+  collapse_fn = max
+)
 #> # A tibble: 198 × 3
 #>    uuid                            d02_i02_school_atten…¹ d02_i02_school_atten…²
 #>    <chr>                                            <int>                  <dbl>
