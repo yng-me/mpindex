@@ -25,7 +25,7 @@ compute_headcount_ratio <- function(.data, ..., survey_design = NULL, inference 
   df <- dplyr::group_by(.data, ...)
   df <- dplyr::ungroup(dplyr::add_count(df))
   df <- dplyr::group_by(df, ..., n) 
-  df <- dplyr::summarise(df, dplyr::across(dplyr::matches(pattern_str), \(x) mean(x, na.rm = TRUE)), .groups = "drop")
+  df <- dplyr::summarise(df, dplyr::across(dplyr::matches(pattern_str), function(x) mean(x, na.rm = TRUE)), .groups = "drop")
   df <- dplyr::select(df, ..., n, dplyr::matches(pattern_str))
 
   class(df) <- c("mp_hr", class(df))
