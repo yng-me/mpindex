@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 library(mpindex)
 ```
 
-Version 0.3.0 contains several breaking changes that require updates to existing
+Version 0.3.* contains several breaking changes that require updates to existing
 code. This vignette walks through each one with before/after examples so you can
 migrate quickly.
 
@@ -45,7 +45,7 @@ define_mpi_specs(
 **Rename map** — find-and-replace the left column with the right column in your
 scripts:
 
-| Old (0.2.x)                 | New (0.3.0)                  | Function(s)                         |
+| Old (0.2.x)                 | New (0.3.*)                  | Function(s)                         |
 |-----------------------------|------------------------------|-------------------------------------|
 | `.mpi_specs_file`           | `mpi_specs_file`             | `define_mpi_specs()`                |
 | `.uid`                      | `uid`                        | `define_mpi_specs()`                |
@@ -348,7 +348,7 @@ result <- compute_mpi(df, mpi_specs = specs, deprivations = ..., by = region)
 
 ## 9. Minimum R version bumped to 4.1.0
 
-`mpindex` 0.3.0 requires R ≥ 4.1.0 (released May 2021). The native pipe `|>`
+`mpindex` 0.3.* requires R ≥ 4.1.0 (released May 2021). The native pipe `|>`
 and `\(x)` lambda syntax are used throughout the package internals. Update R if
 you are on an older version.
 
