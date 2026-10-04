@@ -69,7 +69,7 @@ save_mpi <- function(
 
     dm_cutoffs <- dm_names[dm_names != "uncensored"]
     for (k in dm_cutoffs) {
-      label <- paste0("Deprivation matrix (k = ", stringr::str_pad(stringr::str_remove(k, "^k_"), width = 2, pad = "0"), "%)")
+      label <- paste0("Deprivation matrix (k = ", sprintf("%02s", remove_cutoff_prefix(k)), "%)")
       sheets[[label]] <- dm[[k]]
     }
   }
@@ -125,7 +125,7 @@ tidy_poverty_cutoff <- function(data) {
     data,
     poverty_cutoff = dplyr::if_else(
       grepl("^k_", poverty_cutoff),
-      paste0(stringr::str_pad(stringr::str_remove(poverty_cutoff, "^k_"), width = 2, pad = "0"), "%"),
+      paste0(sprintf("%02s", remove_cutoff_prefix(poverty_cutoff)), "%"),
       to_title_case(poverty_cutoff)
     )
   )
@@ -163,7 +163,7 @@ bind_sheets <- function(data, key, overall_label) {
   for(k in names(df)) {
 
     if(grepl("^k_", k)) {
-      k_label <- paste0("Poverty cutoff, k = ", stringr::str_pad(stringr::str_remove(k, "^k_"), width = 2, pad = "0"), "%")
+      k_label <- paste0("Poverty cutoff, k = ", sprintf("%02s", remove_cutoff_prefix(k)), "%")
     } else {
       k_label <- to_title_case(k)
     }

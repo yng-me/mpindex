@@ -74,3 +74,5 @@ clean_colnames <- function(.data, .to_lower = TRUE) {
   colnames(.data) <- cols
   return(.data)
 }
+
+remove_cutoff_prefix <- function(x) sub("^k_", "", x)

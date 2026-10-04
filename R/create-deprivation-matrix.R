@@ -44,7 +44,7 @@ create_deprivation_matrix <- function(
 
   dep_matrix[["uncensored"]] <- dplyr::rename_with(
     dep_matrix_u, 
-    ~ stringr::str_remove(., "_unweighted$")
+    ~ sub("_unweighted$", "", .)
   )
 
   cutoffs   <- spec_attr$poverty_cutoffs
@@ -78,7 +78,7 @@ create_deprivation_matrix <- function(
   
     dep_matrix[[dep_label]] <- dplyr::rename_with(
       dep_matrix_k, 
-      ~ stringr::str_remove(., "_unweighted_censored$")
+      ~ sub("_unweighted_censored$", "", .)
     )
 
   }

@@ -77,7 +77,7 @@ define_mpi_specs <- function(
   }
 
   if (!is.null(uid)) {
-    uid <- stringr::str_trim(as.character(uid))
+    uid <- trimws(as.character(uid))
     if (length(uid) != 1) {
       stop("uid argument cannot accept multiple values.")
     }
@@ -155,8 +155,8 @@ define_mpi_specs <- function(
   df <- dplyr::mutate(
     df,
     variable_name = paste(
-      paste0("d", stringr::str_pad(m, width = 2, pad = "0")),
-      paste0("i", stringr::str_pad(n, width = 2, pad = "0")),
+      paste0("d", sprintf("%02s", m)),
+      paste0("i", sprintf("%02s", n)),
       tolower(variable),
       sep = "_"
     ),
